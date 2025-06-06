@@ -1,0 +1,1 @@
+# TODO: initialize a DB of all the teams 
