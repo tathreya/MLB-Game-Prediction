@@ -8,11 +8,7 @@ load_dotenv()
 base_url = os.getenv("MLB_API_BASE_URL")
 current_season = os.getenv("CURRENT_SEASON")
 
-def fetchPastMLBSchedule():
-
-    print('hello')
-
-def fetchCurrentMLBSchedule():
+def fetchAndUpdateCurrentSchedule():
 
     params = {
         "sportId": 1,        # MLB
@@ -43,8 +39,6 @@ def fetchCurrentMLBSchedule():
         for game in schedule.get("2025-03-27"):
             print(game)
 
-        # TODO: create the DB schema
-
            
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred while fetching API data: {http_err}")  
@@ -54,11 +48,3 @@ def fetchCurrentMLBSchedule():
   
     # TODO: if current date is past the last entry in schedule, fetch playoff shcedule instead
     
-
-
-
-
-def _main():
-    fetchCurrentMLBSchedule()
-
-_main()
