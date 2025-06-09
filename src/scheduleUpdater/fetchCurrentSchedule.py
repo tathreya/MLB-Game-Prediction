@@ -62,6 +62,7 @@ def fetchAndUpdateCurrentSchedule():
         for day in all_season_dates:
 
             # TODO: remove eventually
+            # TODO: rollback in case of error
             if (i == 1):
                 break
 
@@ -93,9 +94,11 @@ def fetchAndUpdateCurrentSchedule():
                     
                     print("Game already in DB")
 
+                    # TODO:
                     #  check if all the data from API matches all the data in entry already in the table, if it does
                     #  then skip no need to add its already there
 
+                    # TODO: 
                     # if it doesn't match (ie status or something changed), update it
 
                 else:

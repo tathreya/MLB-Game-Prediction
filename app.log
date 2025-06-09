@@ -1,0 +1,4 @@
+2025-06-09 13:30:57,311 - DEBUG - Attempting to initialize MLB Teams in DB
+2025-06-09 13:30:57,315 - DEBUG - Starting new HTTPS connection (1): statsapi.mlb.com:443
+2025-06-09 13:30:57,412 - DEBUG - https://statsapi.mlb.com:443 "GET /api/v1/teams HTTP/1.1" 200 57927
+2025-06-09 13:30:57,441 - DEBUG - MLB Teams successfully initialized in DB
