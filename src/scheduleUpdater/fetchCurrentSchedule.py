@@ -2,120 +2,160 @@ import requests
 import sqlite3
 import os
 from dotenv import load_dotenv
-from datetime import date
+from datetime import date, datetime
+import logging 
 
 load_dotenv()
 
+logger = logging.getLogger(__name__)
 base_url = os.getenv("MLB_API_BASE_URL")
 current_season = os.getenv("CURRENT_SEASON")
 
 def fetchAndUpdateCurrentSchedule():
-
-    params = {
-        "sportId": 1,               # MLB
-        "season": current_season,   # Season
-        "gameType": "R",            # Regular season
-    }
-
-    conn = sqlite3.connect("databases/MLB_Betting.db")
-    cursor = conn.cursor()
-
-    insert_statement = """
-       INSERT OR IGNORE INTO CurrentSchedule (
-            id,
-            season,
-            game_type,
-            date_time,
-            home_team_id,
-            home_team,
-            away_team_id,
-            away_team,
-            home_score,
-            away_score,
-            status_code,
-            venue_id,
-            day_night
-            ) VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-        );
-    """
     try:
+        logger.debug("Attempting to store current MLB schedule in DB")
+
+        conn = sqlite3.connect("databases/MLB_Betting.db")
+        cursor = conn.cursor()
+        cursor.execute("BEGIN TRANSACTION;")
+
+        params = {
+            "sportId": 1,               # MLB
+            "season": current_season,   # Season
+            "gameType": "R",            # Regular season
+        }
+        
         response = requests.get(base_url + "schedule", params=params)
         data = response.json()
         all_season_dates = data.get("dates", [])
 
-        # TODO: if current date is past the last entry in schedule, fetch playoff shcedule instead
         last_regular_season_day = all_season_dates[-1]["date"]
         today_date = date.today().strftime("%Y-%m-%d")
 
-        
         if (all_season_dates):
             if (today_date > last_regular_season_day):
                 # TODO: fetch the playoff games
-                print("fetching playoff games")
+                logger.debug("Need to fetch playoff games")
             else:
-                print("not playoffs")
+                logger.debug("Playoffs not starting yet")
 
-        i = 0
 
+        entries_added = 0
+        entries_updated = 0
         # iterate through each day
         for day in all_season_dates:
-
-            # TODO: remove eventually
-            # TODO: rollback in case of error
-            if (i == 1):
-                break
 
             # get all the games on that day
             games = day.get("games", [])
 
             for game in games:
 
+                home_team_score = game.get("teams", {}).get("home", {}).get("score", None)
+                away_team_score = game.get("teams", {}).get("away", {}).get("score", None)
+
                 game_data = (game["gamePk"], game["season"], game["gameType"], game["gameDate"], 
                             game["teams"]["home"]["team"]["id"], game["teams"]["home"]["team"]["name"],
                             game["teams"]["away"]["team"]["id"], game["teams"]["away"]["team"]["name"],
-                            game["teams"]["home"]["score"], game["teams"]["away"]["score"],
-                             game["status"]["detailedState"], game["venue"]["id"], game["dayNight"])
-                
-                print(game_data)
-                
-             
-                #, if it doesn't then we gotta update the DB entry because something 
-                # was updated, ie the game finished 
+                            home_team_score, away_team_score, game["status"]["detailedState"], 
+                            game["venue"]["id"], game["dayNight"])
 
                 # Check if entry with gamePk already exists in DB
                 cursor.execute(
-                    "SELECT EXISTS(SELECT 1 FROM CurrentSchedule WHERE id = ?)",
+                    "SELECT * FROM CurrentSchedule WHERE id = ?",
                     (game["gamePk"],)
                 )
-                exists = cursor.fetchone()[0] 
 
-                if exists:
+                fetched_entry = cursor.fetchone()
+
+                if fetched_entry:
+
+                    # skip if the entry wasn't updated in API
+                    if (fetched_entry == game_data):
+                        continue
+                    else:
+                        # if it doesn't match (ie status or something changed), update it
+                        api_date_str = game_data[3]           
+                        db_date_str = fetched_entry[3]    
                     
-                    print("Game already in DB")
+                        api_date = datetime.fromisoformat(api_date_str.replace('Z', '+00:00'))
+                        db_date = datetime.fromisoformat(db_date_str.replace('Z', '+00:00'))
 
-                    # TODO:
-                    #  check if all the data from API matches all the data in entry already in the table, if it does
-                    #  then skip no need to add its already there
+                        # Skip the update if DB already has a later date
+                        if db_date > api_date:
+                            continue     
 
-                    # TODO: 
-                    # if it doesn't match (ie status or something changed), update it
+                        update_statement = """
+                            UPDATE CurrentSchedule
+                            SET
+                                season = ?,
+                                game_type = ?,
+                                date_time = ?,
+                                home_team_id = ?,
+                                home_team = ?,
+                                away_team_id = ?,
+                                away_team = ?,
+                                home_score = ?,
+                                away_score = ?,
+                                status_code = ?,
+                                venue_id = ?,
+                                day_night = ?
+                            WHERE id = ?
+                        """
+                        updated_values = (
+                            game_data[1],  # season
+                            game_data[2],  # game_type
+                            game_data[3],  # date_time
+                            game_data[4],  # home_team_id
+                            game_data[5],  # home_team
+                            game_data[6],  # away_team_id
+                            game_data[7],  # away_team
+                            game_data[8],  # home_score
+                            game_data[9],  # away_score
+                            game_data[10], # status_code
+                            game_data[11], # venue_id
+                            game_data[12], # day_night
+                            game_data[0]   # id for WHERE clause
+                        )
+
+                        cursor.execute(update_statement, updated_values)
+                        entries_updated += 1
 
                 else:
-                    print("Game not found, adding the game")
+                    insert_statement = """
+                        INSERT OR IGNORE INTO CurrentSchedule (
+                                id,
+                                season,
+                                game_type,
+                                date_time,
+                                home_team_id,
+                                home_team,
+                                away_team_id,
+                                away_team,
+                                home_score,
+                                away_score,
+                                status_code,
+                                venue_id,
+                                day_night
+                                ) VALUES (
+                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                            );
+                    """
                     cursor.execute(insert_statement, game_data)
-                
-            i = i + 1
+                    entries_added += 1
         
         conn.commit()
+        logger.debug("Successfully stored and updated current MLB schedule in DB")
+        logger.debug(f"Added {entries_added} entries to current MLB schedule DB")
+        logger.debug(f"Updated {entries_updated} entries in current MLB schedule DB")
     
-           
     except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error occurred while fetching API data: {http_err}")  
-    except requests.exceptions.RequestException as err:
-        print(f"Other error occurred while fetching API data: {err}")
+        logger.error(f"HTTP error occurred while fetching current MLB schedule API data: {http_err}")
+        conn.rollback()
     except Exception as e:
-        print(f"Other error occurred while fetching saving games to DB: {e}")  
+        logger.error(f"Other error occurred while saving current MLB schedule to DB: {e}")
+        conn.rollback()
+    finally:
+        conn.close()
 
   
 

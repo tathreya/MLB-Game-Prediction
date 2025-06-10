@@ -5,15 +5,11 @@ import sqlite3
 import logging 
 
 load_dotenv()
-
 base_url = os.getenv("MLB_API_BASE_URL")
-
 logger = logging.getLogger(__name__)
 
 def fetchMLBTeams():
 
-    conn = sqlite3.connect("databases/MLB_Betting.db")
-    cursor = conn.cursor()
     insert_statement = """
         INSERT OR IGNORE INTO Teams (
             id, 
@@ -24,6 +20,8 @@ def fetchMLBTeams():
     """
     try:
 
+        conn = sqlite3.connect("databases/MLB_Betting.db")
+        cursor = conn.cursor()
         logger.debug("Attempting to initialize MLB Teams in DB")
 
         cursor.execute("BEGIN TRANSACTION;")
@@ -48,7 +46,7 @@ def fetchMLBTeams():
         logger.error(f"Database error occurred when initializing MLB Teams: {db_err}")
         conn.rollback()  
     except Exception as e:
-        logger.error(f"An unexpected error occurred when initializing MLB Teams: {e}")
+        logger.error(f"An error occurred when initializing MLB Teams: {e}")
         conn.rollback() 
     finally:
         conn.close()
