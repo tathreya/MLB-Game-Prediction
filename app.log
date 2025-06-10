@@ -1,4 +1,11 @@
-2025-06-09 13:30:57,311 - DEBUG - Attempting to initialize MLB Teams in DB
-2025-06-09 13:30:57,315 - DEBUG - Starting new HTTPS connection (1): statsapi.mlb.com:443
-2025-06-09 13:30:57,412 - DEBUG - https://statsapi.mlb.com:443 "GET /api/v1/teams HTTP/1.1" 200 57927
-2025-06-09 13:30:57,441 - DEBUG - MLB Teams successfully initialized in DB
+2025-06-09 17:05:59,421 - DEBUG - Attempting to initialize MLB Teams in DB
+2025-06-09 17:05:59,426 - DEBUG - Starting new HTTPS connection (1): statsapi.mlb.com:443
+2025-06-09 17:05:59,520 - DEBUG - https://statsapi.mlb.com:443 "GET /api/v1/teams HTTP/1.1" 200 57927
+2025-06-09 17:05:59,550 - DEBUG - MLB Teams successfully initialized in DB
+2025-06-09 17:05:59,550 - DEBUG - Attempting to store current MLB schedule in DB
+2025-06-09 17:05:59,552 - DEBUG - Starting new HTTPS connection (1): statsapi.mlb.com:443
+2025-06-09 17:05:59,636 - DEBUG - https://statsapi.mlb.com:443 "GET /api/v1/schedule?sportId=1&season=2025&gameType=R HTTP/1.1" 200 171447
+2025-06-09 17:05:59,698 - DEBUG - Playoffs not starting yet
+2025-06-09 17:05:59,708 - DEBUG - Successfully stored and updated current MLB schedule in DB
+2025-06-09 17:05:59,708 - DEBUG - Added 0 entries to current MLB schedule DB
+2025-06-09 17:05:59,708 - DEBUG - Updated 0 entries in current MLB schedule DB

@@ -14,7 +14,7 @@ logging.basicConfig(
 def main():
     print('here inside main')
     fetchMLBTeams()
-    #fetchAndUpdateCurrentSchedule()
+    fetchAndUpdateCurrentSchedule()
 
 if __name__ == "__main__":
     main()
