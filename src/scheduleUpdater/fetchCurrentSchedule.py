@@ -1,6 +1,5 @@
 import requests
 import sqlite3
-import os
 from dotenv import load_dotenv
 from datetime import date, datetime
 import logging 
@@ -8,10 +7,8 @@ import logging
 load_dotenv()
 
 logger = logging.getLogger(__name__)
-base_url = os.getenv("MLB_API_BASE_URL")
-current_season = os.getenv("CURRENT_SEASON")
 
-def fetchAndUpdateCurrentSchedule():
+def fetchAndUpdateCurrentSchedule(season, base_url):
     try:
         logger.debug("Attempting to store current MLB schedule in DB")
 
@@ -19,9 +16,10 @@ def fetchAndUpdateCurrentSchedule():
         cursor = conn.cursor()
         cursor.execute("BEGIN TRANSACTION;")
 
+        
         params = {
             "sportId": 1,               # MLB
-            "season": current_season,   # Season
+            "season": season,   # Season
             "gameType": "R",            # Regular season
         }
         
@@ -156,7 +154,3 @@ def fetchAndUpdateCurrentSchedule():
         conn.rollback()
     finally:
         conn.close()
-
-  
-
-    
