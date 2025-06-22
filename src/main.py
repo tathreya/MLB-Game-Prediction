@@ -2,6 +2,7 @@
 from teamsInitializer.initializeTeams import fetchMLBTeams
 from scheduleUpdater.fetchCurrentSchedule import fetchAndUpdateCurrentSchedule
 from scheduleUpdater.fetchPastSchedule import fetchAndUpdateOldSeason
+from featureEngineering.createHistoricalFeatures import engineerFeatures
 import logging
 import os 
 
@@ -19,11 +20,13 @@ base_url = os.getenv("MLB_API_BASE_URL")
 
 def main():
     print('here inside main')
-    fetchMLBTeams()
+    fetchMLBTeams(base_url)
     old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
     for season in old_seasons:
         fetchAndUpdateOldSeason(season, base_url)
     fetchAndUpdateCurrentSchedule(current_season, base_url)
+    engineerFeatures(rolling_window_size=5, base_url = base_url)
+
 
 if __name__ == "__main__":
     main()

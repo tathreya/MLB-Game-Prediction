@@ -1,21 +1,40 @@
 import requests
 import sqlite3
-from dotenv import load_dotenv
 from datetime import date, datetime
 import logging 
-
-load_dotenv()
 
 logger = logging.getLogger(__name__)
 
 def fetchAndUpdateCurrentSchedule(season, base_url):
     try:
-        logger.debug("Attempting to store current MLB schedule in DB")
 
         conn = sqlite3.connect("databases/MLB_Betting.db")
         cursor = conn.cursor()
+
+        logger.debug("Creating CurrentSchedule table if it doesn't exist")
+        create_statement = """
+            CREATE TABLE IF NOT EXISTS CurrentSchedule (
+                id INTEGER PRIMARY KEY,
+                season TEXT,
+                game_type TEXT,
+                date_time TEXT,
+                home_team_id INTEGER,
+                home_team TEXT,
+                away_team_id INTEGER,
+                away_team TEXT,
+                home_score INTEGER,
+                away_score INTEGER,
+                status_code TEXT,
+                venue_id INTEGER,
+                day_night TEXT
+            )
+        """
+
+        cursor.execute(create_statement)
+        
         cursor.execute("BEGIN TRANSACTION;")
 
+        logger.debug("Attempting to store current MLB schedule in DB")
         
         params = {
             "sportId": 1,               # MLB

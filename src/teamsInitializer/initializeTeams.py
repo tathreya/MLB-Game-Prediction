@@ -1,27 +1,27 @@
 import requests
-import os
-from dotenv import load_dotenv
 import sqlite3
 import logging 
 
-load_dotenv()
-base_url = os.getenv("MLB_API_BASE_URL")
 logger = logging.getLogger(__name__)
 
-def fetchMLBTeams():
+def fetchMLBTeams(base_url):
 
-    insert_statement = """
-        INSERT OR IGNORE INTO Teams (
-            id, 
-            name, 
-            abbreviation,
-            short_name
-        ) VALUES (?, ?, ?, ?)
-    """
     try:
 
         conn = sqlite3.connect("databases/MLB_Betting.db")
         cursor = conn.cursor()
+
+        logger.debug("Creating Teams table if it doesn't exist")
+        create_statement = """
+            CREATE TABLE IF NOT EXISTS Teams (
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                abbreviation TEXT,
+                short_name TEXT
+            )
+        """
+        cursor.execute(create_statement)
+
         logger.debug("Attempting to initialize MLB Teams in DB")
 
         cursor.execute("BEGIN TRANSACTION;")
@@ -30,6 +30,15 @@ def fetchMLBTeams():
         data = response.json()
         all_teams = data.get("teams")
         mlb_teams = [team for team in all_teams if team.get("sport", {}).get("name") == 'Major League Baseball']
+
+        insert_statement = """
+            INSERT OR IGNORE INTO Teams (
+                id, 
+                name, 
+                abbreviation,
+                short_name
+            ) VALUES (?, ?, ?, ?)
+        """
 
         for mlb_team in mlb_teams:
             team_to_insert = (mlb_team["id"], mlb_team["name"], mlb_team["abbreviation"], mlb_team["shortName"])
