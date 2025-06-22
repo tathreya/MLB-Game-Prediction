@@ -32,6 +32,9 @@ Stores features for each historical game from **2015-2024** MLB seasons
   - Final scores
   - Advanced team statistics (e.g., OBP, ERA, FIP, wOBA)
 - All data is stored in a **SQL database** for querying, feature generation, and model training.
+- REGULAR SEASON API ENDPOINT —> https://statsapi.mlb.com/api/v1/schedule?sportId=1&season={season}&gameType=R
+- POSTSEASON API ENDPOINT —> https://statsapi.mlb.com/api/v1/schedule/postseason?season={season}&sportId=1
+- ADVANCED STATS API ENDPOINT -> https://statsapi.mlb.com/api/v1/game/{gameID}/boxscore
 
 ## 🧠 Feature Engineering
 

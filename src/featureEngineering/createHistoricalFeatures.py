@@ -1,12 +1,11 @@
 import requests
 import sqlite3
-import logging 
+import logging
+from collections import defaultdict 
 
 logger = logging.getLogger(__name__)
 
 """""
-Steps:
--------
 
 1. Loop over each season (2015–2024):
     - For each game in the season (skipping the first N games, where N is the rolling window size):
@@ -60,9 +59,37 @@ def engineerFeatures(rolling_window_size, base_url):
 
         logger.debug("Attempting to engineer features for past seasons")
 
+        # Outer dict maps team_id → that team's season stats
+        team_season_stats = defaultdict(lambda: {
+            "games_played": 0,
+            "runs": 0,
+            # "hits": 0,
+            # "at_bats": 0,
+            # "walks": 0,
+            # "strikeouts": 0,
+            # "hit_by_pitch": 0,
+            # "plate_appearances": 0,
+            # "total_bases": 0,
+            # "doubles": 0,
+            # "triples": 0,
+            # "home_runs": 0,
+            # "sac_flies": 0,
+            # "innings_pitched": 0.0,
+            # "earned_runs": 0,
+            # "walks_allowed": 0,
+            # "hits_allowed": 0,
+            # "strikeouts_pitched": 0,
+            # "home_runs_allowed": 0,
+            # "errors": 0,
+            # "putouts": 0,
+            # "assists": 0,
+        })
+
         old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
         for old_season in old_seasons:
 
+            if (old_season != '2015'):
+                break
             select_season_statement = """
                 SELECT *
                 FROM OldGames
@@ -74,6 +101,32 @@ def engineerFeatures(rolling_window_size, base_url):
             print(len(games))
             print(games[0])
 
+            for index, game in enumerate(games):
+                
+                game_id = game[0]
+                print(game_id)
+                response = requests.get(f"{base_url}game/{game_id}/boxscore")
+                game_data = response.json()
+                home_team_id = game_data["teams"]["home"]["team"]["id"]
+                away_team_id = game_data["teams"]["away"]["team"]["id"]
+                print(home_team_id)
+                print(away_team_id)
+
+                # TODO: update the team_season_stats dictionary with relevant data
+                
+                # if the total number of games played for that team after updating becomes greater than N (rolling size window), 
+                # then we actually store that game with features in the Features DB with rolling average equal to season average
+                # till now
+
+                # otherwise, we just update the dictionary and don't store that game in the Features DB
+
+                # TODO: how to update rolling average? maybe after total games played % N is 1, reset the rolling stats back to 0 
+
+                break
+
+    except requests.exceptions.HTTPError as http_err:
+        logger.error(f"HTTP error occurred while fetching MLB boxscore data: {http_err}")
+        conn.rollback()
     except Exception as e:
         logger.error(f"Other error occurred while engineering features and saving to DB: {e}")
         conn.rollback()
