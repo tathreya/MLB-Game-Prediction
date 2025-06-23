@@ -14,7 +14,7 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
         logger.debug("Creating CurrentSchedule table if it doesn't exist")
         create_statement = """
             CREATE TABLE IF NOT EXISTS CurrentSchedule (
-                id INTEGER PRIMARY KEY,
+                game_id INTEGER PRIMARY KEY,
                 season TEXT,
                 game_type TEXT,
                 date_time TEXT,
@@ -78,7 +78,7 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
 
                 # Check if entry with gamePk already exists in DB
                 cursor.execute(
-                    "SELECT * FROM CurrentSchedule WHERE id = ?",
+                    "SELECT * FROM CurrentSchedule WHERE game_id = ?",
                     (game["gamePk"],)
                 )
 
@@ -116,7 +116,7 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
                                 status_code = ?,
                                 venue_id = ?,
                                 day_night = ?
-                            WHERE id = ?
+                            WHERE game_id = ?
                         """
                         updated_values = (
                             game_data[1],  # season
@@ -140,7 +140,7 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
                 else:
                     insert_statement = """
                         INSERT OR IGNORE INTO CurrentSchedule (
-                                id,
+                                game_id,
                                 season,
                                 game_type,
                                 date_time,
