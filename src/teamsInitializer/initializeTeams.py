@@ -14,7 +14,7 @@ def fetchMLBTeams(base_url):
         logger.debug("Creating Teams table if it doesn't exist")
         create_statement = """
             CREATE TABLE IF NOT EXISTS Teams (
-                id INTEGER PRIMARY KEY,
+                team_id INTEGER PRIMARY KEY,
                 name TEXT,
                 abbreviation TEXT,
                 short_name TEXT
@@ -33,7 +33,7 @@ def fetchMLBTeams(base_url):
 
         insert_statement = """
             INSERT OR IGNORE INTO Teams (
-                id, 
+                team_id, 
                 name, 
                 abbreviation,
                 short_name
