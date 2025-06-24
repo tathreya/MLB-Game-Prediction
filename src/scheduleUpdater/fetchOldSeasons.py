@@ -7,7 +7,7 @@ import logging
 load_dotenv()
 logger = logging.getLogger(__name__)
 
-
+# TODO functionalize this code 
 def fetchAndUpdateOldSeason(season, base_url):
     try:
 

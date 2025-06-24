@@ -5,6 +5,26 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+create_table_statement = """
+        CREATE TABLE IF NOT EXISTS CurrentSchedule (
+            game_id INTEGER PRIMARY KEY,
+            season TEXT,
+            game_type TEXT,
+            date_time TEXT,
+            home_team_id INTEGER,
+            home_team TEXT,
+            away_team_id INTEGER,
+            away_team TEXT,
+            home_score INTEGER,
+            away_score INTEGER,
+            status_code TEXT,
+            venue_id INTEGER,
+            day_night TEXT
+        )
+    """
+
+# TODO: finish functionalizing this code
+
 def fetchAndUpdateCurrentSchedule(season, base_url):
     try:
 
@@ -12,25 +32,8 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
         cursor = conn.cursor()
 
         logger.debug("Creating CurrentSchedule table if it doesn't exist")
-        create_statement = """
-            CREATE TABLE IF NOT EXISTS CurrentSchedule (
-                game_id INTEGER PRIMARY KEY,
-                season TEXT,
-                game_type TEXT,
-                date_time TEXT,
-                home_team_id INTEGER,
-                home_team TEXT,
-                away_team_id INTEGER,
-                away_team TEXT,
-                home_score INTEGER,
-                away_score INTEGER,
-                status_code TEXT,
-                venue_id INTEGER,
-                day_night TEXT
-            )
-        """
 
-        cursor.execute(create_statement)
+        createCurrentScheduleTable(cursor)
         
         cursor.execute("BEGIN TRANSACTION;")
 
@@ -42,9 +45,8 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
             "gameType": "R",            # Regular season
         }
         
-        response = requests.get(base_url + "schedule", params=params)
-        data = response.json()
-        all_season_dates = data.get("dates", [])
+        
+        all_season_dates = fetchCurrentScheduleFromAPI(base_url, params)
 
         last_regular_season_day = all_season_dates[-1]["date"]
         today_date = date.today().strftime("%Y-%m-%d")
@@ -173,3 +175,13 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
         conn.rollback()
     finally:
         conn.close()
+
+def createCurrentScheduleTable(cursor):
+     cursor.execute(create_table_statement)
+     
+def fetchCurrentScheduleFromAPI(base_url, params):
+    response = requests.get(base_url + "schedule", params=params)
+    data = response.json()
+    all_season_dates = data.get("dates", [])
+
+    return all_season_dates

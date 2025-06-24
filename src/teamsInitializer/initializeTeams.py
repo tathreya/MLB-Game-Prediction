@@ -4,6 +4,24 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+insert_into_table_statement = """
+    INSERT OR IGNORE INTO Teams (
+        team_id, 
+        name, 
+        abbreviation,
+        short_name
+    ) VALUES (?, ?, ?, ?)
+"""
+
+create_table_statement = """
+CREATE TABLE IF NOT EXISTS Teams (
+    team_id INTEGER PRIMARY KEY,
+    name TEXT,
+    abbreviation TEXT,
+    short_name TEXT
+)
+"""
+
 def fetchMLBTeams(base_url):
 
     try:
@@ -12,37 +30,16 @@ def fetchMLBTeams(base_url):
         cursor = conn.cursor()
 
         logger.debug("Creating Teams table if it doesn't exist")
-        create_statement = """
-            CREATE TABLE IF NOT EXISTS Teams (
-                team_id INTEGER PRIMARY KEY,
-                name TEXT,
-                abbreviation TEXT,
-                short_name TEXT
-            )
-        """
-        cursor.execute(create_statement)
+        createTeamsTable(cursor)
 
         logger.debug("Attempting to initialize MLB Teams in DB")
 
         cursor.execute("BEGIN TRANSACTION;")
         
-        response = requests.get(base_url + "teams")
-        data = response.json()
-        all_teams = data.get("teams")
-        mlb_teams = [team for team in all_teams if team.get("sport", {}).get("name") == 'Major League Baseball']
-
-        insert_statement = """
-            INSERT OR IGNORE INTO Teams (
-                team_id, 
-                name, 
-                abbreviation,
-                short_name
-            ) VALUES (?, ?, ?, ?)
-        """
+        mlb_teams = fetchTeamsFromAPI(base_url)
 
         for mlb_team in mlb_teams:
-            team_to_insert = (mlb_team["id"], mlb_team["name"], mlb_team["abbreviation"], mlb_team["shortName"])
-            cursor.execute(insert_statement, team_to_insert)
+            insertIntoTable(mlb_team, cursor)
 
         conn.commit()
         
@@ -59,3 +56,21 @@ def fetchMLBTeams(base_url):
         conn.rollback() 
     finally:
         conn.close()
+
+def createTeamsTable(cursor):
+
+    cursor.execute(create_table_statement)
+
+def insertIntoTable(mlb_team, cursor):
+
+    team_to_insert = (mlb_team["id"], mlb_team["name"], mlb_team["abbreviation"], mlb_team["shortName"])
+    cursor.execute(insert_into_table_statement, team_to_insert)
+
+def fetchTeamsFromAPI(base_url):
+
+    response = requests.get(base_url + "teams")
+    data = response.json()
+    all_teams = data.get("teams")
+    mlb_teams = [team for team in all_teams if team.get("sport", {}).get("name") == 'Major League Baseball']
+
+    return mlb_teams

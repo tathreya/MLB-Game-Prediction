@@ -1,7 +1,7 @@
 
 from teamsInitializer.initializeTeams import fetchMLBTeams
 from scheduleUpdater.fetchCurrentSchedule import fetchAndUpdateCurrentSchedule
-from scheduleUpdater.fetchPastSchedule import fetchAndUpdateOldSeason
+from scheduleUpdater.fetchOldSeasons import fetchAndUpdateOldSeason
 from featureEngineering.createHistoricalFeatures import engineerFeatures
 import logging
 import os 
@@ -22,6 +22,7 @@ def main():
     print('here inside main')
     fetchMLBTeams(base_url)
     old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
+    # TODO: dont havae a loop here, do that inside the fetch past schedule code
     for season in old_seasons:
         fetchAndUpdateOldSeason(season, base_url)
     fetchAndUpdateCurrentSchedule(current_season, base_url)
