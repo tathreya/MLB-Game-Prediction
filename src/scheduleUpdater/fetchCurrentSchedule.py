@@ -5,25 +5,67 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-create_table_statement = """
-        CREATE TABLE IF NOT EXISTS CurrentSchedule (
-            game_id INTEGER PRIMARY KEY,
-            season TEXT,
-            game_type TEXT,
-            date_time TEXT,
-            home_team_id INTEGER,
-            home_team TEXT,
-            away_team_id INTEGER,
-            away_team TEXT,
-            home_score INTEGER,
-            away_score INTEGER,
-            status_code TEXT,
-            venue_id INTEGER,
-            day_night TEXT
-        )
+# ----------------------------- #
+#        SQL STATEMENTS         #
+# ----------------------------- #
+
+CREATE_CURRENT_SCHEDULE_TABLE = """
+    CREATE TABLE IF NOT EXISTS CurrentSchedule (
+        game_id INTEGER PRIMARY KEY,
+        season TEXT,
+        game_type TEXT,
+        date_time TEXT,
+        home_team_id INTEGER,
+        home_team TEXT,
+        away_team_id INTEGER,
+        away_team TEXT,
+        home_score INTEGER,
+        away_score INTEGER,
+        status_code TEXT,
+        venue_id INTEGER,
+        day_night TEXT
+    )
     """
 
-# TODO: finish functionalizing this code
+INSERT_INTO_CURRENT_SCHEDULE = """
+    INSERT OR IGNORE INTO CurrentSchedule (
+        game_id,
+        season,
+        game_type,
+        date_time,
+        home_team_id,
+        home_team,
+        away_team_id,
+        away_team,
+        home_score,
+        away_score,
+        status_code,
+        venue_id,
+        day_night
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """
+
+UPDATE_CURRENT_SCHEDULE = """
+    UPDATE CurrentSchedule
+    SET
+        season = ?,
+        game_type = ?,
+        date_time = ?,
+        home_team_id = ?,
+        home_team = ?,
+        away_team_id = ?,
+        away_team = ?,
+        home_score = ?,
+        away_score = ?,
+        status_code = ?,
+        venue_id = ?,
+        day_night = ?
+    WHERE game_id = ?
+    """
+
+# ----------------------------- #
+#     FUNCTIONS START HERE      #
+# ----------------------------- #
 
 def fetchAndUpdateCurrentSchedule(season, base_url):
     try:
@@ -84,6 +126,7 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
                     (game["gamePk"],)
                 )
 
+                # get the fetched entry
                 fetched_entry = cursor.fetchone()
 
                 if fetched_entry:
@@ -103,63 +146,14 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
                         if db_date > api_date:
                             continue     
 
-                        update_statement = """
-                            UPDATE CurrentSchedule
-                            SET
-                                season = ?,
-                                game_type = ?,
-                                date_time = ?,
-                                home_team_id = ?,
-                                home_team = ?,
-                                away_team_id = ?,
-                                away_team = ?,
-                                home_score = ?,
-                                away_score = ?,
-                                status_code = ?,
-                                venue_id = ?,
-                                day_night = ?
-                            WHERE game_id = ?
-                        """
-                        updated_values = (
-                            game_data[1],  # season
-                            game_data[2],  # game_type
-                            game_data[3],  # date_time
-                            game_data[4],  # home_team_id
-                            game_data[5],  # home_team
-                            game_data[6],  # away_team_id
-                            game_data[7],  # away_team
-                            game_data[8],  # home_score
-                            game_data[9],  # away_score
-                            game_data[10], # status_code
-                            game_data[11], # venue_id
-                            game_data[12], # day_night
-                            game_data[0]   # id for WHERE clause
-                        )
+                        # update the current schedule table
+                        updateCurrentSchedule(game_data, cursor)
 
-                        cursor.execute(update_statement, updated_values)
                         entries_updated += 1
 
                 else:
-                    insert_statement = """
-                        INSERT OR IGNORE INTO CurrentSchedule (
-                                game_id,
-                                season,
-                                game_type,
-                                date_time,
-                                home_team_id,
-                                home_team,
-                                away_team_id,
-                                away_team,
-                                home_score,
-                                away_score,
-                                status_code,
-                                venue_id,
-                                day_night
-                                ) VALUES (
-                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-                            );
-                    """
-                    cursor.execute(insert_statement, game_data)
+                   
+                    insertIntoCurrentSchedule(game_data, cursor)
                     entries_added += 1
         
         conn.commit()
@@ -177,7 +171,7 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
         conn.close()
 
 def createCurrentScheduleTable(cursor):
-     cursor.execute(create_table_statement)
+     cursor.execute(CREATE_CURRENT_SCHEDULE_TABLE)
      
 def fetchCurrentScheduleFromAPI(base_url, params):
     response = requests.get(base_url + "schedule", params=params)
@@ -185,3 +179,25 @@ def fetchCurrentScheduleFromAPI(base_url, params):
     all_season_dates = data.get("dates", [])
 
     return all_season_dates
+
+def updateCurrentSchedule(game_data, cursor):
+    updated_values = (
+        game_data[1],  # season
+        game_data[2],  # game_type
+        game_data[3],  # date_time
+        game_data[4],  # home_team_id
+        game_data[5],  # home_team
+        game_data[6],  # away_team_id
+        game_data[7],  # away_team
+        game_data[8],  # home_score
+        game_data[9],  # away_score
+        game_data[10], # status_code
+        game_data[11], # venue_id
+        game_data[12], # day_night
+        game_data[0]   # id for WHERE clause
+    )
+
+    cursor.execute(UPDATE_CURRENT_SCHEDULE, updated_values)
+
+def insertIntoCurrentSchedule(game_data, cursor):
+    cursor.execute(INSERT_INTO_CURRENT_SCHEDULE, game_data)
