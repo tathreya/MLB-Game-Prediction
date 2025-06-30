@@ -4,23 +4,31 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-insert_into_table_statement = """
+# ----------------------------- #
+#        SQL STATEMENTS         #
+# ----------------------------- #
+
+CREATE_TEAMS_TABLE = """
+    CREATE TABLE IF NOT EXISTS Teams (
+        team_id INTEGER PRIMARY KEY,
+        name TEXT,
+        abbreviation TEXT,
+        short_name TEXT
+    )
+    """
+
+INSERT_INTO_TEAMS = """
     INSERT OR IGNORE INTO Teams (
         team_id, 
         name, 
         abbreviation,
         short_name
-    ) VALUES (?, ?, ?, ?)
-"""
+        ) VALUES (?, ?, ?, ?)
+    """
 
-create_table_statement = """
-CREATE TABLE IF NOT EXISTS Teams (
-    team_id INTEGER PRIMARY KEY,
-    name TEXT,
-    abbreviation TEXT,
-    short_name TEXT
-)
-"""
+# ----------------------------- #
+#     FUNCTIONS START HERE      #
+# ----------------------------- #
 
 def fetchMLBTeams(base_url):
 
@@ -35,7 +43,7 @@ def fetchMLBTeams(base_url):
         logger.debug("Attempting to initialize MLB Teams in DB")
 
         cursor.execute("BEGIN TRANSACTION;")
-        
+
         mlb_teams = fetchTeamsFromAPI(base_url)
 
         for mlb_team in mlb_teams:
@@ -59,12 +67,12 @@ def fetchMLBTeams(base_url):
 
 def createTeamsTable(cursor):
 
-    cursor.execute(create_table_statement)
+    cursor.execute(CREATE_TEAMS_TABLE)
 
 def insertIntoTable(mlb_team, cursor):
 
     team_to_insert = (mlb_team["id"], mlb_team["name"], mlb_team["abbreviation"], mlb_team["shortName"])
-    cursor.execute(insert_into_table_statement, team_to_insert)
+    cursor.execute(INSERT_INTO_TEAMS, team_to_insert)
 
 def fetchTeamsFromAPI(base_url):
 

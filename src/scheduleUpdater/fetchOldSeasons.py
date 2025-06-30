@@ -1,40 +1,83 @@
 import requests
 import sqlite3
-from dotenv import load_dotenv
 from datetime import datetime
 import logging 
 
-load_dotenv()
 logger = logging.getLogger(__name__)
 
-# TODO functionalize this code 
+# ----------------------------- #
+#        SQL STATEMENTS         #
+# ----------------------------- #
+
+CREATE_OLD_GAMES_TABLE = """
+    CREATE TABLE IF NOT EXISTS OldGames (
+        game_id INTEGER PRIMARY KEY,
+        season TEXT,
+        game_type TEXT,
+        date_time TEXT,
+        home_team_id INTEGER,
+        home_team TEXT,
+        away_team_id INTEGER,
+        away_team TEXT,
+        home_score INTEGER,
+        away_score INTEGER,
+        status_code TEXT,
+        venue_id INTEGER,
+        day_night TEXT
+    )
+    """
+
+UPDATE_OLD_GAMES = """
+    UPDATE OldGames
+    SET
+        season = ?,
+        game_type = ?,
+        date_time = ?,
+        home_team_id = ?,
+        home_team = ?,
+        away_team_id = ?,
+        away_team = ?,
+        home_score = ?,
+        away_score = ?,
+        status_code = ?,
+        venue_id = ?,
+        day_night = ?
+    WHERE game_id = ?
+    """
+
+INSERT_INTO_OLD_GAMES = """
+    INSERT OR IGNORE INTO OldGames (
+            game_id,
+            season,
+            game_type,
+            date_time,
+            home_team_id,
+            home_team,
+            away_team_id,
+            away_team,
+            home_score,
+            away_score,
+            status_code,
+            venue_id,
+            day_night
+            ) VALUES (
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        );
+    """
+
+# ----------------------------- #
+#     FUNCTIONS START HERE      #
+# ----------------------------- #
+
 def fetchAndUpdateOldSeason(season, base_url):
     try:
 
         conn = sqlite3.connect("databases/MLB_Betting.db")
         cursor = conn.cursor()
-
-        # Create OldGames table if it doesn't exist
-        create_statement = """
-            CREATE TABLE IF NOT EXISTS OldGames (
-                game_id INTEGER PRIMARY KEY,
-                season TEXT,
-                game_type TEXT,
-                date_time TEXT,
-                home_team_id INTEGER,
-                home_team TEXT,
-                away_team_id INTEGER,
-                away_team TEXT,
-                home_score INTEGER,
-                away_score INTEGER,
-                status_code TEXT,
-                venue_id INTEGER,
-                day_night TEXT
-            )
-        """
-
+ 
         logger.debug("Creating OldGames table if it doesn't exist")
-        cursor.execute(create_statement)
+
+        createOldGamesTable(cursor)
 
         cursor.execute("BEGIN TRANSACTION;")
 
@@ -96,63 +139,12 @@ def fetchAndUpdateOldSeason(season, base_url):
                         if db_date > api_date:
                             continue     
 
-                        update_statement = """
-                            UPDATE OldGames
-                            SET
-                                season = ?,
-                                game_type = ?,
-                                date_time = ?,
-                                home_team_id = ?,
-                                home_team = ?,
-                                away_team_id = ?,
-                                away_team = ?,
-                                home_score = ?,
-                                away_score = ?,
-                                status_code = ?,
-                                venue_id = ?,
-                                day_night = ?
-                            WHERE game_id = ?
-                        """
-                        updated_values = (
-                            game_data[1],  # season
-                            game_data[2],  # game_type
-                            game_data[3],  # date_time
-                            game_data[4],  # home_team_id
-                            game_data[5],  # home_team
-                            game_data[6],  # away_team_id
-                            game_data[7],  # away_team
-                            game_data[8],  # home_score
-                            game_data[9],  # away_score
-                            game_data[10], # status_code
-                            game_data[11], # venue_id
-                            game_data[12], # day_night
-                            game_data[0]   # id for WHERE clause
-                        )
-
-                        cursor.execute(update_statement, updated_values)
+                        updateOldGamesTable(game_data, cursor)
                         entries_updated += 1
 
                 else:
-                    insert_statement = """
-                        INSERT OR IGNORE INTO OldGames (
-                                game_id,
-                                season,
-                                game_type,
-                                date_time,
-                                home_team_id,
-                                home_team,
-                                away_team_id,
-                                away_team,
-                                home_score,
-                                away_score,
-                                status_code,
-                                venue_id,
-                                day_night
-                                ) VALUES (
-                                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-                            );
-                    """
-                    cursor.execute(insert_statement, game_data)
+              
+                    insertIntoOldGamesTable(game_data, cursor)
                     entries_added += 1
         
         conn.commit()
@@ -168,3 +160,28 @@ def fetchAndUpdateOldSeason(season, base_url):
         conn.rollback()
     finally:
         conn.close()
+    
+def createOldGamesTable(cursor):
+     cursor.execute(CREATE_OLD_GAMES_TABLE)
+
+def updateOldGamesTable(game_data, cursor):
+    updated_values = (
+        game_data[1],  # season
+        game_data[2],  # game_type
+        game_data[3],  # date_time
+        game_data[4],  # home_team_id
+        game_data[5],  # home_team
+        game_data[6],  # away_team_id
+        game_data[7],  # away_team
+        game_data[8],  # home_score
+        game_data[9],  # away_score
+        game_data[10], # status_code
+        game_data[11], # venue_id
+        game_data[12], # day_night
+        game_data[0]   # id for WHERE clause
+    )
+
+    cursor.execute(UPDATE_OLD_GAMES, updated_values)
+
+def insertIntoOldGamesTable(game_data, cursor):
+    cursor.execute(INSERT_INTO_OLD_GAMES, game_data)
