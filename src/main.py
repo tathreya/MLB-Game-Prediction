@@ -26,7 +26,8 @@ def main():
     for season in old_seasons:
         fetchAndUpdateOldSeason(season, base_url)
     fetchAndUpdateCurrentSchedule(current_season, base_url)
-    #engineerFeatures(rolling_window_size=5, base_url = base_url)
+    print('calling engineer feature')
+    engineerFeatures(rolling_window_size=5, base_url = base_url)
 
 
 if __name__ == "__main__":
