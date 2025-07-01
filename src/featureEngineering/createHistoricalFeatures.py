@@ -1,7 +1,7 @@
 import requests
 import sqlite3
 import logging
-from collections import defaultdict 
+from collections import defaultdict, deque
 import json
 
 logger = logging.getLogger(__name__)
@@ -80,7 +80,8 @@ def engineerFeatures(rolling_window_size, base_url):
             
             cursor.execute("DROP TABLE IF EXISTS Features;")
 
-            # TODO: uncomment this out once feature engineering is finalized
+            # TODO: uncomment this out once feature engineering is finalized, maybe look into a way to make this process faster
+            # by storing box scores locally...
             # logger.debug("Features table already exists — skipping historical feature engineering.")
             # return  # Exit early if already built
         
@@ -101,60 +102,63 @@ def engineerFeatures(rolling_window_size, base_url):
             games = selectSeasonGames(cursor, old_season)
         
             print(len(games))
-            print(games[0])
 
             # Outer dict maps team_id → that team's season stats
             team_season_stats = defaultdict(lambda: {
 
                 # GENERAL STATS
                 "gamesPlayed": 0,
+
                 # OFFENSIVE/BATTING STATS
                 "runsScored": 0,
+
                 # DEFENSIVE/PITCHING STATS
-                "runsGiven": 0
+                "runsGiven": 0,
+            })
+
+            team_rolling_stats = defaultdict(lambda: {
+                # keep a deque of the last N game stats for eeach team
+
+                # OFFENSIVE/BATTING STATS
+                "runsScored": deque(maxlen=rolling_window_size),
+
+                # DEFENSIVE/PITCHING STATS
+                "runsGiven": deque(maxlen=rolling_window_size)
             })
 
             numGamesProcessed = 0
             for game in games:
                 
                 game_id = game[0]
-                # print(game_id)
                 response = requests.get(f"{base_url}game/{game_id}/boxscore")
                 game_data = response.json()
 
                 # Extract team IDs
                 home_team, home_team_id = fetchHomeTeam(game_data)
                 away_team, away_team_id = fetchAwayTeam(game_data)
-                #print(home_team_id)
-                # print(away_team_id)
 
-                print(team_season_stats[home_team_id]["gamesPlayed"])
-                print(team_season_stats[away_team_id]["gamesPlayed"])
+                # extract runs scored for both teams
+                home_runs_scored, away_runs_scored = fetchRunsScored(home_team, away_team)
 
                 # if the total number of games played for that team after updating becomes greater than N (rolling size window), 
                 # then we actually store that game with features in the Features DB with rolling average equal to season average
                 # till now
                 if (team_season_stats[home_team_id]["gamesPlayed"] >= rolling_window_size and 
-                    team_season_stats[away_team_id]["gamesPlayed"] >= rolling_window_size):
-                    # print('here, saving the game because both teams have enough info for rolling average')
-                    features = buildFeatures(team_season_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
-                    insertIntoFeaturesTable(cursor, game_id, features)
-                    conn.commit()
-                    # print(team_season_stats)
-                    # print(game_id)
-                    return
+                    team_season_stats[away_team_id]["gamesPlayed"] >= rolling_window_size and home_runs_scored != away_runs_scored):
+                    
 
-                # extract runs scored for both teams
-                home_runs_scored, away_runs_scored = fetchRunsScored(home_team, away_team)
-                # print(home_runs_scored, away_runs_scored)
+                    features = buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
+                    insertIntoFeaturesTable(cursor, game_id, features)
+                    print('here, saving the game because both teams have enough info for rolling average')
+                    print(game_id)
 
                 # After feature extraction, update season totals to include this game for both teams
-                updateTeamStats(team_season_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)   
+                updateTeamSeasonStats(team_season_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)   
+                # also update rolling averages
+                updateTeamRollingStats(team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
 
                 numGamesProcessed += 1
                 print('processed game = ' + str(numGamesProcessed))
-
-                # TODO: how to update rolling average? maybe after total games played % N is 1, reset the rolling stats back to 0 
 
             print(team_season_stats)
             break
@@ -184,33 +188,50 @@ def selectSeasonGames(cursor, old_season):
     games = cursor.fetchall()
     return games
 
-def buildFeatures(team_season_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored):
-    home_stats = team_season_stats[home_team_id]
-    away_stats = team_season_stats[away_team_id]
+def buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored):
 
-    # Calculate averages
-    home_avg_runs_scored = home_stats["runsScored"] / home_stats["gamesPlayed"] if home_stats["gamesPlayed"] > 0 else 0
-    home_avg_runs_given = home_stats["runsGiven"] / home_stats["gamesPlayed"] if home_stats["gamesPlayed"] > 0 else 0
+    home_season_stats = team_season_stats[home_team_id]
+    away_season_stats = team_season_stats[away_team_id]
 
-    away_avg_runs_scored = away_stats["runsScored"] / away_stats["gamesPlayed"] if away_stats["gamesPlayed"] > 0 else 0
-    away_avg_runs_given = away_stats["runsGiven"] / away_stats["gamesPlayed"] if away_stats["gamesPlayed"] > 0 else 0
+    home_rolling_stats = team_rolling_stats[home_team_id]
+    away_rolling_stats = team_rolling_stats[away_team_id]
+
+    # calculate season averages
+    season_home_avg_runs_scored = home_season_stats["runsScored"] / home_season_stats["gamesPlayed"] if home_season_stats["gamesPlayed"] > 0 else 0
+    season_home_avg_runs_given = home_season_stats["runsGiven"] / home_season_stats["gamesPlayed"] if home_season_stats["gamesPlayed"] > 0 else 0
+    season_away_avg_runs_scored = away_season_stats["runsScored"] / away_season_stats["gamesPlayed"] if away_season_stats["gamesPlayed"] > 0 else 0
+    season_away_avg_runs_given = away_season_stats["runsGiven"] / away_season_stats["gamesPlayed"] if away_season_stats["gamesPlayed"] > 0 else 0
+
+    # calculate rolling averages
+    rolling_home_avg_runs_scored = sum(home_rolling_stats["runsScored"]) / len(home_rolling_stats["runsScored"])
+    rolling_home_avg_runs_given = sum(home_rolling_stats["runsGiven"]) / len(home_rolling_stats["runsGiven"])
+    rolling_away_avg_runs_scored =  sum(away_rolling_stats["runsScored"]) / len(away_rolling_stats["runsScored"])
+    rolling_away_avg_runs_given = sum(away_rolling_stats["runsGiven"]) / len(away_rolling_stats["runsGiven"])
+
 
     features = {
         "home_team_id": home_team_id,
         "away_team_id": away_team_id,
-        "home_avg_runs_scored": home_avg_runs_scored,
-        "home_avg_runs_given": home_avg_runs_given,
-        "away_avg_runs_scored": away_avg_runs_scored,
-        "away_avg_runs_given": away_avg_runs_given,
+        "season_home_avg_runs_scored": season_home_avg_runs_scored,
+        "season_home_avg_runs_given": season_home_avg_runs_given,
+        "season_away_avg_runs_scored": season_away_avg_runs_scored,
+        "season_away_avg_runs_given": season_away_avg_runs_given,
+        "rolling_home_avg_runs_scored": rolling_home_avg_runs_scored,
+        "rolling_home_avg_runs_given": rolling_home_avg_runs_given,
+        "rolling_away_avg_runs_scored": rolling_away_avg_runs_scored,
+        "rolling_away_avg_runs_given": rolling_away_avg_runs_given,
         # TODO: might change this to not be a binary classificatino instead predict final score or probability
         # of win
         "label": 1 if home_runs_scored > away_runs_scored else 0 
     }
 
-    print(features)
+    print("homeRuns = " + str(home_runs_scored))
+    print("awayRuns = " + str(away_runs_scored))
+    print("label = " + str(features["label"]))
+
     return features
 
-def updateTeamStats(team_season_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored):
+def updateTeamSeasonStats(team_season_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored):
     # Home team update
     team_season_stats[home_team_id]["gamesPlayed"] += 1
     team_season_stats[home_team_id]["runsScored"] += home_runs_scored
@@ -220,6 +241,19 @@ def updateTeamStats(team_season_stats, home_team_id, away_team_id, home_runs_sco
     team_season_stats[away_team_id]["gamesPlayed"] += 1
     team_season_stats[away_team_id]["runsScored"] += away_runs_scored
     team_season_stats[away_team_id]["runsGiven"] += home_runs_scored
+
+def updateTeamRollingStats(team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored):
+
+    # we can just append because dequeue has max_len of rolling window size so if it is at max (rollwing window), then 
+    # it'll automatically pop the oldest game and append the newest game, keeping our rolling window of 5 most recent games
+
+    # Home team update
+    team_rolling_stats[home_team_id]["runsScored"].append(home_runs_scored)
+    team_rolling_stats[home_team_id]["runsGiven"].append(away_runs_scored)
+
+    # Away team update
+    team_rolling_stats[away_team_id]["runsScored"].append(away_runs_scored)
+    team_rolling_stats[away_team_id]["runsGiven"].append(home_runs_scored)
 
 def fetchHomeTeam(game_data):
 
