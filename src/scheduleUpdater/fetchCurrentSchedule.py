@@ -68,6 +68,14 @@ UPDATE_CURRENT_SCHEDULE = """
 # ----------------------------- #
 
 def fetchAndUpdateCurrentSchedule(season, base_url):
+    """
+    Fetches the current MLB schedule for a given season from the MLB API and updates the local SQLite database.
+    It creates the CurrentSchedule table if it doesn't exist, inserts new games, and updates existing games if necessary.
+
+    :param season: Season year as a string (e.g., "2024")
+    :param base_url: Base URL of the MLB API
+    :returns: None
+    """
     try:
 
         conn = sqlite3.connect("databases/MLB_Betting.db")
@@ -171,9 +179,22 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
         conn.close()
 
 def createCurrentScheduleTable(cursor):
-     cursor.execute(CREATE_CURRENT_SCHEDULE_TABLE)
+    """
+    Creates the CurrentSchedule table in the SQLite database if it does not already exist.
+
+    :param cursor: SQLite database cursor
+    :returns: None
+    """
+    cursor.execute(CREATE_CURRENT_SCHEDULE_TABLE)
      
 def fetchCurrentScheduleFromAPI(base_url, params):
+    """
+    Fetches the current MLB schedule data from the MLB API.
+
+    :param base_url: Base URL of the MLB API
+    :param params: Dictionary of parameters to send with the API request
+    :returns: List of daily schedules (each containing games and metadata) from the API response
+    """
     response = requests.get(base_url + "schedule", params=params)
     data = response.json()
     all_season_dates = data.get("dates", [])
@@ -181,6 +202,13 @@ def fetchCurrentScheduleFromAPI(base_url, params):
     return all_season_dates
 
 def updateCurrentSchedule(game_data, cursor):
+    """
+    Updates an existing game entry in the CurrentSchedule table with new data.
+
+    :param game_data: Tuple containing game information to update
+    :param cursor: SQLite database cursor
+    :returns: None
+    """
     updated_values = (
         game_data[1],  # season
         game_data[2],  # game_type
@@ -200,4 +228,11 @@ def updateCurrentSchedule(game_data, cursor):
     cursor.execute(UPDATE_CURRENT_SCHEDULE, updated_values)
 
 def insertIntoCurrentSchedule(game_data, cursor):
+    """
+    Inserts a new game entry into the CurrentSchedule table.
+
+    :param game_data: Tuple containing game information to insert
+    :param cursor: SQLite database cursor
+    :returns: None
+    """
     cursor.execute(INSERT_INTO_CURRENT_SCHEDULE, game_data)

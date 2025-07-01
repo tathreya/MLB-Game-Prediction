@@ -32,8 +32,14 @@ INSERT_INTO_TEAMS = """
 
 def fetchMLBTeams(base_url):
 
-    try:
+    """
+    Fetch MLB team data from the API and store it in the Teams table in the SQLite database.
 
+    :param base_url: The base URL of the MLB API.
+    :return: None
+    """
+
+    try:
         conn = sqlite3.connect("databases/MLB_Betting.db")
         cursor = conn.cursor()
 
@@ -66,16 +72,33 @@ def fetchMLBTeams(base_url):
         conn.close()
 
 def createTeamsTable(cursor):
+    """
+    Creates the Teams table if it does not already exist in the SQLite database.
 
+    :param cursor: SQLite database cursor
+    :returns: None
+    """
     cursor.execute(CREATE_TEAMS_TABLE)
 
 def insertIntoTable(mlb_team, cursor):
+    """
+    Inserts an MLB team record into the Teams table.
 
+    :param mlb_team: Dictionary representing an MLB team with keys 'id', 'name', 
+                     'abbreviation', and 'shortName'
+    :param cursor: SQLite database cursor
+    :returns: None
+    """
     team_to_insert = (mlb_team["id"], mlb_team["name"], mlb_team["abbreviation"], mlb_team["shortName"])
     cursor.execute(INSERT_INTO_TEAMS, team_to_insert)
 
 def fetchTeamsFromAPI(base_url):
+    """
+    Fetches the list of MLB teams from the MLB API.
 
+    :param base_url: Base URL of the MLB API
+    :returns: List of dictionaries, each representing an MLB team filtered by sport name 'Major League Baseball'
+    """
     response = requests.get(base_url + "teams")
     data = response.json()
     all_teams = data.get("teams")
