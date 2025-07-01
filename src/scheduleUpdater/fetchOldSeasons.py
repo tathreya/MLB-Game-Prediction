@@ -70,6 +70,16 @@ INSERT_INTO_OLD_GAMES = """
 # ----------------------------- #
 
 def fetchAndUpdateOldSeason(season, base_url):
+
+    """
+    Fetches the full schedule for a specified MLB season from the API and stores or updates
+    the schedule data in the OldGames SQLite database table.
+
+    :param season: Season year as a string (e.g., "2015")
+    :param base_url: Base URL of the MLB API for requests
+    :return: None
+    """
+
     try:
 
         conn = sqlite3.connect("databases/MLB_Betting.db")
@@ -162,9 +172,22 @@ def fetchAndUpdateOldSeason(season, base_url):
         conn.close()
     
 def createOldGamesTable(cursor):
-     cursor.execute(CREATE_OLD_GAMES_TABLE)
+    """
+    Creates the OldGames table in the SQLite database if it does not exist.
+
+    :param cursor: SQLite database cursor
+    :return: None
+    """
+    cursor.execute(CREATE_OLD_GAMES_TABLE)
 
 def updateOldGamesTable(game_data, cursor):
+    """
+    Updates an existing game record in OldGames with the provided data.
+
+    :param game_data: Tuple containing game data corresponding to the OldGames schema
+    :param cursor: SQLite database cursor
+    :return: None
+    """
     updated_values = (
         game_data[1],  # season
         game_data[2],  # game_type
@@ -184,4 +207,11 @@ def updateOldGamesTable(game_data, cursor):
     cursor.execute(UPDATE_OLD_GAMES, updated_values)
 
 def insertIntoOldGamesTable(game_data, cursor):
+    """
+    Inserts a new game record into OldGames table.
+
+    :param game_data: Tuple containing game data corresponding to the OldGames schema
+    :param cursor: SQLite database cursor
+    :return: None
+    """
     cursor.execute(INSERT_INTO_OLD_GAMES, game_data)
