@@ -146,12 +146,14 @@ def engineerFeatures(rolling_window_size, base_url):
                 if (team_season_stats[home_team_id]["gamesPlayed"] >= rolling_window_size and 
                     team_season_stats[away_team_id]["gamesPlayed"] >= rolling_window_size and home_runs_scored != away_runs_scored):
                     
-
                     features = buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
                     insertIntoFeaturesTable(cursor, game_id, features)
                     print('here, saving the game because both teams have enough info for rolling average')
                     print(game_id)
-
+                    if (team_season_stats[home_team_id]["gamesPlayed"] == 10 and team_season_stats[away_team_id]["gamesPlayed"] == 10):
+                        print('game with both playing 6 is game id =' + str(game_id))
+                        break
+                    
                 # After feature extraction, update season totals to include this game for both teams
                 updateTeamSeasonStats(team_season_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)   
                 # also update rolling averages
@@ -179,7 +181,6 @@ def createFeaturesTable(cursor):
     cursor.execute(CREATE_FEATURES_TABLE)
 
 def insertIntoFeaturesTable(cursor, game_id, features_dict):
-    print('inserting the game')
     features_json = json.dumps(features_dict)
     cursor.execute(INSERT_INTO_FEATURES, (game_id, features_json))
 
@@ -224,10 +225,6 @@ def buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team
         # of win
         "label": 1 if home_runs_scored > away_runs_scored else 0 
     }
-
-    print("homeRuns = " + str(home_runs_scored))
-    print("awayRuns = " + str(away_runs_scored))
-    print("label = " + str(features["label"]))
 
     return features
 
