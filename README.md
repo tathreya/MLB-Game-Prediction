@@ -44,7 +44,7 @@ For each game and for each team in that game, features are computed based on **s
 
 - **Runs per Game**: Total runs scored divided by games played. Core indicator of offensive output.
 - **Batting Average (AVG)**: Hits ÷ At-Bats. Measures how often a team gets a hit. Doesn't account for walks or power.
-- **On-Base Percentage (OBP)**: (Hits + Walks + Hit by Pitch) ÷ (Plate Appearances). Shows how often a team reaches base.
+- **On-Base Percentage (OBP)**: (Hits + Walks + Hit By Pitch) / (At Bats + Walks + Hit By Pitch + Sacrifice Flies). Shows how often a team reaches base.
 - **Slugging Percentage (SLG)**: Total bases ÷ At-Bats. Reflects power-hitting (extra-base hits).
 - **OPS (On-base + Slugging)**: OBP + SLG. Combined measure of contact and power hitting.
 - **wOBA (Weighted On-Base Average)**: Like OBP, but weights events by run value. More predictive of scoring than AVG or OPS.
