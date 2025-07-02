@@ -538,6 +538,8 @@ def updateTeamRollingStats(team_rolling_stats, home_team_id, away_team_id, home_
     team_rolling_stats[away_team_id]["sacFlies"].append(away_stats["away_sac_flies"])
 
 def calculate_obp(hits, walks, hbp, at_bats, sac_flies):
+
+    # OBP = (Hits + Walks + Hit By Pitch) / (At Bats + Walks + Hit By Pitch + Sacrifice Flies)
     numerator = hits + walks + hbp
     denominator = at_bats + walks + hbp + sac_flies
     return numerator / denominator if denominator > 0 else 0
