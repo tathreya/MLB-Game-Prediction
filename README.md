@@ -51,7 +51,7 @@ For each game and for each team in that game, features are computed based on **s
 - **Walk Rate (BB%)**: Walks ÷ Plate Appearances. More walks = more base runners.
 - **BABIP (Batting Average on Balls In Play)**: (Hits - Home Runs) ÷ (At-Bats - K - HR + Sac Flies). Can indicate luck or fielding quality.
 MAYBE:
-- **wOBA M(Weighted On-Base Average)**: Like OBP, but weights events by run value. More predictive of scoring than AVG or OPS.
+- **wOBA (Weighted On-Base Average)**: Like OBP, but weights events by run value. More predictive of scoring than AVG or OPS.
 
 ### 🔹 Pitching & Defensive Metrics
 
