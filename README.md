@@ -50,6 +50,7 @@ For each game and for each team in that game, features are computed based on **s
 - **Strikeout Rate (K%)**: Strikeouts ÷ Plate Appearances. High K% = unproductive outs.
 - **Walk Rate (BB%)**: Walks ÷ Plate Appearances. More walks = more base runners.
 - **BABIP (Batting Average on Balls In Play)**: (Hits - Home Runs) ÷ (At-Bats - K - HR + Sac Flies). Can indicate luck or fielding quality.
+  
 MAYBE:
 - **wOBA (Weighted On-Base Average)**: Like OBP, but weights events by run value. More predictive of scoring than AVG or OPS.
 
@@ -57,12 +58,14 @@ MAYBE:
 
 - **ERA (Earned Run Average)**: (Earned Runs × 9) ÷ Innings Pitched. Lower = better run prevention.
 - **WHIP**: (Walks + Hits) ÷ Innings Pitched. Tracks base runners allowed per inning.
-- **FIP (Fielding Independent Pitching)**: Based only on HR, BB, K. Estimates a pitcher’s performance independent of defense.
 - **K/9**: (Strikeouts × 9) ÷ Innings Pitched. Strikeout dominance.
 - **K%**: (Strikeout Rate): Strikeouts ÷ Batters Faced. Measures the percentage of batters a pitcher strikes out — a direct indicator of pitching dominance independent of innings pitched.
 - **BB/9**: (Walks × 9) ÷ Innings Pitched. Pitch control — lower is better.
 - **HR/9**: (Home Runs × 9) ÷ Innings Pitched. Fewer home runs allowed = fewer big innings.
 - **Opponent OBP/SLG/OPS**: How well opposing batters perform against the team’s pitchers. Lower values = stronger pitching.
+
+MAYBE:
+- **FIP (Fielding Independent Pitching)**: Based only on HR, BB, K. Estimates a pitcher’s performance independent of defense.
 - **DRS (Defensive Runs Saved)**: Measures how many runs a team’s defense saved above average.
 - **OAA (Outs Above Average)**: Statcast-based measure of how many outs fielders made relative to average — includes range.
 
