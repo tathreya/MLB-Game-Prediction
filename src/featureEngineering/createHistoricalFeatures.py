@@ -189,19 +189,22 @@ def engineerFeatures(rolling_window_size, base_url):
 
                 # OFFENSIVE/BATTING STATS
                 "runsScored": 0,
-                "hits": 0,
+                "battingHits": 0,
                 "atBats": 0,
-                "walks": 0,
+                "battingWalks": 0,
                 "hitByPitch": 0,
                 "sacFlies": 0, 
                 "totalBases": 0,
                 "strikeouts": 0,
                 "plateAppearances": 0,
-
+                "homeRuns": 0, 
+                
                 # DEFENSIVE/PITCHING STATS
                 "runsGiven": 0,
-
-                
+                "pitchingHits": 0,
+                "pitchingWalks": 0,
+                "earnedRuns": 0,
+                "inningsPitched": 0.0,
             })
 
             team_rolling_stats = defaultdict(lambda: {
@@ -209,17 +212,22 @@ def engineerFeatures(rolling_window_size, base_url):
 
                 # OFFENSIVE/BATTING STATS
                 "runsScored": deque(maxlen=rolling_window_size),
-                "hits": deque(maxlen=rolling_window_size),
+                "battingHits": deque(maxlen=rolling_window_size),
                 "atBats": deque(maxlen=rolling_window_size),
-                "walks": deque(maxlen=rolling_window_size),
+                "battingWalks": deque(maxlen=rolling_window_size),
                 "hitByPitch": deque(maxlen=rolling_window_size),
                 "sacFlies": deque(maxlen=rolling_window_size),
                 "totalBases": deque(maxlen=rolling_window_size),
                 "strikeouts": deque(maxlen=rolling_window_size),
                 "plateAppearances": deque(maxlen=rolling_window_size),
+                "homeRuns": deque(maxlen=rolling_window_size),  
 
                 # DEFENSIVE/PITCHING STATS
-                "runsGiven": deque(maxlen=rolling_window_size)
+                "runsGiven": deque(maxlen=rolling_window_size),
+                "pitchingHits": deque(maxlen=rolling_window_size),
+                "pitchingWalks": deque(maxlen=rolling_window_size),
+                "earnedRuns": deque(maxlen=rolling_window_size),
+                "inningsPitched": deque(maxlen=rolling_window_size),
             })
 
             numGamesProcessed = 0
@@ -384,149 +392,95 @@ def selectSeasonGames(cursor, old_season):
     games = cursor.fetchall()
     return games
 
+def calculate_metrics(stats, games=None):
+    if games is None:
+        games = stats.get("gamesPlayed", 0)
+
+    # ----------------------------- #
+    #    BATTING/ OFFENSIVE STATS   #
+    # ----------------------------- #
+
+    plate_appearances = stats.get("plateAppearances", 0)
+    at_bats = stats.get("atBats", 0)
+
+    avg_runs_scored = stats.get("runsScored", 0) / games if games > 0 else 0
+    avg_runs_given = stats.get("runsGiven", 0) / games if games > 0 else 0
+    avg_batting_avg = stats.get("battingHits", 0) / at_bats if at_bats > 0 else 0
+    avg_obp = calculate_obp(
+        stats.get("battingHits", 0),
+        stats.get("battingWalks", 0),
+        stats.get("hitByPitch", 0),
+        at_bats,
+        stats.get("sacFlies", 0)
+    )
+    avg_slg = stats.get("totalBases", 0) / at_bats if at_bats > 0 else 0
+    avg_ops = avg_obp + avg_slg
+    batting_k_pct = stats.get("strikeouts", 0) / plate_appearances if plate_appearances > 0 else 0
+    bb_pct = stats.get("battingWalks", 0) / plate_appearances if plate_appearances > 0 else 0
+    babip = calculate_babip(
+        stats.get("battingHits", 0),
+        stats.get("homeRuns", 0),
+        at_bats,
+        stats.get("strikeouts", 0),
+        stats.get("sacFlies", 0)
+    )
+
+    # ----------------------------- #
+    #    PITCHING/ DEFENSIVE STATS  #
+    # ----------------------------- #
+    earned_runs = stats.get("earnedRuns", 0)
+    innings_pitched = stats.get("inningsPitched", 0)
+    hits_allowed = stats.get("pitchingHits", 0)
+    walks_allowed = stats.get("pitchingWalks", 0)
+
+    era = (earned_runs * 9) / innings_pitched if innings_pitched > 0 else 0
+    whip = (hits_allowed + walks_allowed) / innings_pitched if innings_pitched > 0 else 0
+
+    return {
+        "runs_scored": avg_runs_scored,
+        "runs_given": avg_runs_given,
+        "batting_avg": avg_batting_avg,
+        "obp": avg_obp,
+        "slg": avg_slg,
+        "ops": avg_ops,
+        "batting_k_pct": batting_k_pct,
+        "bb_pct": bb_pct,
+        "babip": babip,
+        "era": era,
+        "whip": whip
+    }
+
 def buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored):
 
-    # get the home + away season stats
-    home_season_stats = team_season_stats[home_team_id]
-    away_season_stats = team_season_stats[away_team_id]
+    features = {}
 
-    # get their rolling stats too
-    home_rolling_stats = team_rolling_stats[home_team_id]
-    away_rolling_stats = team_rolling_stats[away_team_id]
+    for team_type, team_id in [("home", home_team_id), ("away", away_team_id)]:
+        # Season stats
+        season_stats = team_season_stats[team_id]
+        season_metrics = calculate_metrics(season_stats)
 
-    # -------------------------------------------------
-    #             CALCULATING SEASON AVERAGES
-    # -------------------------------------------------
+        # Rolling stats: convert deque/list stats to sums
+        rolling_stats = {
+            stat_name: sum(stat_values)
+            for stat_name, stat_values in team_rolling_stats[team_id].items()
+        }
+        number_rolling_games = len(team_rolling_stats[team_id]["runsScored"])
+        rolling_metrics = calculate_metrics(rolling_stats, games=number_rolling_games)
 
-    # calculate home team season averages
-    season_home_avg_runs_scored = home_season_stats["runsScored"] / home_season_stats["gamesPlayed"] if home_season_stats["gamesPlayed"] > 0 else 0
-    season_home_avg_runs_given = home_season_stats["runsGiven"] / home_season_stats["gamesPlayed"] if home_season_stats["gamesPlayed"] > 0 else 0
-    # Batting Average = hits / at Bats
-    season_home_avg_batting_avg = home_season_stats["hits"] / home_season_stats["atBats"] if home_season_stats["atBats"] > 0 else 0
-    # Calculate OBP
-    season_home_avg_obp = calculate_obp(
-        home_season_stats["hits"],
-        home_season_stats["walks"],
-        home_season_stats["hitByPitch"],
-        home_season_stats["atBats"],
-        home_season_stats["sacFlies"]
-    )
-    # Calculate SLG
-    season_home_avg_slg = home_season_stats["totalBases"] / home_season_stats["atBats"] if home_season_stats["atBats"] > 0 else 0
-    # Calculate OPS
-    season_home_avg_ops = season_home_avg_obp + season_home_avg_slg
-    # Calculate batting K%
-    season_home_batting_k_pct = home_season_stats["strikeouts"] / home_season_stats["plateAppearances"] if home_season_stats["plateAppearances"] > 0 else 0
+        # Add team IDs 
+        features[f"{team_type}_team_id"] = team_id
 
-    # calculate away team season averages
-    season_away_avg_runs_scored = away_season_stats["runsScored"] / away_season_stats["gamesPlayed"] if away_season_stats["gamesPlayed"] > 0 else 0
-    season_away_avg_runs_given = away_season_stats["runsGiven"] / away_season_stats["gamesPlayed"] if away_season_stats["gamesPlayed"] > 0 else 0
-    # Batting Average = hits / at Bats
-    season_away_avg_batting_avg = away_season_stats["hits"] / away_season_stats["atBats"] if away_season_stats["atBats"] > 0 else 0
-    # Calculate OBP 
-    season_away_avg_obp = calculate_obp(
-        away_season_stats["hits"],
-        away_season_stats["walks"],
-        away_season_stats["hitByPitch"],
-        away_season_stats["atBats"],
-        away_season_stats["sacFlies"]
-    )
-    # Calculate SLG
-    season_away_avg_slg = away_season_stats["totalBases"] / away_season_stats["atBats"] if away_season_stats["atBats"] > 0 else 0
-    # Calculate OPS
-    season_away_avg_ops = season_away_avg_obp + season_away_avg_slg
-    # Calculate batting K%
-    season_away_batting_k_pct = away_season_stats["strikeouts"] / away_season_stats["plateAppearances"] if away_season_stats["plateAppearances"] > 0 else 0
+        # Add season metrics with prefix 
+        for key, val in season_metrics.items():
+            features[f"season_{team_type}_avg_{key}"] = val
 
-    # -------------------------------------------------
-    #             CALCULATING ROLLING AVERAGES
-    # -------------------------------------------------
+        # Add rolling metrics with prefix 
+        for key, val in rolling_metrics.items():
+            features[f"rolling_{team_type}_avg_{key}"] = val
 
-    # calculate home team rolling averages
-    rolling_home_avg_runs_scored = sum(home_rolling_stats["runsScored"]) / len(home_rolling_stats["runsScored"])
-    rolling_home_avg_runs_given = sum(home_rolling_stats["runsGiven"]) / len(home_rolling_stats["runsGiven"])
-    # Batting Average = hits / at Bats
-    rolling_home_avg_batting_avg = sum(home_rolling_stats["hits"]) / sum(home_rolling_stats["atBats"]) if sum(home_rolling_stats["atBats"]) > 0 else 0
-    # Calculate OBP
-    rolling_home_avg_obp = calculate_obp(
-        sum(home_rolling_stats["hits"]),
-        sum(home_rolling_stats["walks"]),
-        sum(home_rolling_stats["hitByPitch"]),
-        sum(home_rolling_stats["atBats"]),
-        sum(home_rolling_stats["sacFlies"])
-    )
-    # Calculate SLG
-    rolling_home_avg_slg = sum(home_rolling_stats["totalBases"]) / sum(home_rolling_stats["atBats"]) if sum(home_rolling_stats["atBats"]) > 0 else 0
-    # Calculate OPS
-    rolling_home_avg_ops = rolling_home_avg_obp + rolling_home_avg_slg
-    # Calculate batting K%
-    rolling_home_batting_k_pct = sum(home_rolling_stats["strikeouts"]) / sum(home_rolling_stats["plateAppearances"]) if sum(home_rolling_stats["plateAppearances"]) > 0 else 0
-
-    # calculate away team rolling averages
-    rolling_away_avg_runs_scored =  sum(away_rolling_stats["runsScored"]) / len(away_rolling_stats["runsScored"])
-    rolling_away_avg_runs_given = sum(away_rolling_stats["runsGiven"]) / len(away_rolling_stats["runsGiven"])
-    # Batting Average = hits / at Bats
-    rolling_away_avg_batting_avg = sum(away_rolling_stats["hits"]) / sum(away_rolling_stats["atBats"]) if sum(away_rolling_stats["atBats"]) > 0 else 0
-    # Calculate OBP
-    rolling_away_avg_obp = calculate_obp(
-        sum(away_rolling_stats["hits"]),
-        sum(away_rolling_stats["walks"]),
-        sum(away_rolling_stats["hitByPitch"]),
-        sum(away_rolling_stats["atBats"]),
-        sum(away_rolling_stats["sacFlies"])
-    )
-    # Calculate SLG
-    rolling_away_avg_slg = sum(away_rolling_stats["totalBases"]) / sum(away_rolling_stats["atBats"]) if sum(away_rolling_stats["atBats"]) > 0 else 0
-    # Calculate OPS
-    rolling_away_avg_ops = rolling_away_avg_obp + rolling_away_avg_slg
-    # Calculate batting K%
-    rolling_away_batting_k_pct = sum(away_rolling_stats["strikeouts"]) / sum(away_rolling_stats["plateAppearances"]) if sum(away_rolling_stats["plateAppearances"]) > 0 else 0
-
-    features = {
-
-        # TEAM IDs
-        "home_team_id": home_team_id,
-        "away_team_id": away_team_id,
-
-        # SEASON AVG FEATURES
-        "season_home_avg_runs_scored": season_home_avg_runs_scored,
-        "season_home_avg_runs_given": season_home_avg_runs_given,
-        "season_home_avg_batting_avg": season_home_avg_batting_avg,
-        "season_home_avg_obp": season_home_avg_obp,
-        "season_home_avg_slg": season_home_avg_slg,
-        "season_home_avg_ops": season_home_avg_ops,
-        "season_home_batting_k_pct": season_home_batting_k_pct,
-
-        "season_away_avg_runs_scored": season_away_avg_runs_scored,
-        "season_away_avg_runs_given": season_away_avg_runs_given,
-        "season_away_avg_batting_avg": season_away_avg_batting_avg,
-        "season_away_avg_obp": season_away_avg_obp,
-        "season_away_avg_slg": season_away_avg_slg,
-        "season_away_avg_ops": season_away_avg_ops,
-        "season_away_batting_k_pct": season_away_batting_k_pct,
-
-        # ROLLING AVERAGE
-        "rolling_home_avg_runs_scored": rolling_home_avg_runs_scored,
-        "rolling_home_avg_runs_given": rolling_home_avg_runs_given,
-        "rolling_home_avg_batting_avg": rolling_home_avg_batting_avg,
-        "rolling_home_avg_obp": rolling_home_avg_obp,
-        "rolling_home_avg_slg": rolling_home_avg_slg,
-        "rolling_home_avg_ops": rolling_home_avg_ops,
-        "rolling_home_batting_k_pct": rolling_home_batting_k_pct,
-
-        "rolling_away_avg_runs_scored": rolling_away_avg_runs_scored,
-        "rolling_away_avg_runs_given": rolling_away_avg_runs_given,
-        "rolling_away_avg_batting_avg": rolling_away_avg_batting_avg,
-        "rolling_away_avg_obp": rolling_away_avg_obp,
-        "rolling_away_avg_slg": rolling_away_avg_slg,
-        "rolling_away_avg_ops": rolling_away_avg_ops,
-        "rolling_away_batting_k_pct": rolling_away_batting_k_pct,
-
-        # ML Classification/Regression Label
-        # TODO: might change this to not be a binary classificatino instead predict final score or probability
-        # of win
-        "label": 1 if home_runs_scored > away_runs_scored else 0 
-    }
+    # TODO: might change this to not be a binary classificatino instead predict final score or probability
+    # of win
+    features["label"] = 1 if home_runs_scored > away_runs_scored else 0
 
     return features
 
@@ -535,28 +489,37 @@ def updateTeamSeasonStats(team_season_stats, home_team_id, away_team_id, home_st
     team_season_stats[home_team_id]["gamesPlayed"] += 1
     team_season_stats[home_team_id]["runsScored"] += home_stats["home_runs"]
     team_season_stats[home_team_id]["runsGiven"] += away_stats["away_runs"]
-    team_season_stats[home_team_id]["hits"] += home_stats["home_hits"]
+    team_season_stats[home_team_id]["battingHits"] += home_stats["home_hits"]
     team_season_stats[home_team_id]["atBats"] += home_stats["home_at_bats"]
-    team_season_stats[home_team_id]["walks"] += home_stats["home_walks"]
+    team_season_stats[home_team_id]["battingWalks"] += home_stats["home_walks"]
     team_season_stats[home_team_id]["hitByPitch"] += home_stats["home_hit_by_pitch"]
     team_season_stats[home_team_id]["sacFlies"] += home_stats["home_sac_flies"]
     team_season_stats[home_team_id]["totalBases"] += home_stats["home_total_bases"]
     team_season_stats[home_team_id]["strikeouts"] += home_stats["home_strikeouts"]
     team_season_stats[home_team_id]["plateAppearances"] += home_stats["home_plate_appearances"]
+    team_season_stats[home_team_id]["homeRuns"] += home_stats["home_home_runs"]
+    team_season_stats[home_team_id]["earnedRuns"] += home_stats["home_earned_runs"]
+    team_season_stats[home_team_id]["inningsPitched"] += home_stats["home_innings_pitched"]
+    team_season_stats[home_team_id]["pitchingHits"] += home_stats["home_pitching_hits"]
+    team_season_stats[home_team_id]["pitchingWalks"] += home_stats["home_pitching_walks"]
 
     # Away team update
     team_season_stats[away_team_id]["gamesPlayed"] += 1
     team_season_stats[away_team_id]["runsScored"] += away_stats["away_runs"]
     team_season_stats[away_team_id]["runsGiven"] += home_stats["home_runs"]
-    team_season_stats[away_team_id]["hits"] += away_stats["away_hits"]
+    team_season_stats[away_team_id]["battingHits"] += away_stats["away_hits"]
     team_season_stats[away_team_id]["atBats"] += away_stats["away_at_bats"]
-    team_season_stats[away_team_id]["walks"] += away_stats["away_walks"]
+    team_season_stats[away_team_id]["battingWalks"] += away_stats["away_walks"]
     team_season_stats[away_team_id]["hitByPitch"] += away_stats["away_hit_by_pitch"]
     team_season_stats[away_team_id]["sacFlies"] += away_stats["away_sac_flies"]
     team_season_stats[away_team_id]["totalBases"] += away_stats["away_total_bases"]
     team_season_stats[away_team_id]["strikeouts"] += away_stats["away_strikeouts"]
     team_season_stats[away_team_id]["plateAppearances"] += away_stats["away_plate_appearances"]
-
+    team_season_stats[away_team_id]["homeRuns"] += away_stats["away_home_runs"]
+    team_season_stats[away_team_id]["earnedRuns"] += away_stats["away_earned_runs"]
+    team_season_stats[away_team_id]["inningsPitched"] += away_stats["away_innings_pitched"]
+    team_season_stats[away_team_id]["pitchingHits"] += away_stats["away_pitching_hits"]
+    team_season_stats[away_team_id]["pitchingWalks"] += away_stats["away_pitching_walks"]
 
 def updateTeamRollingStats(team_rolling_stats, home_team_id, away_team_id, home_stats, away_stats):
 
@@ -566,31 +529,48 @@ def updateTeamRollingStats(team_rolling_stats, home_team_id, away_team_id, home_
     # Home team update
     team_rolling_stats[home_team_id]["runsScored"].append(home_stats["home_runs"])
     team_rolling_stats[home_team_id]["runsGiven"].append(away_stats["away_runs"])
-    team_rolling_stats[home_team_id]["hits"].append(home_stats["home_hits"])
+    team_rolling_stats[home_team_id]["battingHits"].append(home_stats["home_hits"])
     team_rolling_stats[home_team_id]["atBats"].append(home_stats["home_at_bats"])
-    team_rolling_stats[home_team_id]["walks"].append(home_stats["home_walks"])
+    team_rolling_stats[home_team_id]["battingWalks"].append(home_stats["home_walks"])
     team_rolling_stats[home_team_id]["hitByPitch"].append(home_stats["home_hit_by_pitch"])
     team_rolling_stats[home_team_id]["sacFlies"].append(home_stats["home_sac_flies"])
     team_rolling_stats[home_team_id]["totalBases"].append(home_stats["home_total_bases"])
     team_rolling_stats[home_team_id]["strikeouts"].append(home_stats["home_strikeouts"])
     team_rolling_stats[home_team_id]["plateAppearances"].append(home_stats["home_plate_appearances"])
+    team_rolling_stats[home_team_id]["homeRuns"].append(home_stats["home_home_runs"])
+    team_rolling_stats[home_team_id]["earnedRuns"].append(home_stats["home_earned_runs"])
+    team_rolling_stats[home_team_id]["inningsPitched"].append(home_stats["home_innings_pitched"])
+    team_rolling_stats[home_team_id]["pitchingHits"].append(home_stats["home_pitching_hits"])
+    team_rolling_stats[home_team_id]["pitchingWalks"].append(home_stats["home_pitching_walks"])
 
 
     # Away team update
     team_rolling_stats[away_team_id]["runsScored"].append(away_stats["away_runs"])
     team_rolling_stats[away_team_id]["runsGiven"].append(home_stats["home_runs"])
-    team_rolling_stats[away_team_id]["hits"].append(away_stats["away_hits"])
+    team_rolling_stats[away_team_id]["battingHits"].append(away_stats["away_hits"])
     team_rolling_stats[away_team_id]["atBats"].append(away_stats["away_at_bats"])
-    team_rolling_stats[away_team_id]["walks"].append(away_stats["away_walks"])
+    team_rolling_stats[away_team_id]["battingWalks"].append(away_stats["away_walks"])
     team_rolling_stats[away_team_id]["hitByPitch"].append(away_stats["away_hit_by_pitch"])
     team_rolling_stats[away_team_id]["sacFlies"].append(away_stats["away_sac_flies"])
     team_rolling_stats[away_team_id]["totalBases"].append(away_stats["away_total_bases"])
     team_rolling_stats[away_team_id]["strikeouts"].append(away_stats["away_strikeouts"])
     team_rolling_stats[away_team_id]["plateAppearances"].append(away_stats["away_plate_appearances"])
+    team_rolling_stats[away_team_id]["homeRuns"].append(away_stats["away_home_runs"])
+    team_rolling_stats[away_team_id]["earnedRuns"].append(away_stats["away_earned_runs"])
+    team_rolling_stats[away_team_id]["inningsPitched"].append(away_stats["away_innings_pitched"])
+    team_rolling_stats[away_team_id]["pitchingHits"].append(away_stats["away_pitching_hits"])
+    team_rolling_stats[away_team_id]["pitchingWalks"].append(away_stats["away_pitching_walks"])
 
 def calculate_obp(hits, walks, hbp, at_bats, sac_flies):
 
     # OBP = (Hits + Walks + Hit By Pitch) / (At Bats + Walks + Hit By Pitch + Sacrifice Flies)
     numerator = hits + walks + hbp
     denominator = at_bats + walks + hbp + sac_flies
+    return numerator / denominator if denominator > 0 else 0
+
+def calculate_babip(hits, home_runs, at_bats, strikeouts, sac_flies):
+
+    # BABIP = (Hits - Home Runs) / (At-Bats - Strikeouts - Home Runs + Sac Flies)
+    numerator = hits - home_runs
+    denominator = at_bats - strikeouts - home_runs + sac_flies
     return numerator / denominator if denominator > 0 else 0
