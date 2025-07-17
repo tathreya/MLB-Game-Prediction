@@ -145,7 +145,7 @@ CREATE_BOXSCORE_TABLE = """
 """
 
 INSERT_INTO_FEATURES = """
-    INSERT OR IGNORE INTO Features (
+    INSERT OR REPLACE INTO Features (
         game_id,
         features_json
         ) VALUES (
@@ -156,7 +156,7 @@ INSERT_INTO_FEATURES = """
 SELECT_SEASON_GAMES_IN_ORDER = """
     SELECT *
     FROM OldGames
-    WHERE season = ?
+    WHERE season = ? AND status_code != 'Cancelled'
     ORDER BY date_time ASC
 """
 
@@ -186,7 +186,8 @@ def engineerFeatures(rolling_window_size, base_url):
 
             games = selectSeasonGames(cursor, old_season)
         
-            print(len(games))
+            print('starting to build features for season ' + str(old_season))
+            print('there are this many games to process = ' + str(len(games)))
 
             # Outer dict maps team_id → that team's season stats
             team_season_stats = defaultdict(lambda: {
@@ -253,13 +254,6 @@ def engineerFeatures(rolling_window_size, base_url):
                 "pitchingBattersFaced": deque(maxlen=rolling_window_size)
             })
 
-            if (old_season != '2015'):
-                print('we have started on 2016 season')
-                print('printing tshe season and rolling dictionaries, they should be reset')
-                print(team_season_stats)
-                print(team_rolling_stats)
-                break
-
             numGamesProcessed = 0
             for game in games:
                 
@@ -268,8 +262,10 @@ def engineerFeatures(rolling_window_size, base_url):
                 game_data = None
 
                 if (boxScoreExists(cursor, game_id)):
-                    print('box score already existed! skipped it')
-                    continue
+
+                    print('box score exists, reconstructing and replacing in features table')
+                    game_data = reconstructGameDataFromSQL(cursor, game_id)
+                  
                 else:
                     response = requests.get(f"{base_url}game/{game_id}/boxscore")
                     game_data = response.json()
@@ -295,11 +291,6 @@ def engineerFeatures(rolling_window_size, base_url):
                     
                     features = buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
                     insertIntoFeaturesTable(cursor, game_id, features)
-
-                    if(team_season_stats[home_team_id]["gamesPlayed"] == 6 and team_season_stats[away_team_id]["gamesPlayed"] == 6):       
-                        print('6 games played each, breaking here and printing game id')
-                        print('gameId = ' + str(game_id))
-                        break
                     
                 # After saving the feature, update season totals to include this game for bobuith teams
                 updateTeamSeasonStats(team_season_stats, home_team_id, away_team_id, home_stats, away_stats)   
@@ -308,7 +299,6 @@ def engineerFeatures(rolling_window_size, base_url):
 
                 numGamesProcessed += 1
                 print('processed game = ' + str(numGamesProcessed))
-
         conn.commit() 
 
     except requests.exceptions.HTTPError as http_err:
@@ -348,6 +338,91 @@ def insertIntoBoxScoreTable(cursor, game_id, game_data):
     keys = ", ".join(data.keys())
     placeholders = ", ".join(["?"] * len(data))
     cursor.execute(f"INSERT OR IGNORE INTO GameBoxScoreStats ({keys}) VALUES ({placeholders})", tuple(data.values()))
+
+def reconstructGameDataFromSQL(cursor, game_id):
+    cursor.execute("SELECT * FROM GameBoxScoreStats WHERE game_id = ?", (game_id,))
+    row = cursor.fetchone()
+    if row is None:
+        raise ValueError(f"No box score found for game_id {game_id}")
+
+    col_names = [description[0] for description in cursor.description]
+    data = dict(zip(col_names, row))
+
+    # Rebuild the structure similar to what the MLB API returns
+    return {
+        "teams": {
+            "home": buildTeamStatsDict(data, "home"),
+            "away": buildTeamStatsDict(data, "away")
+        }
+    }
+def buildTeamStatsDict(data, prefix):
+    # Reverse map flattened stats to MLB API-style nested dict
+    return {
+        "team": {"id": data[f"{prefix}_team_id"]},
+        "teamStats": {
+            "batting": {
+                "runs": data[f"{prefix}_runs"],
+                "hits": data[f"{prefix}_hits"],
+                "doubles": data[f"{prefix}_doubles"],
+                "triples": data[f"{prefix}_triples"],
+                "homeRuns": data[f"{prefix}_home_runs"],
+                "strikeOuts": data[f"{prefix}_strikeouts"],
+                "baseOnBalls": data[f"{prefix}_walks"],
+                "hitByPitch": data[f"{prefix}_hit_by_pitch"],
+                "atBats": data[f"{prefix}_at_bats"],
+                "plateAppearances": data[f"{prefix}_plate_appearances"],
+                "totalBases": data[f"{prefix}_total_bases"],
+                "sacFlies": data[f"{prefix}_sac_flies"],
+                "sacBunts": data[f"{prefix}_sac_bunts"],
+                "obp": data[f"{prefix}_obp"],
+                "slg": data[f"{prefix}_slg"],
+                "ops": data[f"{prefix}_ops"],
+                "avg": data[f"{prefix}_avg"],
+                "rbi": data[f"{prefix}_rbi"],
+                "leftOnBase": data[f"{prefix}_left_on_base"],
+                "caughtStealing": data[f"{prefix}_caught_stealing"],
+                "stolenBases": data[f"{prefix}_stolen_bases"],
+                "stolenBasePercentage": data[f"{prefix}_stolen_base_percentage"],
+                "groundIntoDoublePlay": data[f"{prefix}_ground_into_double_play"],
+                "groundIntoTriplePlay": data[f"{prefix}_ground_into_triple_play"],
+                "pickoffs": data[f"{prefix}_pickoffs_batting"]
+            },
+            "pitching": {
+                "earnedRuns": data[f"{prefix}_earned_runs"],
+                "inningsPitched": data[f"{prefix}_innings_pitched"],
+                "strikeOuts": data[f"{prefix}_pitching_strikeouts"],
+                "baseOnBalls": data[f"{prefix}_pitching_walks"],
+                "hits": data[f"{prefix}_pitching_hits"],
+                "doubles": data[f"{prefix}_pitching_doubles"],
+                "triples": data[f"{prefix}_pitching_triples"],
+                "hitBatsmen": data[f"{prefix}_pitching_hit_batsmen"],
+                "sacFlies": data[f"{prefix}_pitching_sac_flies"],
+                "atBats": data[f"{prefix}_pitching_at_bats"],
+                "homeRuns": data[f"{prefix}_pitching_home_runs"],
+                "era": data[f"{prefix}_pitching_era"],
+                "whip": data[f"{prefix}_pitching_whip"],
+                "obp": data[f"{prefix}_pitching_obp"],
+                "battersFaced": data[f"{prefix}_pitching_batters_faced"],
+                "strikes": data[f"{prefix}_pitching_strikes"],
+                "balls": data[f"{prefix}_pitching_balls"],
+                "strikePercentage": data[f"{prefix}_pitching_strike_pct"],
+                "pickoffs": data[f"{prefix}_pitching_pickoffs"],
+                "inheritedRunners": data[f"{prefix}_pitching_inherited_runners"],
+                "inheritedRunnersScored": data[f"{prefix}_pitching_inherited_runners_scored"]
+            },
+            "fielding": {
+                "errors": data[f"{prefix}_errors"],
+                "assists": data[f"{prefix}_assists"],
+                "putOuts": data[f"{prefix}_putouts"],
+                "chances": data[f"{prefix}_fielding_chances"],
+                "passedBall": data[f"{prefix}_passed_ball"],
+                "caughtStealing": data[f"{prefix}_fielding_caught_stealing"],
+                "stolenBases": data[f"{prefix}_fielding_stolen_bases"],
+                "stolenBasePercentage": data[f"{prefix}_fielding_stolen_base_pct"],
+                "pickoffs": data[f"{prefix}_fielding_pickoffs"]
+            }
+        }
+    }
 
 def extractTeamStats(team, prefix):
     batting = team["teamStats"]["batting"]
