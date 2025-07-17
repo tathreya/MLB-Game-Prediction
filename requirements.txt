@@ -1,2 +1,7 @@
 python-dotenv
 requests
+pandas
+ipykernel
+numpy
+scikit-learn
+matplotlib
