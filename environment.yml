@@ -1,0 +1,15 @@
+name: MLB_Betting
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12 
+  - python-dotenv
+  - requests
+  - pandas
+  - ipykernel
+  - numpy
+  - scikit-learn
+  - scipy
+  - matplotlib
+  - xgboost
