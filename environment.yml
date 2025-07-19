@@ -13,3 +13,8 @@ dependencies:
   - scipy
   - matplotlib
   - xgboost
+  - shap
+  - pip
+  - pip:
+      - playwright
+      - beautifulsoup4
