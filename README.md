@@ -1,4 +1,4 @@
-# MLB-AI-Betting
+# MLB Game Prediction Engine
 
 A machine learning project to predict outcomes of MLB games using historical and current season data, including advanced team-level statistics. Focuses on storing, engineering, and modeling structured team data for predictive accuracy
 
