@@ -31,11 +31,17 @@ INSERT_INTO_ODDS = """
         ) VALUES (?, ?, ?, ?, ?)
     """
 
-SELECT_GAMES_BEFORE_NOW = """
-        SELECT *
-        FROM CurrentSchedule
-        WHERE date_time < datetime('now')
-        ORDER BY date_time ASC;
+SELECT_GAMEDAY_DATES_BEFORE_NOW = """
+        SELECT 
+            DATE(datetime(date_time, '-4 hours')) AS local_game_date
+        FROM 
+            CurrentSchedule
+        WHERE 
+            datetime(date_time, '-4 hours') < datetime('now', 'localtime')
+        GROUP BY 
+            local_game_date
+        ORDER BY 
+            local_game_date ASC;
     """
 # ----------------------------- #
 #     FUNCTIONS START HERE      #
@@ -219,6 +225,8 @@ def createOddsTable(cursor):
     cursor.execute(CREATE_ODDS_TABLE)
 
 def saveOddsToDB():
+
+    # TODO: save odds from 2025 season to DB 
     try:
         conn = sqlite3.connect("databases/MLB_Betting.db")
         cursor = conn.cursor()
@@ -226,7 +234,21 @@ def saveOddsToDB():
         logger.debug("Creating Odds table if it doesn't exist")
         createOddsTable(cursor)
 
-        logger.debug("Attempting to initialize MLB Teams in DB")
+        cursor.execute(SELECT_GAMEDAY_DATES_BEFORE_NOW)
+
+        # Fetch all dates that games were played
+        dates = cursor.fetchall()
+
+        print(dates)
+        print(len(dates))
+
+        # TODO: go through each day and fetch the odds from the website for all games on that day
+        # store in the Odds DB --> FIGURE OUT HOW TO GET MLB's GAME_ID IN THIS TABLE, ie have to look at finding the 
+        # game by date and teams (problem is from website the teams abbreviation does not match what I have in my Teams table) 
+        # in the CurrentSchedule DB and extracting the game_id from there
+        # Finally store into odds table with game_id and then what teams played and what the odds were for each team
+
+
     except sqlite3.DatabaseError as db_err:
         logger.error(f"Database error occurred when initializing MLB Teams: {db_err}")
         conn.rollback()  
@@ -236,9 +258,9 @@ def saveOddsToDB():
     finally:
         conn.close()
 
-
 def main():
     # fetchOddsFromOneGame("2025-07-13")
+    saveOddsToDB()
 
 if __name__ == "__main__":
     main()
