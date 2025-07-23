@@ -138,22 +138,11 @@ def fetchAndUpdateOldSeason(season, base_url):
                     if (fetched_entry == game_data):
                         continue
                     else:
-                        # if it doesn't match (ie status or something changed), update it
-                        api_date_str = game_data[3]           
-                        db_date_str = fetched_entry[3]    
                     
-                        api_date = datetime.fromisoformat(api_date_str.replace('Z', '+00:00'))
-                        db_date = datetime.fromisoformat(db_date_str.replace('Z', '+00:00'))
-
-                        # Skip the update if DB already has a later date
-                        if db_date > api_date:
-                            continue     
-
                         updateOldGamesTable(game_data, cursor)
                         entries_updated += 1
 
                 else:
-              
                     insertIntoOldGamesTable(game_data, cursor)
                     entries_added += 1
         

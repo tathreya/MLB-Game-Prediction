@@ -263,7 +263,6 @@ def engineerFeatures(rolling_window_size, base_url):
 
                 if (boxScoreExists(cursor, game_id)):
 
-                    print('box score exists, reconstructing and replacing in features table')
                     game_data = reconstructGameDataFromSQL(cursor, game_id)
                   
                 else:
@@ -298,7 +297,6 @@ def engineerFeatures(rolling_window_size, base_url):
                 updateTeamRollingStats(team_rolling_stats, home_team_id, away_team_id, home_stats, away_stats)
 
                 numGamesProcessed += 1
-                print('processed game = ' + str(numGamesProcessed))
         conn.commit() 
 
     except requests.exceptions.HTTPError as http_err:
