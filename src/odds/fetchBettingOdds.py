@@ -17,7 +17,7 @@ CREATE_ODDS_TABLE = """
         home_team TEXT,
         away_team TEXT,
         home_team_odds TEXT,
-        away_team_odds TEXT,
+        away_team_odds TEXT
     )
     """
 
@@ -43,6 +43,16 @@ SELECT_GAMEDAY_DATES_BEFORE_NOW = """
         ORDER BY 
             local_game_date ASC;
     """
+
+SELECT_GAME_ID_BY_DATE_AND_TEAMS = """
+    SELECT game_id
+    FROM CurrentSchedule
+    WHERE 
+        home_team = ? AND 
+        away_team = ? AND 
+        DATE(date_time) = ?
+"""
+
 # ----------------------------- #
 #     FUNCTIONS START HERE      #
 # ----------------------------- #
@@ -219,14 +229,13 @@ def fetchOddsFromOneGame(date):
             opening_odds = extract_opening_odds(updated_html)
             list_of_all_odds.append(opening_odds)
         
-        print(list_of_all_odds)
+        return list_of_all_odds
     
 def createOddsTable(cursor):
     cursor.execute(CREATE_ODDS_TABLE)
 
 def saveOddsToDB():
 
-    # TODO: save odds from 2025 season to DB 
     try:
         conn = sqlite3.connect("databases/MLB_Betting.db")
         cursor = conn.cursor()
@@ -239,27 +248,92 @@ def saveOddsToDB():
         # Fetch all dates that games were played
         dates = cursor.fetchall()
 
-        print(dates)
-        print(len(dates))
+        for date in dates:
 
-        # TODO: go through each day and fetch the odds from the website for all games on that day
-        # store in the Odds DB --> FIGURE OUT HOW TO GET MLB's GAME_ID IN THIS TABLE, ie have to look at finding the 
-        # game by date and teams (problem is from website the teams abbreviation does not match what I have in my Teams table) 
-        # in the CurrentSchedule DB and extracting the game_id from there
-        # Finally store into odds table with game_id and then what teams played and what the odds were for each team
+            date_of_games = date[0]
+            print('processing date = ' + str(date_of_games))
+            all_odds = fetchOddsFromOneGame(date[0])
 
+            for game_odds in all_odds:
+
+                ABBR_TO_TEAM_NAME = {
+                    'LAA': 'Los Angeles Angels',
+                    'SD': 'San Diego Padres',
+                    'SF': 'San Francisco Giants',
+                    'ATH': 'Athletics',
+                    'SEA': 'Seattle Mariners',
+                    'NYY': 'New York Yankees',
+                    'PHI': 'Philadelphia Phillies',
+                    'CHC': 'Chicago Cubs',
+                    'WAS': 'Washington Nationals',
+                    'MIL': 'Milwaukee Brewers',
+                    'TOR': 'Toronto Blue Jays',
+                    'CLE': 'Cleveland Guardians',
+                    'MIA': 'Miami Marlins',
+                    'ATL': 'Atlanta Braves',
+                    'BOS': 'Boston Red Sox',
+                    'TEX': 'Texas Rangers',
+                    'AZ': 'Arizona Diamondbacks',
+                    'CIN': 'Cincinnati Reds',
+                    'BAL': 'Baltimore Orioles',
+                    'MIN': 'Minnesota Twins',
+                    'LAD': 'Los Angeles Dodgers',
+                    'HOU': 'Houston Astros',
+                    'KC': 'Kansas City Royals',
+                    'STL': 'St. Louis Cardinals',
+                    'COL': 'Colorado Rockies',
+                    'PIT': 'Pittsburgh Pirates',
+                    'CHW': 'Chicago White Sox',
+                    'TB': 'Tampa Bay Rays',
+                    'NYM': 'New York Mets',
+                    'DET': 'Detroit Tigers'
+                }
+
+                # convert away team and home team abbreviation from Odds API to the FULL TEAM name from CurrentSchedule
+                converted_away_team = ABBR_TO_TEAM_NAME.get(game_odds['away_team'])
+                converted_home_team = ABBR_TO_TEAM_NAME.get(game_odds['home_team'])
+
+                # use date and query CurrentSchedule for the corresponding game_id for that game for quick lookup 
+
+                # TODO: issue is that there are double headers... that means this won't work, may need to also fetch the date/time of the game 
+                # from odds API 
+                cursor.execute(
+                    SELECT_GAME_ID_BY_DATE_AND_TEAMS,
+                    (converted_home_team, converted_away_team, date_of_games)
+                )
+                result = cursor.fetchone()
+                print('fetched a result from CurrentSchedule table')
+                print(result)
+
+                if (result):
+                    game_id = result[0]
+                    cursor.execute(
+                        INSERT_INTO_ODDS,
+                        (
+                            game_id,
+                            game_odds['home_team'],
+                            game_odds['away_team'],
+                            game_odds['home_odds'],
+                            game_odds['away_odds']
+                        )
+                    )
+                    conn.commit()
+                    
+                    break
+                else:
+                    print('did not find game on date with matching home and away teams')
 
     except sqlite3.DatabaseError as db_err:
-        logger.error(f"Database error occurred when initializing MLB Teams: {db_err}")
+        logger.error(f"Database error occurred when fetching Odds: {db_err}")
         conn.rollback()  
     except Exception as e:
-        logger.error(f"An error occurred when initializing MLB Teams: {e}")
+        logger.error(f"An error occurred when initializing fetching odds: {e}")
         conn.rollback() 
     finally:
         conn.close()
 
 def main():
-    # fetchOddsFromOneGame("2025-07-13")
+   
     saveOddsToDB()
 
 if __name__ == "__main__":

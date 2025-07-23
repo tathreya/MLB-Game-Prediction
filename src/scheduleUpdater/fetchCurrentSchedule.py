@@ -95,7 +95,6 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
             "gameType": "R",            # Regular season
         }
         
-        
         all_season_dates = fetchCurrentScheduleFromAPI(base_url, params)
 
         last_regular_season_day = all_season_dates[-1]["date"]
@@ -143,24 +142,12 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
                     if (fetched_entry == game_data):
                         continue
                     else:
-                        # if it doesn't match (ie status or something changed), update it
-                        api_date_str = game_data[3]           
-                        db_date_str = fetched_entry[3]    
-                    
-                        api_date = datetime.fromisoformat(api_date_str.replace('Z', '+00:00'))
-                        db_date = datetime.fromisoformat(db_date_str.replace('Z', '+00:00'))
-
-                        # Skip the update if DB already has a later date
-                        if db_date > api_date:
-                            continue     
-
                         # update the current schedule table
                         updateCurrentSchedule(game_data, cursor)
 
                         entries_updated += 1
 
                 else:
-                   
                     insertIntoCurrentSchedule(game_data, cursor)
                     entries_added += 1
         
