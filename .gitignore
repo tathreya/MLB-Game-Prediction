@@ -1,2 +1,3 @@
 .env
 *.log
+databases/MLB_Betting.db
