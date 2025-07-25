@@ -93,6 +93,26 @@ SELECT_GAME_ID_BY_DATE_AND_TEAMS = """
 #     FUNCTIONS START HERE      #
 # ----------------------------- #
 
+def should_fetch_odds_for_date(cursor, date):
+    cursor.execute("""
+        SELECT COUNT(*) FROM CurrentSchedule 
+        WHERE DATE(datetime(date_time, '-4 hours')) = ?
+    """, (date,))
+    total_games = cursor.fetchone()[0]
+    print('total_games = ' + str(total_games))
+
+    cursor.execute("""
+        SELECT COUNT(*) FROM Odds 
+        WHERE game_id IN (
+            SELECT game_id FROM CurrentSchedule
+            WHERE DATE(datetime(date_time, '-4 hours')) = ?
+        )
+    """, (date,))
+    games_with_odds = cursor.fetchone()[0]
+    print('games_with_odds = ' + str(games_with_odds))
+
+    return games_with_odds < total_games
+
 def accept_cookies(page):
     try:
         # click on the cookie accept
@@ -350,11 +370,9 @@ def saveOddsToDB():
             date_of_games = date[0]
             print('processing date = ' + str(date_of_games))
 
-            # TODO: fetch games from Current Schedule from that day (make sure to convert ones from DB to EST) and get all the game_ids
-            # check if ALL game_ids are already in Odds table if so then skip otherwise then fetch the odds
-            
-
-            # TODO: fixing the buggy/missing games
+            if not should_fetch_odds_for_date(cursor, date_of_games):
+                print(f"All odds already saved for {date_of_games}, skipping...")
+                continue
 
             all_odds = fetchOddsFromOneGame(date[0])
 
