@@ -2,9 +2,10 @@
 from teamsInitializer.initializeTeams import fetchMLBTeams
 from scheduleUpdater.fetchCurrentSchedule import fetchAndUpdateCurrentSchedule
 from scheduleUpdater.fetchOldSeasons import fetchAndUpdateOldSeason
-from featureEngineering.createHistoricalFeatures import engineerFeatures
+from featureEngineering.createFeatures import engineerFeatures
 import logging
 import os 
+import sys
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -36,6 +37,7 @@ def main():
     :returns: None
     """
 
+    sys.stdout = open('main.log', 'w', encoding='utf-8')
     print('here inside main')
     fetchMLBTeams(base_url)
     old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]

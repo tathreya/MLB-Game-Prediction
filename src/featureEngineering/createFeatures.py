@@ -3,6 +3,8 @@ import sqlite3
 import logging
 from collections import defaultdict, deque
 import json
+import os
+from datetime import datetime, timezone, timedelta
 
 logger = logging.getLogger(__name__)
 
@@ -153,11 +155,20 @@ INSERT_INTO_FEATURES = """
     );
 """
 
-SELECT_SEASON_GAMES_IN_ORDER = """
+SELECT_OLD_SEASON_GAMES_IN_ORDER = """
     SELECT *
     FROM OldGames
     WHERE season = ? AND status_code != 'Cancelled'
     ORDER BY date_time ASC
+"""
+
+SELECT_CURRENT_SEASON_GAMES_IN_ORDER = """
+    SELECT *
+    FROM CurrentSchedule
+    WHERE season = ?
+    AND status_code != 'Cancelled'
+    AND DATE(datetime(date_time, '-4 hours')) <= DATE(datetime('now', '-4 hours'))
+    ORDER BY date_time ASC;
 """
 
 # ----------------------------- #
@@ -179,14 +190,20 @@ def engineerFeatures(rolling_window_size, base_url):
 
         logger.debug("Attempting to engineer features for past seasons")
 
-        old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
-        for old_season in old_seasons:
+        seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]
+        for season in seasons:
             
-            logger.debug(f"Engineering features for {old_season} season")
+            logger.debug(f"Engineering features for {season} season")
 
-            games = selectSeasonGames(cursor, old_season)
+            # if it is the current season
+            if (season == os.environ.get("CURRENT_SEASON")):
+
+                games = selectCurrentSeasonGames(cursor, season)
+            else:
+
+                games = selectOldSeasonGames(cursor, season)
         
-            print('starting to build features for season ' + str(old_season))
+            print('starting to build features for season ' + str(season))
             print('there are this many games to process = ' + str(len(games)))
 
             # Outer dict maps team_id → that team's season stats
@@ -259,16 +276,31 @@ def engineerFeatures(rolling_window_size, base_url):
                 
                 game_id = game[0]
 
+                if season == os.environ.get("CURRENT_SEASON"):
+                    print(game_id)
+
                 game_data = None
 
                 if (boxScoreExists(cursor, game_id)):
 
+                    if season == os.environ.get("CURRENT_SEASON"):
+                        print('box score existed current season game, getting from DB')
                     game_data = reconstructGameDataFromSQL(cursor, game_id)
                   
                 else:
                     response = requests.get(f"{base_url}game/{game_id}/boxscore")
                     game_data = response.json()
-                    insertIntoBoxScoreTable(cursor, game_id, game_data)
+                    if season == os.environ.get("CURRENT_SEASON"):
+                        print('box score did not exist for current season game, fetching from API')
+                    
+                    game_date = datetime.strptime(game[3], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                    now = datetime.now(timezone.utc)
+
+                     # Only store if it's an older current season on game
+                    if season != os.environ.get("CURRENT_SEASON") or (now - game_date > timedelta(days=14)):
+                        if (season == os.environ.get("CURRENT_SEASON")):
+                            print('hey, we found an old game (2 weeks an inserted into box score)')
+                        insertIntoBoxScoreTable(cursor, game_id, game_data)
 
                 # fetch all the stats from boxscore for each team
                 home_stats = extractTeamStats(game_data["teams"]["home"], "home")
@@ -291,12 +323,14 @@ def engineerFeatures(rolling_window_size, base_url):
                     features = buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
                     insertIntoFeaturesTable(cursor, game_id, features)
                     
-                # After saving the feature, update season totals to include this game for bobuith teams
+                # After saving the feature, update season totals to include this game for both teams
                 updateTeamSeasonStats(team_season_stats, home_team_id, away_team_id, home_stats, away_stats)   
                 # also update rolling averages
                 updateTeamRollingStats(team_rolling_stats, home_team_id, away_team_id, home_stats, away_stats)
 
                 numGamesProcessed += 1
+                if season == os.environ.get("CURRENT_SEASON"):
+                    print('numGamesProcessed = ' + str(numGamesProcessed))
         conn.commit() 
 
     except requests.exceptions.HTTPError as http_err:
@@ -490,8 +524,13 @@ def extractTeamStats(team, prefix):
         f"{prefix}_fielding_pickoffs": fielding.get("pickoffs", 0)
     }
 
-def selectSeasonGames(cursor, old_season):
-    cursor.execute(SELECT_SEASON_GAMES_IN_ORDER, (old_season,))
+def selectOldSeasonGames(cursor, old_season):
+    cursor.execute(SELECT_OLD_SEASON_GAMES_IN_ORDER, (old_season,))
+    games = cursor.fetchall()
+    return games
+
+def selectCurrentSeasonGames(cursor, current_season):
+    cursor.execute(SELECT_CURRENT_SEASON_GAMES_IN_ORDER, (current_season,))
     games = cursor.fetchall()
     return games
 
