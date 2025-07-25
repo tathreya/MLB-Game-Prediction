@@ -1,2 +1,0 @@
-# TODO: write this function to feature engineer (add features to Features table) for the current season 
-# up until current day --> JUST DO IT IN THE CREATE HISTORICAL FEATURES FILE AND HAVE SPECIAL CASE FOR THE CURRENT SEASON!
