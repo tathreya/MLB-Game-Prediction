@@ -296,7 +296,8 @@ def engineerFeatures(rolling_window_size, base_url):
                     game_date = datetime.strptime(game[3], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
                     now = datetime.now(timezone.utc)
 
-                     # Only store if it's an older current season on game
+                     # Only store in box score table if it's a historic game (finished season) or
+                     # an older current season game
                     if season != os.environ.get("CURRENT_SEASON") or (now - game_date > timedelta(days=14)):
                         if (season == os.environ.get("CURRENT_SEASON")):
                             print('hey, we found an old game (2 weeks an inserted into box score)')
