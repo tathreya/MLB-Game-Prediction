@@ -3,12 +3,16 @@ import sqlite3
 import pandas as pd
 import json
 import numpy as np
+import os
 import pickle
 import re
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
-def extractAndPreprocessFeatures(games, scaler):
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+from odds.calculateUnitSize import calculateUnitSize, moneyLineToPayout
+
+def extractAndPreprocessFeatures(games, scaler, model):
 
     # Turn raw SQL data into a DataFrame
     df = pd.DataFrame(games, columns=[
@@ -42,22 +46,35 @@ def extractAndPreprocessFeatures(games, scaler):
     # Select only diff columns for prediction
     X = df_final[diff_cols]
 
-    # Scale the diff features
-    games_to_predict_features_scaled = pd.DataFrame(scaler.transform(X), columns=diff_cols, index=df_final.index)
+    games_to_predict_features = None
+    if (model == 'logreg'):
+        # Scale the features for logreg
+        games_to_predict_features = pd.DataFrame(scaler.transform(X), columns=diff_cols, index=df_final.index)
+    elif (model == 'xgboost'):
+        # don't scale for xgboost
+        games_to_predict_features = X
 
-    return df_final, games_to_predict_features_scaled, diff_cols
 
-def calculateTotalProfit():
+    return df_final, games_to_predict_features, diff_cols
+
+def calculateTotalProfit(model = "logreg"):
     conn = sqlite3.connect("databases/MLB_Betting.db")
     cursor = conn.cursor()
 
     logreg = None
-    with open('src/modelDevelopment/training/logistic_regression_model.pkl', 'rb') as f:
-        logreg = pickle.load(f)
-    
     scaler = None
-    with open('src/modelDevelopment/training/logistic_regression_model.pkl', 'rb') as f:
-        scaler = pickle.load(f)
+    xgboost = None
+
+    if model == "logreg":
+        with open('src/modelDevelopment/training/logistic_regression_model.pkl', 'rb') as f:
+            logreg = pickle.load(f)
+    
+        with open('src/modelDevelopment/training/scaler.pkl', 'rb') as f:
+            scaler = pickle.load(f)
+    
+    elif model == 'xgboost':
+        # TODO: LOAD AND TEST XGboost
+        print('xgboost used')
 
     # STEP 1: get all features (games) that have occured before today by querying CurrentSchedule for game_ids of such games
     # # order by ascending date time so earliest games first, then finding the corresponding features from Feature Table and odds from 
@@ -76,23 +93,80 @@ def calculateTotalProfit():
     cursor.execute(all_completed_games_current_season)
 
     games = cursor.fetchall()
-    
-    print(len(games))
 
-    for game in games:
-        print(game)
-        break
+    df_final, games_to_predict_features_scaled, diff_cols = extractAndPreprocessFeatures(games, scaler, model = "logreg")
 
-    # Step 4: make prediction on each game, get the prediction probabilities for home and away and then plug into the unit size function to get
-    # unit size prediction, if no prediciton given, skip it, if yes, then depending on the actual outcome of game, either subtract the unit size
-    # or add how much you won
+    total_profit = 0
 
-def extractAndPreprocessFeatures():
+    for i, row in df_final.iterrows():
+        game_id = row["game_id"]
+        home_team = row["home_team"]
+        away_team = row["away_team"]
+        home_odds = row["home_team_odds"]
+        away_odds = row["away_team_odds"]
+        home_score = row["home_score"]
+        away_score = row["away_score"]
+
+        print("GAME INFO!, home team + odds + score comes first then away!")
+        print((game_id, home_team, home_odds, home_score, away_team, away_odds, away_score))
+        print()
+
+        # Get the scaled features for this game
+        current_game_features = games_to_predict_features_scaled.loc[[i]]  
+
+        print("MODEL PREDICTION PROBABILITIES, first is away, 2nd is home")
+        probabilities = logreg.predict_proba(current_game_features)[0]
+        print(probabilities)
+        home_win_proba = probabilities[1]
+        away_win_proba = probabilities[0]
+        print(f"home_probability = {home_win_proba}")
+        print(f"away_probability = {away_win_proba}")
+
+        print()
+
+        teamToBetOn, unit_size, expected_roi = calculateUnitSize(home_win_proba, away_win_proba, home_odds, away_odds)
+
+        print("UNIT SIZE RECOMMENDATION")
+
+        # if there is no play for that game, skip it 
+        if (teamToBetOn == None):
+            print('no bet for that game!')
+            continue
+
+        print(f"teamToBetOn = {teamToBetOn}")
+        print(f"unit_size = {unit_size}")
+        print(f"expected_roi = {expected_roi}")
+
+        print()
+
+        print("OUTCOME")
+        outcome = None
+        if (home_score > away_score):
+            outcome = 'home'
+        else:
+            outcome = 'away'
+        
+        if (teamToBetOn == outcome):
+            print("Bet was correct!")
+            if (teamToBetOn == 'home'):
+                total_profit = total_profit + (unit_size * moneyLineToPayout(home_odds))
+                print(f"Profitted {unit_size * moneyLineToPayout(home_odds)} units")
+            else:
+                total_profit = total_profit + (unit_size * moneyLineToPayout(away_odds))
+                print(f"Profitted {unit_size * moneyLineToPayout(away_odds)} units")
+        else:
+            print(f"Bet was wrong, lost {unit_size} units")
+            total_profit = total_profit - unit_size
+
+        print(f"total running profit is {total_profit}")
+
+        print()
+        print()
 
 def main():
    
     sys.stdout = open('testingOnCurrentSeason.log', 'w', encoding='utf-8')
-    calculateTotalProfit()
+    calculateTotalProfit(model="logreg")
 
 if __name__ == "__main__":
     main()
