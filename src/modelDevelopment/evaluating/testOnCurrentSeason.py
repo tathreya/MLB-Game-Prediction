@@ -70,6 +70,7 @@ def calculateTotalProfit(model = "logreg"):
     
     elif model == 'xgboost':
         # TODO: LOAD AND TEST XGboost
+        # just need to open the model weights and 
         print('xgboost used')
 
     # get all features (games) that have occured before today by querying CurrentSchedule for game_ids of such games
