@@ -29,7 +29,7 @@ def buildFeatures(df_json, method = "diff"):
         ]
         final_features = final_features.drop(columns=columns_to_drop)
 
-        print(len(final_features))
+        #print(len(final_features))
         return final_features, y, list(final_features.columns)
 
     elif method == "raw":
@@ -45,7 +45,7 @@ def buildFeatures(df_json, method = "diff"):
         ]
         final_features = final_features.drop(columns=columns_to_drop)
 
-        print(len(final_features))
+        #print(len(final_features))
         return final_features, y, list(final_features.columns)
 
     else:
