@@ -52,46 +52,46 @@ class DeepMLP(nn.Module):
 
     
     
-def calculateTotalProfit(model_name="logistic_regression"):
+def calculateTotalProfit(model_name, feature_method):
     db_path = "../../databases/MLB_Betting.db"
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    with open("training/feature_names.pkl", "rb") as f:
+    with open(f"training/model_files/feature_names_{feature_method}.pkl", "rb") as f:
         feature_names = pickle.load(f)
 
     needs_scaling = False
     scaler = None
 
     if model_name in ["logistic_regression", "gradient_boosting", "random_forest", "svm"]:
-        with open(f"training/{model_name}_model.pkl", "rb") as f:
+        with open(f"training/model_files/{model_name}_model_{feature_method}.pkl", "rb") as f:
             model = pickle.load(f)
-        with open("training/scaler.pkl", "rb") as f:
+        with open(f"training/model_files/scaler_{feature_method}.pkl", "rb") as f:
             scaler = pickle.load(f)
         needs_scaling = True
 
     elif model_name == "xgboost":
-        with open("training/xgboost_model.pkl", "rb") as f:
+        with open(f"training/model_files/xgboost_model_{feature_method}.pkl", "rb") as f:
             model = pickle.load(f)
 
     elif model_name == "mlp":
         model = MLP(len(feature_names))
-        model.load_state_dict(torch.load("training/mlp_model.pt"))
+        model.load_state_dict(torch.load(f"training/model_files/mlp_model_{feature_method}.pt"))
         model.eval()
-        with open("training/scaler.pkl", "rb") as f:
+        with open(f"training/model_files/scaler_{feature_method}.pkl", "rb") as f:
             scaler = pickle.load(f)
         needs_scaling = True
 
     elif model_name == "deep_mlp":
         model = DeepMLP(len(feature_names))
-        model.load_state_dict(torch.load("training/deep_mlp_model.pt"))
+        model.load_state_dict(torch.load(f"training/model_files/deep_mlp_model_{feature_method}.pt"))
         model.eval()
-        with open("training/scaler.pkl", "rb") as f:
+        with open(f"training/model_files/scaler_{feature_method}.pkl", "rb") as f:
             scaler = pickle.load(f)
         needs_scaling = True
 
     elif model_name == "tabnet":
-        with open("training/tabnet_model.pkl", "rb") as f:
+        with open(f"training/model_files/tabnet_model_{feature_method}.pkl", "rb") as f:
             model = pickle.load(f)
 
     else:
@@ -116,7 +116,7 @@ def calculateTotalProfit(model_name="logistic_regression"):
     ])
     df["features_json"] = df["features_json"].apply(json.loads)
 
-    X_all, _, _ = buildFeatures(df, method="raw")
+    X_all, _, _ = buildFeatures(df, method=feature_method)
     X_features = X_all[feature_names]
 
     if needs_scaling:
@@ -168,6 +168,17 @@ def calculateTotalProfit(model_name="logistic_regression"):
         
         print("UNIT SIZE RECOMMENDATION")
         
+            
+        ### ELIMINATING SOME BETS ###
+        potential_payout = unit_size*(moneyLineToPayout(home_odds) if (teamToBetOn == 'home') else moneyLineToPayout(away_odds))
+
+        if potential_payout < 0.2 or expected_roi < 10:
+            skipped_games += 1
+            continue
+        #############################
+        
+        
+        
         # if there is no play for that game, skip it 
         if teamToBetOn is None:
             skipped_games += 1
@@ -207,6 +218,7 @@ def calculateTotalProfit(model_name="logistic_regression"):
 
     print("\nFINAL STATS")
     print(f"Model: {model_name}")
+    print(f"Feature Method: {feature_method}")
     print(f"Total Bets Placed: {total_bets}")
     print(f"Amount Wagered: {total_wagered:.2f} units")
     #print(f"Correct Bets: {correct_bets}")
@@ -221,12 +233,12 @@ def calculateTotalProfit(model_name="logistic_regression"):
 
 
         
-def main_evaluate(model_name="logistic_regression"):
-    with open(f'testingOnCurrentSeason_{model_name}.log', 'w', encoding='utf-8') as f:
+def main_evaluate(model_name="logistic_regression", feature_method="raw"):
+    with open(f'evaluation_logs/testingOnCurrentSeason_{model_name}_{feature_method}.log', 'w', encoding='utf-8') as f:
         old_stdout = sys.stdout
         sys.stdout = f
         try:
-            calculateTotalProfit(model_name)
+            calculateTotalProfit(model_name, feature_method)
         finally:
             sys.stdout = old_stdout
     
