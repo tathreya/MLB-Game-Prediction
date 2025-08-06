@@ -130,6 +130,18 @@ def calculateTotalProfit(model_name, feature_method):
     total_profit, total_bets, correct_bets, incorrect_bets = 0, 0, 0, 0
     total_wagered, unit_size_won, unit_size_lost, skipped_games = 0, 0, 0, 0
 
+    # Confidence bin setup (0.50 to 1.00 in steps of 0.05)
+    bin_edges = np.arange(0.50, 1.01, 0.05)
+    bin_stats = {
+        f"{bin_edges[i]:.2f}-{bin_edges[i+1]:.2f}": {
+            "count": 0,
+            "total_profit": 0,
+            "correct": 0,
+            "total_unit_size": 0,
+            "sum_confidence": 0,
+        } for i in range(len(bin_edges) - 1)
+    }
+
     for _, row in df_final.iterrows():
         game_id = row["game_id"]
         home_team = row["home_team"]
@@ -155,6 +167,18 @@ def calculateTotalProfit(model_name, feature_method):
             probs = model.predict_proba(features)[0]
         
         home_proba, away_proba = probs[1], probs[0]
+
+
+        # Determine predicted team and confidence (probability of predicted team)
+        if home_proba >= away_proba:
+            predicted_team = "home"
+            confidence = home_proba
+            odds = row["home_team_odds"]
+        else:
+            predicted_team = "away"
+            confidence = away_proba
+            odds = row["away_team_odds"]
+
         
         print(probs)
         print(f"home_probability = {home_proba}")
@@ -197,18 +221,39 @@ def calculateTotalProfit(model_name, feature_method):
             unit_size_won += unit_size
             profit = unit_size * moneyLineToPayout(row[f"{teamToBetOn}_team_odds"])
             total_profit += profit
-            
             print("Bet was correct!")
             if (teamToBetOn == 'home'):
-                print(f"Profitted {unit_size * moneyLineToPayout(home_odds)} units")
+                print(f"Profitted {profit} units")
             else:
-                print(f"Profitted {unit_size * moneyLineToPayout(away_odds)} units")
+                print(f"Profitted {profit} units")
         else:
             incorrect_bets += 1
             unit_size_lost += unit_size
-            total_profit -= unit_size
-            
+            profit = -1 * unit_size
+            total_profit += profit
             print(f"Bet was wrong, lost {unit_size} units")
+        
+        # Update bin stats
+        for i in range(len(bin_edges) - 1):
+            if bin_edges[i] <= confidence < bin_edges[i + 1]:
+                bin_key = f"{bin_edges[i]:.2f}-{bin_edges[i+1]:.2f}"
+                bin_stats[bin_key]["count"] += 1
+                bin_stats[bin_key]["total_profit"] += profit
+                if teamToBetOn == outcome:
+                    bin_stats[bin_key]["correct"] += 1
+                bin_stats[bin_key]["total_unit_size"] += unit_size
+                bin_stats[bin_key]["sum_confidence"] += confidence
+                break
+            # Handle edge case confidence == 1.0
+            if confidence == 1.0 and bin_edges[-2] <= confidence <= bin_edges[-1]:
+                bin_key = f"{bin_edges[-2]:.2f}-{bin_edges[-1]:.2f}"
+                bin_stats[bin_key]["count"] += 1
+                bin_stats[bin_key]["total_profit"] += profit
+                if teamToBetOn == outcome:
+                    bin_stats[bin_key]["correct"] += 1
+                bin_stats[bin_key]["total_unit_size"] += unit_size
+                bin_stats[bin_key]["sum_confidence"] += confidence
+                break
             
         print(f"total running profit is {total_profit}\n\n")
 
@@ -218,15 +263,26 @@ def calculateTotalProfit(model_name, feature_method):
     print(f"Feature Method: {feature_method}")
     print(f"Total Bets Placed: {total_bets}")
     print(f"Amount Wagered: {total_wagered:.2f} units")
-    #print(f"Correct Bets: {correct_bets}")
-    #print(f"Incorrect Bets: {incorrect_bets}")
-    #print(f"Correct Bets Avg Unit Size: {unit_size_won / correct_bets if correct_bets else 0:.2f}")
-    #print(f"Wrong Bets Avg Unit Size: {unit_size_lost / incorrect_bets if incorrect_bets else 0:.2f}")
+    print(f"Correct Bets: {correct_bets}")
+    print(f"Incorrect Bets: {incorrect_bets}")
+    print(f"Correct Bets Avg Unit Size: {unit_size_won / correct_bets if correct_bets else 0:.2f}")
+    print(f"Wrong Bets Avg Unit Size: {unit_size_lost / incorrect_bets if incorrect_bets else 0:.2f}")
     print(f"Skipped Games: {skipped_games}")
     print(f"Total Profit: {total_profit:.2f} units")
     if total_bets > 0:
         print(f"Hit Rate: {round(correct_bets / total_bets * 100, 2)}%")
         print(f"ROI: {total_profit / total_wagered * 100:.2f}%")
+
+    print("\nCONFIDENCE BINNING PROFIT ANALYSIS:")
+    print(f"{'Bin':<11} {'Count':>6} {'Avg Conf':>9} {'Win Rate':>9} {'Total Profit':>13} {'Avg Profit/Bet':>15}")
+    for bin_key, stats in bin_stats.items():
+        count = stats["count"]
+        if count == 0:
+            continue
+        avg_conf = stats["sum_confidence"] / count
+        win_rate = stats["correct"] / count
+        avg_profit_per_bet = stats["total_profit"] / count
+        print(f"{bin_key:<11} {count:6} {avg_conf:9.3f} {win_rate:9.3f} {stats['total_profit']:13.2f} {avg_profit_per_bet:15.4f}")
 
 def main_evaluate(model_name, feature_method):
 
