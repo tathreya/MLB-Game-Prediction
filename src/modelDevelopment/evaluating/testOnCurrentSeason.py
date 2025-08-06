@@ -19,16 +19,6 @@ from odds.calculateUnitSize import calculateUnitSize, moneyLineToPayout
 from modelDevelopment.utils.featureExtraction import buildFeatures
 
 # MLP
-# class MLP(nn.Module):
-#     def __init__(self, input_size):
-#         super(MLP, self).__init__()
-#         self.fc1 = nn.Linear(input_size, 64)
-#         self.fc2 = nn.Linear(64, 2)
-
-#     def forward(self, x):
-#         x = torch.relu(self.fc1(x))
-#         return self.fc2(x)
-
 class MLP(nn.Module):
     def __init__(self, input_size):
         super(MLP, self).__init__()
@@ -40,24 +30,6 @@ class MLP(nn.Module):
         x = torch.relu(self.fc1(x))
         return self.fc2(x)
 
-# Deep MLP with Dropout & BatchNorm
-# class DeepMLP(nn.Module):
-#     def __init__(self, input_size):
-#         super(DeepMLP, self).__init__()
-#         self.model = nn.Sequential(
-#             nn.Linear(input_size, 128),
-#             nn.BatchNorm1d(128),
-#             nn.ReLU(),
-#             nn.Dropout(0.3),
-#             nn.Linear(128, 64),
-#             nn.BatchNorm1d(64),
-#             nn.ReLU(),
-#             nn.Dropout(0.3),
-#             nn.Linear(64, 2)
-#         )
-
-#     def forward(self, x):
-#         return self.model(x)
 class DeepMLP(nn.Module):
     def __init__(self, input_size):
         super(DeepMLP, self).__init__()
