@@ -19,38 +19,65 @@ from odds.calculateUnitSize import calculateUnitSize, moneyLineToPayout
 from modelDevelopment.utils.featureExtraction import buildFeatures
 
 # MLP
+# class MLP(nn.Module):
+#     def __init__(self, input_size):
+#         super(MLP, self).__init__()
+#         self.fc1 = nn.Linear(input_size, 64)
+#         self.fc2 = nn.Linear(64, 2)
+
+#     def forward(self, x):
+#         x = torch.relu(self.fc1(x))
+#         return self.fc2(x)
+
 class MLP(nn.Module):
     def __init__(self, input_size):
         super(MLP, self).__init__()
-        self.fc1 = nn.Linear(input_size, 64)
-        self.fc2 = nn.Linear(64, 2)
+        hidden_size = max(32, input_size // 2)
+        self.fc1 = nn.Linear(input_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, 2)
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
         return self.fc2(x)
 
-
 # Deep MLP with Dropout & BatchNorm
+# class DeepMLP(nn.Module):
+#     def __init__(self, input_size):
+#         super(DeepMLP, self).__init__()
+#         self.model = nn.Sequential(
+#             nn.Linear(input_size, 128),
+#             nn.BatchNorm1d(128),
+#             nn.ReLU(),
+#             nn.Dropout(0.3),
+#             nn.Linear(128, 64),
+#             nn.BatchNorm1d(64),
+#             nn.ReLU(),
+#             nn.Dropout(0.3),
+#             nn.Linear(64, 2)
+#         )
+
+#     def forward(self, x):
+#         return self.model(x)
 class DeepMLP(nn.Module):
     def __init__(self, input_size):
         super(DeepMLP, self).__init__()
+        hidden1 = max(64, input_size * 2)
+        hidden2 = max(32, input_size)
+
         self.model = nn.Sequential(
-            nn.Linear(input_size, 128),
-            nn.BatchNorm1d(128),
+            nn.Linear(input_size, hidden1),
+            nn.BatchNorm1d(hidden1),
             nn.ReLU(),
             nn.Dropout(0.3),
-            nn.Linear(128, 64),
-            nn.BatchNorm1d(64),
+            nn.Linear(hidden1, hidden2),
+            nn.BatchNorm1d(hidden2),
             nn.ReLU(),
             nn.Dropout(0.3),
-            nn.Linear(64, 2)
+            nn.Linear(hidden2, 2)
         )
 
     def forward(self, x):
         return self.model(x)
-
-
-    
     
 def calculateTotalProfit(model_name, feature_method):
     db_path = "../../databases/MLB_Betting.db"
@@ -154,8 +181,6 @@ def calculateTotalProfit(model_name, feature_method):
             probs = model.predict_proba(features)[0]
         else:
             probs = model.predict_proba(features)[0]
-            
-        
         
         home_proba, away_proba = probs[1], probs[0]
         
@@ -168,15 +193,15 @@ def calculateTotalProfit(model_name, feature_method):
         
         print("UNIT SIZE RECOMMENDATION")
         
-            
-        ### ELIMINATING SOME BETS ###
-        potential_payout = unit_size*(moneyLineToPayout(home_odds) if (teamToBetOn == 'home') else moneyLineToPayout(away_odds))
-
-        if potential_payout < 0.2 or expected_roi < 10:
-            skipped_games += 1
-            continue
-        #############################
         
+        # TODO: mess with the filtering of plays
+        ### ELIMINATING SOME BETS ###
+        # potential_payout = unit_size*(moneyLineToPayout(home_odds) if (teamToBetOn == 'home') else moneyLineToPayout(away_odds))
+
+        # if potential_payout < 0.2 or expected_roi < 10:
+        #     skipped_games += 1
+        #     continue
+        #############################
         
         
         # if there is no play for that game, skip it 
@@ -231,9 +256,8 @@ def calculateTotalProfit(model_name, feature_method):
         print(f"Hit Rate: {round(correct_bets / total_bets * 100, 2)}%")
         print(f"ROI: {total_profit / total_wagered * 100:.2f}%")
 
+def main_evaluate(model_name, feature_method):
 
-        
-def main_evaluate(model_name="logistic_regression", feature_method="raw"):
     with open(f'evaluation_logs/testingOnCurrentSeason_{model_name}_{feature_method}.log', 'w', encoding='utf-8') as f:
         old_stdout = sys.stdout
         sys.stdout = f
