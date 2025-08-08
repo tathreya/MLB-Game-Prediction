@@ -22,12 +22,12 @@ from modelDevelopment.utils.featureExtraction import buildFeatures
 class MLP(nn.Module):
     def __init__(self, input_size):
         super(MLP, self).__init__()
-        self.fc1 = nn.Linear(input_size, 64)
-        self.fc2 = nn.Linear(64, 2)
-
+        self.fc1 = nn.Linear(input_size, 256)
+        self.fc2 = nn.Linear(256, 2)
     def forward(self, x):
         x = torch.relu(self.fc1(x))
         return self.fc2(x)
+
 
 
 # Deep MLP with Dropout & BatchNorm
@@ -35,21 +35,19 @@ class DeepMLP(nn.Module):
     def __init__(self, input_size):
         super(DeepMLP, self).__init__()
         self.model = nn.Sequential(
-            nn.Linear(input_size, 128),
+            nn.Linear(input_size, 512),
+            nn.BatchNorm1d(512),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(512, 128),
             nn.BatchNorm1d(128),
             nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(128, 64),
-            nn.BatchNorm1d(64),
-            nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(64, 2)
+            nn.Dropout(0.2),
+            nn.Linear(128, 2)
         )
 
     def forward(self, x):
         return self.model(x)
-
-
     
     
 def calculateTotalProfit(model_name, feature_method):
@@ -93,6 +91,18 @@ def calculateTotalProfit(model_name, feature_method):
     elif model_name == "tabnet":
         with open(f"training/model_files/tabnet_model_{feature_method}.pkl", "rb") as f:
             model = pickle.load(f)
+            
+    elif model_name.startswith("xgboost_"):
+        # Parse n features
+        n_str = model_name.split("_")[1]
+        feature_file = f"training/model_files/feature_names_{feature_method}_{n_str}.pkl"
+        model_file = f"training/model_files/xgboost_model_{feature_method}_{n_str}.pkl"
+        with open(feature_file, "rb") as f:
+            feature_names = pickle.load(f)
+        with open(model_file, "rb") as f:
+            model = pickle.load(f)
+        needs_scaling = False
+
 
     else:
         raise ValueError(f"Unsupported model: {model_name}")
@@ -172,7 +182,7 @@ def calculateTotalProfit(model_name, feature_method):
         ### ELIMINATING SOME BETS ###
         potential_payout = unit_size*(moneyLineToPayout(home_odds) if (teamToBetOn == 'home') else moneyLineToPayout(away_odds))
 
-        if potential_payout < 0.2 or expected_roi < 10:
+        if potential_payout < 0.2:
             skipped_games += 1
             continue
         #############################
