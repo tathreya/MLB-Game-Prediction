@@ -34,7 +34,7 @@ def moneyLineToPayout(odds):
         if odds.startswith('+'):
             # remove the '+' sign
             odds = odds[1:]  
-        odds = int(odds)
+        odds = int(odds)    
 
     if odds < 0:
         return 100 / -odds

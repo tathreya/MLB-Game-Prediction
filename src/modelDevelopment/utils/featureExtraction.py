@@ -28,24 +28,23 @@ def buildFeatures(df_json, method = "diff"):
             "rolling_avg_opponent_ops_diff"
         ]
         final_features = final_features.drop(columns=columns_to_drop)
-
-        #print(len(final_features))
+        
         return final_features, y, list(final_features.columns)
 
     elif method == "raw":
         all_cols = [col for col in features_df.columns if re.match(r"(season|rolling)_(home|away)_avg_", col)]
         final_features = features_df[all_cols]
 
-        # Drop irrelevant features
-        columns_to_drop = [
-            "season_home_avg_ops", "season_away_avg_ops",
-            "season_home_avg_opponent_ops", "season_away_avg_opponent_ops",
-            "rolling_home_avg_ops", "rolling_away_avg_ops",
-            "rolling_home_avg_opponent_ops", "rolling_away_avg_opponent_ops"
-        ]
-        final_features = final_features.drop(columns=columns_to_drop)
+        # IF YOU WANT TO DROP IRRELEVANT FEATURES DO IT HERE
 
-        #print(len(final_features))
+        # columns_to_drop = [
+        #     "season_home_avg_ops", "season_away_avg_ops",
+        #     "season_home_avg_opponent_ops", "season_away_avg_opponent_ops",
+        #     "rolling_home_avg_ops", "rolling_away_avg_ops",
+        #     "rolling_home_avg_opponent_ops", "rolling_away_avg_opponent_ops"
+        # ]
+        # final_features = final_features.drop(columns=columns_to_drop)
+
         return final_features, y, list(final_features.columns)
 
     else:

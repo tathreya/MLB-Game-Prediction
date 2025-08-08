@@ -319,10 +319,17 @@ def engineerFeatures(rolling_window_size, base_url):
                 # then we actually store that game with features in the Features DB with rolling average equal to season average
                 # till now
                 if (team_season_stats[home_team_id]["gamesPlayed"] >= rolling_window_size and 
-                    team_season_stats[away_team_id]["gamesPlayed"] >= rolling_window_size and home_runs_scored != away_runs_scored):
-                    
-                    features = buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
-                    insertIntoFeaturesTable(cursor, game_id, features)
+                    team_season_stats[away_team_id]["gamesPlayed"] >= rolling_window_size):
+
+                    # only build features if it wasn't a tie
+                    if (home_runs_scored != away_runs_scored):
+                        features = buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
+                        insertIntoFeaturesTable(cursor, game_id, features)
+
+                    # or if it was a tie but the game is still going on
+                    if (home_runs_scored == away_runs_scored and season == os.environ.get("CURRENT_SEASON")):
+                        features = buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team_id, home_runs_scored, away_runs_scored)
+                        insertIntoFeaturesTable(cursor, game_id, features)
                     
                 # After saving the feature, update season totals to include this game for both teams
                 updateTeamSeasonStats(team_season_stats, home_team_id, away_team_id, home_stats, away_stats)   
@@ -669,8 +676,6 @@ def buildFeatures(team_season_stats, team_rolling_stats, home_team_id, away_team
         for key, val in rolling_metrics.items():
             features[f"rolling_{team_type}_avg_{key}"] = val
 
-    # TODO: might change this to not be a binary classificatino instead predict final score or probability
-    # of win
     features["label"] = 1 if home_runs_scored > away_runs_scored else 0
 
     return features

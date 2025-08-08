@@ -3,6 +3,7 @@ from teamsInitializer.initializeTeams import fetchMLBTeams
 from scheduleUpdater.fetchCurrentSchedule import fetchAndUpdateCurrentSchedule
 from scheduleUpdater.fetchOldSeasons import fetchAndUpdateOldSeason
 from featureEngineering.createFeatures import engineerFeatures
+from dailyPrediction.computeDailyPredictions import computeDailyPredictions
 import logging
 import os 
 import sys
@@ -45,6 +46,12 @@ def main():
         fetchAndUpdateOldSeason(season, base_url)
     fetchAndUpdateCurrentSchedule(current_season, base_url)
     engineerFeatures(rolling_window_size=5, base_url = base_url)
+
+    sys.stdout.close() 
+    sys.stdout = sys.__stdout__ 
+    computeDailyPredictions()
+
+    # TODO: deploy via flask API
 
 if __name__ == "__main__":
     main()
