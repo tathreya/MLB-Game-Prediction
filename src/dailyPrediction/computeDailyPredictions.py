@@ -10,6 +10,15 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from odds.calculateUnitSize import calculateUnitSize, moneyLineToPayout
 from modelDevelopment.utils.featureExtraction import buildFeatures
 
+
+def get_valid_odds(prompt):
+    while True:
+        odds = input(prompt).strip()
+        # Check starts with + or - and rest are digits
+        if (odds.startswith(("+", "-")) and odds[1:].isdigit() and len(odds) >= 4):
+            return odds
+        print("Invalid odds format. Please enter like +150 or -120.")
+
 def computeDailyPredictions():
 
     fetch_games_today = """
@@ -49,13 +58,24 @@ def computeDailyPredictions():
     X_scaled = X_features.astype(np.float32)
     df_final = pd.concat([df, X_scaled], axis = 1)
 
+    unique_games = {}
+
     for _, row in df_final.iterrows():
+
         home_team = row["home_team"]
         away_team = row["away_team"]
+
         print(row["game_id"])
         print(f"\nGame: {away_team} @ {home_team}")
-        home_odds = input(f"Enter home odds for {home_team}: ").strip()
-        away_odds = input(f"Enter away odds for {away_team}: ").strip()
+
+        if (unique_games.get(home_team) == None):
+            unique_games[home_team] = away_team
+        else:
+            # found a double header
+            print("THIS IS DOUBLE HEADER RUN, ONLY FETCH PREDICTION AFTER FIRST GAME FINISHES")
+
+        home_odds = get_valid_odds(f"Enter home odds for {home_team}: ")
+        away_odds = get_valid_odds(f"Enter away odds for {away_team}: ")
 
         features = row[feature_names].values.astype(np.float32).reshape(1, -1)
         probs = model.predict_proba(features)[0]
@@ -73,6 +93,8 @@ def computeDailyPredictions():
         if teamToBetOn is None:
             print("skipped that game!")
             continue
+
+        # TODO: filter out plays that are outside 35-65 expected ROI range
 
         if (teamToBetOn == "home"):
             print(f"teamToBetOn = {home_team}")
