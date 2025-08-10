@@ -166,7 +166,7 @@ SELECT_CURRENT_SEASON_GAMES_IN_ORDER = """
     SELECT *
     FROM CurrentSchedule
     WHERE season = ?
-    AND status_code != 'Cancelled'
+    AND status_code NOT IN ('Cancelled', 'Postponed')
     AND DATE(datetime(date_time, '-4 hours')) <= DATE(datetime('now', '-4 hours'))
     ORDER BY date_time ASC;
 """
