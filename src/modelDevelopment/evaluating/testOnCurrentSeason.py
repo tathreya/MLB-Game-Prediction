@@ -92,6 +92,18 @@ def calculateTotalProfit(model_name, feature_method):
     elif model_name == "tabnet":
         with open(f"training/model_files/tabnet_model_{feature_method}.pkl", "rb") as f:
             model = pickle.load(f)
+            
+    elif model_name.startswith("xgboost_"):
+        # Parse n features
+        n_str = model_name.split("_")[1]
+        feature_file = f"training/model_files/feature_names_{feature_method}_{n_str}.pkl"
+        model_file = f"training/model_files/xgboost_model_{feature_method}_{n_str}.pkl"
+        with open(feature_file, "rb") as f:
+            feature_names = pickle.load(f)
+        with open(model_file, "rb") as f:
+            model = pickle.load(f)
+        needs_scaling = False
+
 
     else:
         raise ValueError(f"Unsupported model: {model_name}")
