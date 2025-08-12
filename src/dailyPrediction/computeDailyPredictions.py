@@ -41,12 +41,11 @@ def computeDailyPredictions():
     # load the feature set
     with open(f"src/modelDevelopment/training/model_files/feature_names_diff.pkl", "rb") as f:
         feature_names = pickle.load(f)
-        
-    print(len(feature_names))
-    # load the xgboost model
-    with open(f"src/modelDevelopment/training/model_files/xgboost_model_diff.pkl", "rb") as f:
-            model = pickle.load(f)
 
+    # load the xgboost model
+    with open(f"src/modelDevelopment/training/model_files/xgboost_base_96_profit.pkl", "rb") as f:
+            model = pickle.load(f)
+    
     df = pd.DataFrame(games, columns=[
         "game_id", "date_time", "season", "status_code", "home_team", "away_team", "features_json"
     ])
@@ -82,19 +81,17 @@ def computeDailyPredictions():
         print(probs)
         home_proba, away_proba = probs[1], probs[0]
    
+        teamToBetOn, unit_size, expected_roi = calculateUnitSize(home_proba, away_proba, home_odds, away_odds)
+
+        # if there is no play for that game, skip it 
+        if teamToBetOn is None or expected_roi < 35 or expected_roi > 65:
+            print("skipped that game!")
+            continue
+
         print(f"\nModel Predictions:")
         print(f"home_probability = {home_proba}")
         print(f"away_probability = {away_proba}")
         print()
-
-        teamToBetOn, unit_size, expected_roi = calculateUnitSize(home_proba, away_proba, home_odds, away_odds)
-
-        # if there is no play for that game, skip it 
-        if teamToBetOn is None:
-            print("skipped that game!")
-            continue
-
-        # TODO: filter out plays that are outside 35-65 expected ROI range
 
         if (teamToBetOn == "home"):
             print(f"teamToBetOn = {home_team}")

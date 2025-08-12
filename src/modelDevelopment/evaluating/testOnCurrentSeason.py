@@ -97,6 +97,8 @@ def calculateTotalProfit(model_name, feature_method):
         raise ValueError(f"Unsupported model: {model_name}")
 
     # Pull and preprocess games
+
+    # NOTE: Base model of 96 profit w/ filtering until August 11th (last day)
     query = """
         SELECT F.game_id, C.date_time, C.season, C.status_code, 
                O.home_team, O.away_team, O.home_team_odds, O.away_team_odds, 
@@ -171,10 +173,6 @@ def calculateTotalProfit(model_name, feature_method):
         away_odds = row["away_team_odds"]
         home_score = row["home_score"]
         away_score = row["away_score"]
-        print("GAME INFO!, home team + odds + score comes first then away!")
-        print((game_id, home_team, home_odds, home_score, away_team, away_odds, away_score))
-        print()
-        print("MODEL PREDICTION PROBABILITIES, first is away, 2nd is home")
         
         features = row[feature_names].values.astype(np.float32).reshape(1, -1)
 
@@ -189,27 +187,25 @@ def calculateTotalProfit(model_name, feature_method):
         
         home_proba, away_proba = probs[1], probs[0]
         
-        print(probs)
-        print(f"home_probability = {home_proba}")
-        print(f"away_probability = {away_proba}")
-        print()
-        
         teamToBetOn, unit_size, expected_roi = calculateUnitSize(home_proba, away_proba, row["home_team_odds"], row["away_team_odds"])
         
-        print("UNIT SIZE RECOMMENDATION")
-        
-        # if there is no play for that game, skip it 
-        if teamToBetOn is None:
+        # TODO: mess with the filtering of plays, sweet spot was 35-65 expected ROI
+        # if there is no play for that game or outside the filter range, skip it 
+        if teamToBetOn is None or expected_roi < 35 or expected_roi > 65:
             skipped_games += 1
             continue
-        
+
+        print("GAME INFO!, home team + odds + score comes first then away!")
+        print((game_id, home_team, home_odds, home_score, away_team, away_odds, away_score))
+        print()
+        print("MODEL PREDICTION PROBABILITIES, first is away, 2nd is home")
+       
+        print("UNIT SIZE RECOMMENDATION")
         print(f"teamToBetOn = {teamToBetOn}")
         print(f"unit_size = {unit_size}")
         print(f"expected_roi = {expected_roi}")
         print()
         print("OUTCOME")
-
-        # TODO: mess with the filtering of plays, sweet spot was 35-65 expected ROI
 
         if teamToBetOn == "home":
             confidence = home_proba
