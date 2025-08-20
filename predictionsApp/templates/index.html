@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MLB Prediction Platform</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #1E1E2F 0%, #2C2C3E 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: #E5E7EB; /* light text on dark bg */
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        background: linear-gradient(135deg, #A3E635, #84CC16);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    #runButton {
+        display: block;
+        margin: 0 auto 30px;
+        padding: 16px 32px;
+        background: linear-gradient(135deg, #A3E635, #84CC16);
+        color: #1E1E2F;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    #runButton:hover {
+        background: linear-gradient(135deg, #84CC16, #65A30D);
+        transform: translateY(-2px);
+    }
+
+    #gamesContainer {
+        display: none; /* hide initially */
+        background: rgba(30,30,47,0.5);
+        backdrop-filter: blur(15px);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(30,30,47,0.9);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        color: #E5E7EB;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+    }
+
+    thead {
+        background: linear-gradient(135deg, #11121A, #1E1E2F);
+        color: #A3E635;
+        font-weight: 700;
+    }
+
+    tr:nth-child(even) {
+        background: rgba(255,255,255,0.05);
+    }
+
+    td div {
+        display: flex;
+        align-items: center;
+    }
+
+    img.team-logo {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        margin-right: 8px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    input[type="text"] {
+        width: 80px;
+        padding: 8px;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #A3E635;
+        background: rgba(255,255,255,0.1);
+        color: #E5E7EB;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+        box-shadow: 0 0 6px #A3E635;
+    }
+
+    button.predict-btn {
+        padding: 8px 12px;
+        background: linear-gradient(135deg, #A3E635, #84CC16);
+        color: #1E1E2F;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+    button.predict-btn:hover {
+        background: linear-gradient(135deg, #84CC16, #65A30D);
+    }
+
+    .prediction-output {
+        margin-top: 12px;
+        font-size: 14px;
+        padding: 12px;
+        border-radius: 8px;
+        display: inline-block;
+        background: rgba(163,230,53,0.1);
+        border: 1px solid #A3E635;
+        color: #A3E635;
+        font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+
+        table {
+            font-size: 13px;
+        }
+
+        th, td {
+            padding: 10px 8px;
+        }
+
+        img.team-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        input[type="text"] {
+            width: 60px;
+            padding: 6px;
+        }
+
+        #runButton, button.predict-btn {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<script>
+async function runPipeline() {
+    const button = document.getElementById('runButton');
+    button.disabled = true;
+    button.innerText = "Running...";
+
+    try {
+        // const response = await fetch('/run-pipeline', { method: 'POST' });
+        // const result = await response.json();
+
+        // if(result.status === "success") {
+        //     // hide button after pipeline finishes
+        //     button.style.display = "none"; 
+        //     fetchGames();
+        // } else {
+        //     button.disabled = false;
+        //     button.innerText = "Run the Model for Today";
+        //     alert(result.message);
+        // }
+        button.style.display = "none"; 
+        fetchGames()
+    } catch (err) {
+        button.disabled = false;
+        button.innerText = "Run the Model for Today";
+        alert("Error running pipeline");
+    }
+}
+
+async function fetchGames() {
+    const response = await fetch('/fetch-games');
+    const games = await response.json();
+
+    const container = document.getElementById('gamesContainer');
+    container.innerHTML = "";
+
+    const table = document.createElement('table');
+
+    // Header
+    const header = table.insertRow();
+    ["Date/Time (EST)", "Away Team", "Away Odds", "Home Team", "Home Odds", "Prediction"].forEach(h => header.insertCell().innerText = h);
+
+    games.forEach(game => {
+        const row = table.insertRow();
+
+        // Date/Time
+        const dt = new Date(game.date_time);
+        let dateStr = dt.toLocaleString("en-US", { timeZone: "America/New_York" });
+        if (game.double_header === "DH-2") dateStr += " ⚠️ DOUBLE HEADER";
+        row.insertCell().innerText = dateStr;
+
+        // Away Team + Logo
+        const awayCell = row.insertCell();
+        awayCell.innerHTML = `
+            <div style="display:flex; align-items:center;">
+                <img src="${game.away_logo}" style="width:40px; height:40px; object-fit:contain; margin-right:8px;">
+                <span>${game.away_team}</span>
+            </div>
+        `;
+
+        // Away Odds
+        row.insertCell().innerHTML = `<input type="text" class="away-odds" data-gameid="${game.game_id}">`;
+
+        // Home Team + Logo
+        const homeCell = row.insertCell();
+        homeCell.innerHTML = `
+            <div style="display:flex; align-items:center;">
+                <img src="${game.home_logo}" style="width:40px; height:40px; object-fit:contain; margin-right:8px;">
+                <span>${game.home_team}</span>
+            </div>
+        `;
+
+        // Home Odds
+        row.insertCell().innerHTML = `<input type="text" class="home-odds" data-gameid="${game.game_id}">`;
+
+        // Prediction button/output
+        row.insertCell().innerHTML = `<button class="predict-btn" onclick="calculatePrediction(${game.game_id})">Predict</button>
+                                      <div class="prediction-output" id="prediction_${game.game_id}" style="display:none;"></div>`;
+    });
+
+    container.appendChild(table);
+    container.style.display = "block";  
+}
+
+function validateOdds(odds) {
+    return (
+        typeof odds === 'string' &&
+        (odds.startsWith('+') || odds.startsWith('-')) &&
+        odds.length >= 4 &&
+        /^\d+$/.test(odds.slice(1))
+    );
+}
+
+async function calculatePrediction(game_id) {
+    const homeInput = document.querySelector(`.home-odds[data-gameid='${game_id}']`).value;
+    const awayInput = document.querySelector(`.away-odds[data-gameid='${game_id}']`).value;
+
+    if(!validateOdds(homeInput) || !validateOdds(awayInput)) {
+        alert("Enter valid odds like +150 or -120");
+        return;
+    }
+
+    const response = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ game_id, home_odds: homeInput, away_odds: awayInput })
+    });
+
+    const result = await response.json();
+    const outputDiv = document.getElementById(`prediction_${game_id}`);
+    if(result.status === "success") {
+        outputDiv.innerText = `Take ${result.teamToBetOn}, Unit Size: ${result.unit_size.toFixed(2)}, ROI: ${result.expected_roi.toFixed(2)}%`;
+        outputDiv.style.display = 'block';
+    } else {
+        outputDiv.innerText = "Prediction failed";
+        outputDiv.style.display = 'block';
+    }
+}
+</script>
+</head>
+<body>
+<h1>MLB Prediction Platform</h1>
+<button id="runButton" onclick="runPipeline()">Run the Model for Today</button>
+<div id="gamesContainer"></div>
+</body>
+</html>

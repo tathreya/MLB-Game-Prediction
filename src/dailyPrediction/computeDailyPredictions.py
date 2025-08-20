@@ -5,6 +5,7 @@ import sys
 import json
 import pandas as pd
 import numpy as np
+from xgboost import XGBClassifier
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from odds.calculateUnitSize import calculateUnitSize, moneyLineToPayout
@@ -42,9 +43,10 @@ def computeDailyPredictions():
     with open(f"src/modelDevelopment/training/model_files/feature_names_diff.pkl", "rb") as f:
         feature_names = pickle.load(f)
 
-    # load the xgboost model
-    with open(f"src/modelDevelopment/training/model_files/xgboost_base_96_profit.pkl", "rb") as f:
-            model = pickle.load(f)
+    # Load XGBoost model from JSON
+    xgb_model_path = "src/modelDevelopment/training/model_files/xgboost_base_96_profit.json"
+    model = XGBClassifier()
+    model.load_model(xgb_model_path)
     
     df = pd.DataFrame(games, columns=[
         "game_id", "date_time", "season", "status_code", "home_team", "away_team", "features_json"
@@ -83,15 +85,14 @@ def computeDailyPredictions():
    
         teamToBetOn, unit_size, expected_roi = calculateUnitSize(home_proba, away_proba, home_odds, away_odds)
 
-        # if there is no play for that game, skip it 
-        if teamToBetOn is None or expected_roi < 35 or expected_roi > 65:
-            print("skipped that game!")
-            continue
 
         print(f"\nModel Predictions:")
         print(f"home_probability = {home_proba}")
         print(f"away_probability = {away_proba}")
         print()
+
+        if(teamToBetOn is None):
+            print("skipped that game!")
 
         if (teamToBetOn == "home"):
             print(f"teamToBetOn = {home_team}")
@@ -100,6 +101,12 @@ def computeDailyPredictions():
        
         print(f"unit_size = {unit_size}")
         print(f"expected_roi = {expected_roi}")
+
+
+        # if there is no play for that game, skip it 
+        if expected_roi < 35 or expected_roi > 65:
+            print("ROI not in range")
+            continue
 
 
 def main():

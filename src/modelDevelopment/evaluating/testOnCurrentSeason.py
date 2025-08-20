@@ -13,6 +13,8 @@ from torch.utils.data import TensorDataset, DataLoader
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from pytorch_tabnet.tab_model import TabNetClassifier
+from datetime import datetime, timezone, timedelta
+from xgboost import XGBClassifier
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from odds.calculateUnitSize import calculateUnitSize, moneyLineToPayout
@@ -62,16 +64,20 @@ def calculateTotalProfit(model_name, feature_method):
     needs_scaling = False
     scaler = None
 
-    if model_name in ["logistic_regression", "gradient_boosting", "random_forest", "svm"]:
+    if model_name in ["logistic_regression", "svm"]:
         with open(f"training/model_files/{model_name}_model_{feature_method}.pkl", "rb") as f:
             model = pickle.load(f)
         with open(f"training/model_files/scaler_{feature_method}.pkl", "rb") as f:
             scaler = pickle.load(f)
         needs_scaling = True
 
-    elif model_name == "xgboost":
-        with open(f"training/model_files/xgboost_model_{feature_method}.pkl", "rb") as f:
+    elif model_name in ["gradient_boosting", "random_forest"]:
+        with open(f"training/model_files/{model_name}_model_{feature_method}.pkl", "rb") as f:
             model = pickle.load(f)
+
+    elif model_name == "xgboost":
+        model = XGBClassifier()
+        model.load_model(f"training/model_files/xgboost_model_{feature_method}.json")
 
     elif model_name == "mlp":
         model = MLP(len(feature_names))
@@ -127,8 +133,6 @@ def calculateTotalProfit(model_name, feature_method):
 
     df_final = pd.concat([df, X_scaled], axis=1)
 
-    from odds.calculateUnitSize import calculateUnitSize, moneyLineToPayout
-
     total_profit, total_bets, correct_bets, incorrect_bets = 0, 0, 0, 0
     total_wagered, unit_size_won, unit_size_lost, skipped_games = 0, 0, 0, 0
     home_bets, away_bets, home_profit, away_profit, home_correct, away_correct = 0, 0, 0, 0, 0, 0
@@ -165,6 +169,8 @@ def calculateTotalProfit(model_name, feature_method):
     }
     expected_roi_buckets["80+"] = {"count": 0, "profit": 0, "correct": 0, "wagered": 0}
 
+    monthly_profit = {month: {"profit": 0, "bets": 0} for month in range(1, 13)}
+
     for _, row in df_final.iterrows():
         game_id = row["game_id"]
         home_team = row["home_team"]
@@ -191,7 +197,7 @@ def calculateTotalProfit(model_name, feature_method):
         
         # TODO: mess with the filtering of plays, sweet spot was 35-65 expected ROI
         # if there is no play for that game or outside the filter range, skip it 
-        if teamToBetOn is None or expected_roi < 35 or expected_roi > 65:
+        if teamToBetOn is None: #or expected_roi < 35 or expected_roi > 65:
             skipped_games += 1
             continue
 
@@ -206,6 +212,7 @@ def calculateTotalProfit(model_name, feature_method):
         print(f"expected_roi = {expected_roi}")
         print()
         print("OUTCOME")
+
 
         if teamToBetOn == "home":
             confidence = home_proba
@@ -233,6 +240,7 @@ def calculateTotalProfit(model_name, feature_method):
             total_profit += profit
             print(f"Bet was wrong, lost {unit_size} units")
 
+        # Updating home vs away bet stats
         if teamToBetOn == "home":
             home_bets += 1
             home_profit += profit
@@ -244,6 +252,7 @@ def calculateTotalProfit(model_name, feature_method):
             if teamToBetOn == outcome:
                 away_correct += 1
         
+        # Upadting unit size buckets
         if unit_size < 0.5:
             bucket = "0-0.49"
         elif unit_size < 1:
@@ -261,6 +270,7 @@ def calculateTotalProfit(model_name, feature_method):
         if teamToBetOn == outcome:
             unit_size_buckets[bucket]["correct"] += 1
 
+        # Updating expected roi buckets
         bucket_found = False
         for low, high in expected_roi_bins:
             if low <= expected_roi < high:
@@ -270,14 +280,13 @@ def calculateTotalProfit(model_name, feature_method):
         if not bucket_found:
             bucket_key = "80+"
 
-        # Update bucket stats
         expected_roi_buckets[bucket_key]["count"] += 1
         expected_roi_buckets[bucket_key]["profit"] += profit
         expected_roi_buckets[bucket_key]["wagered"] += unit_size
         if teamToBetOn == outcome:
             expected_roi_buckets[bucket_key]["correct"] += 1
         
-        # Update bin stats
+        # Update confidence bin stats
         for i in range(len(bin_edges) - 1):
             if bin_edges[i] <= confidence < bin_edges[i + 1]:
                 bin_key = f"{bin_edges[i]:.2f}-{bin_edges[i+1]:.2f}"
@@ -288,7 +297,19 @@ def calculateTotalProfit(model_name, feature_method):
                 bin_stats[bin_key]["total_unit_size"] += unit_size
                 bin_stats[bin_key]["sum_confidence"] += confidence
                 break
-            
+
+        # Updating monthly profit buckets
+
+         # Convert UTC datetime string to datetime object
+        dt_utc = datetime.fromisoformat(row["date_time"].replace("Z", "+00:00"))
+        # Convert to EST (UTC-4)
+        dt_est = dt_utc - timedelta(hours=4)
+        # get month in EST
+        month = dt_est.month
+        monthly_profit[month]["profit"] += profit
+        monthly_profit[month]["bets"] += 1
+                
+
         print(f"total running profit is {total_profit}\n\n")
 
 
@@ -339,6 +360,16 @@ def calculateTotalProfit(model_name, feature_method):
             continue
         hit_rate = stats["correct"] / stats["count"]
         print(f"{bucket_key:<10} {stats['count']:6} {stats['profit']:10.2f} {stats['wagered']:10.2f} {hit_rate:10.2%}")
+
+    print("\nPROFIT BY MONTH:")
+    print(f"{'Month':<6} {'Bets':>6} {'Profit':>10} {'Avg Profit/Bet':>15}")
+    for month in range(1, 13):
+        stats = monthly_profit.get(month, {"profit": 0, "bets": 0})
+        bets = stats["bets"]
+        profit = stats["profit"]
+        avg_profit = profit / bets if bets else 0
+        month_name = datetime(2025, month, 1).strftime("%b") 
+        print(f"{month_name:<6} {bets:6} {profit:10.2f} {avg_profit:15.4f}")
 
 def main_evaluate(model_name, feature_method):
 
