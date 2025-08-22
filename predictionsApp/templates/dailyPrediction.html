@@ -10,12 +10,25 @@
         box-sizing: border-box;
     }
 
+    #gamesContainer table td:nth-child(1) { width: 19%; }  /* Date/Time */
+    #gamesContainer table td:nth-child(2) { width: 20%; }  /* Away Team */
+    #gamesContainer table td:nth-child(3) { width: 9%; }  /* Away Odds */
+    #gamesContainer table td:nth-child(4) { width: 20%; }  /* Home Team */
+    #gamesContainer table td:nth-child(5) { width: 9%; }  /* Home Odds */
+    #gamesContainer table td:nth-child(6) { width: 23%; }  /* Prediction */
+
+    /* Make sure long prediction text wraps */
+    #gamesContainer table td:last-child {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
     body {
         font-family: 'Inter', sans-serif;
         background: linear-gradient(135deg, #1E1E2F 0%, #2C2C3E 100%);
         min-height: 100vh;
         padding: 20px;
-        color: #E5E7EB; /* light text on dark bg */
+        color: #E5E7EB;
     }
 
     h1 {
@@ -173,20 +186,20 @@ async function runPipeline() {
     button.innerText = "Running...";
 
     try {
-        // const response = await fetch('/run-pipeline', { method: 'POST' });
-        // const result = await response.json();
+        const response = await fetch('/run-pipeline', { method: 'POST' });
+        const result = await response.json();
 
-        // if(result.status === "success") {
-        //     // hide button after pipeline finishes
-        //     button.style.display = "none"; 
-        //     fetchGames();
-        // } else {
-        //     button.disabled = false;
-        //     button.innerText = "Run the Model for Today";
-        //     alert(result.message);
-        // }
-        button.style.display = "none"; 
-        fetchGames()
+        if(result.status === "success") {
+            // hide button after pipeline finishes
+            button.style.display = "none"; 
+            fetchGames();
+        } else {
+            button.disabled = false;
+            button.innerText = "Run the Model for Today";
+            alert(result.message);
+        }
+        // button.style.display = "none"; 
+        // fetchGames()
     } catch (err) {
         button.disabled = false;
         button.innerText = "Run the Model for Today";

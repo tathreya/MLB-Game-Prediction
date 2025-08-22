@@ -1,0 +1,10 @@
+services:
+  mlb-app:
+    build: .
+    container_name: mlb-app
+    ports:
+      - "5001:5000"             # safer host port to avoid conflicts
+    volumes:
+      - ./databases:/app/databases   # SQLite persistence
+    env_file:
+      - .env

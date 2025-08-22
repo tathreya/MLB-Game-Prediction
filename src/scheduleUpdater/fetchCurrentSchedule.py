@@ -107,7 +107,6 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
             else:
                 logger.debug("Playoffs not starting yet")
 
-
         entries_added = 0
         entries_updated = 0
         # iterate through each day

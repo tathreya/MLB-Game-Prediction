@@ -7,7 +7,12 @@ import numpy as np
 import pickle
 import json
 from xgboost import XGBClassifier
-from flask import url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from werkzeug.security import check_password_hash
+from datetime import timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Add src/ to Python path so you can import your modules
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src'))
@@ -17,6 +22,10 @@ from odds.calculateUnitSize import calculateUnitSize
 from modelDevelopment.utils.featureExtraction import buildFeatures
 
 app = Flask(__name__)
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
+app.permanent_session_lifetime = timedelta(hours=2)
+
+# ----------------- GLOBAL VARIABLES -----------------
 
 DB_PATH = "databases/MLB_Betting.db"
 FEATURE_FILE = "src/modelDevelopment/training/model_files/feature_names_diff.pkl"
@@ -61,6 +70,26 @@ with open(FEATURE_FILE, "rb") as f:
 model = XGBClassifier()
 model.load_model(f"src/modelDevelopment/training/model_files/xgboost_base_96_profit.json")
 
+# ----------------- HELPER FUNCTIONS -----------------
+
+def validate_login(username, password):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT password_hash FROM users WHERE username = ?", (username,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return check_password_hash(row[0], password)
+    return False
+
+def login_required(func):
+    from functools import wraps
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect(url_for("login"))
+        return func(*args, **kwargs)
+    return wrapper
 def fetch_todays_games():
     query = """
         SELECT CS.game_id, CS.date_time, CS.home_team, CS.away_team
@@ -93,16 +122,39 @@ def validate_odds(odds):
     """Return True if odds are valid (+/- followed by digits)."""
     return odds and (odds.startswith(("+", "-")) and odds[1:].isdigit() and len(odds) >= 4)
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+# ----------------- API ROUTES -----------------
+@app.route("/", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if validate_login(username, password):
+            session.permanent = True
+            session["logged_in"] = True
+            session["username"] = username
+            return redirect(url_for("daily_prediction"))
+        else:
+            return render_template("login.html", error="Invalid credentials")
+    return render_template("login.html")
 
-@app.route('/fetch-games')
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+@app.route("/dailyPrediction")
+@login_required
+def daily_prediction():
+    return render_template("dailyPrediction.html")
+
+@app.route("/fetch-games")
+@login_required
 def fetch_games_api():
     games = fetch_todays_games()
     return jsonify(games)
 
-@app.route('/run-pipeline', methods=['POST'])
+@app.route("/run-pipeline", methods=["POST"])
+@login_required
 def runFeaturePipeline():
     """
     Calls runFeaturePipeline.main() and waits for it to finish.
@@ -114,7 +166,8 @@ def runFeaturePipeline():
     except Exception as e:
         return jsonify({"status": "error", "message": "Feature engineering pipeline failed!"})
     
-@app.route('/predict', methods=['POST'])
+@app.route("/predict", methods=["POST"])
+@login_required
 def predict():
     """
     Expects JSON: { game_id, home_odds, away_odds }
@@ -175,4 +228,4 @@ def predict():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
