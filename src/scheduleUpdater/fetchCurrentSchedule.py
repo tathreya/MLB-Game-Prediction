@@ -76,6 +76,7 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
     :param base_url: Base URL of the MLB API
     :returns: None
     """
+
     try:
 
         conn = sqlite3.connect("databases/MLB_Betting.db")
@@ -89,23 +90,13 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
 
         logger.debug("Attempting to store current MLB schedule in DB")
         
-        params = {
+        regular_season_params = {
             "sportId": 1,               # MLB
             "season": season,   # Season
             "gameType": "R",            # Regular season
         }
         
-        all_season_dates = fetchCurrentScheduleFromAPI(base_url, params)
-
-        last_regular_season_day = all_season_dates[-1]["date"]
-        today_date = date.today().strftime("%Y-%m-%d")
-
-        if (all_season_dates):
-            if (today_date > last_regular_season_day):
-                # TODO: fetch the playoff games
-                logger.debug("Need to fetch playoff games")
-            else:
-                logger.debug("Playoffs not starting yet")
+        all_season_dates = fetchCurrentScheduleFromAPI(base_url, regular_season_params)
 
         entries_added = 0
         entries_updated = 0
@@ -149,12 +140,73 @@ def fetchAndUpdateCurrentSchedule(season, base_url):
                 else:
                     insertIntoCurrentSchedule(game_data, cursor)
                     entries_added += 1
+
+        
+        last_regular_season_day = all_season_dates[-1]["date"]
+        today_date = date.today().strftime("%Y-%m-%d")
+
+          
+        postseason_params = {
+            "sportId": 1,               # MLB
+            "season": season,   # Season
+            "gameType": "P",            # Regular season
+        }
+
+        if (all_season_dates):
+            if (today_date >= last_regular_season_day):
+                logger.debug("Need to fetch playoff games")
+                all_playoff_dates = fetchPlayoffScheduleFromAPI(base_url, postseason_params)
+
+                # iterate through each day
+                for day in all_playoff_dates:
+
+                    # get all the games on that day
+                    games = day.get("games", [])
+
+                    for game in games:
+
+                        home_team_score = game.get("teams", {}).get("home", {}).get("score", None)
+                        away_team_score = game.get("teams", {}).get("away", {}).get("score", None)
+
+                        game_data = (game["gamePk"], game["season"], game["gameType"], game["gameDate"], 
+                                    game["teams"]["home"]["team"]["id"], game["teams"]["home"]["team"]["name"],
+                                    game["teams"]["away"]["team"]["id"], game["teams"]["away"]["team"]["name"],
+                                    home_team_score, away_team_score, game["status"]["detailedState"], 
+                                    game["venue"]["id"], game["dayNight"])
+
+                        # Check if entry with gamePk already exists in DB
+                        cursor.execute(
+                            "SELECT * FROM CurrentSchedule WHERE game_id = ?",
+                            (game["gamePk"],)
+                        )
+
+                        # get the fetched entry
+                        fetched_entry = cursor.fetchone()
+
+                        if fetched_entry:
+
+                            # skip if the entry wasn't updated in API
+                            if (fetched_entry == game_data):
+                                continue
+                            else:
+                                # update the current schedule table
+                                updateCurrentSchedule(game_data, cursor)
+
+                                entries_updated += 1
+
+                        else:
+                            insertIntoCurrentSchedule(game_data, cursor)
+                            entries_added += 1
+                        
+            else:
+                logger.debug("Playoffs not starting yet")
+
         
         conn.commit()
         logger.debug("Successfully stored and updated current MLB schedule in DB")
         logger.debug(f"Added {entries_added} entries to current MLB schedule DB")
         logger.debug(f"Updated {entries_updated} entries in current MLB schedule DB")
-    
+     
     except requests.exceptions.HTTPError as http_err:
         logger.error(f"HTTP error occurred while fetching current MLB schedule API data: {http_err}")
         conn.rollback()
@@ -186,6 +238,20 @@ def fetchCurrentScheduleFromAPI(base_url, params):
     all_season_dates = data.get("dates", [])
 
     return all_season_dates
+
+def fetchPlayoffScheduleFromAPI(base_url, params):
+    """
+    Fetches the current MLB playoff data from the MLB API.
+
+    :param base_url: Base URL of the MLB API
+    :param params: Dictionary of parameters to send with the API request
+    :returns: List of daily schedules (each containing games and metadata) from the API response
+    """
+    response = requests.get(base_url + "schedule/postseason", params = params)
+    data = response.json()
+    playoff_dates = data.get("dates", [])
+    
+    return playoff_dates
 
 def updateCurrentSchedule(game_data, cursor):
     """

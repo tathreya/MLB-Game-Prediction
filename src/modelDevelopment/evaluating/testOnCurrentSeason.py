@@ -15,6 +15,7 @@ from sklearn.preprocessing import StandardScaler
 from pytorch_tabnet.tab_model import TabNetClassifier
 from datetime import datetime, timezone, timedelta
 from xgboost import XGBClassifier
+from sklearn.calibration import CalibratedClassifierCV
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from odds.calculateUnitSize import calculateUnitSize, moneyLineToPayout
@@ -101,6 +102,8 @@ def calculateTotalProfit(model_name, feature_method):
             
     else:
         raise ValueError(f"Unsupported model: {model_name}")
+    
+    # TODO: run calibration on xgboost, random forest, and gradient boosting and test profit change
 
     # Pull and preprocess games
 
