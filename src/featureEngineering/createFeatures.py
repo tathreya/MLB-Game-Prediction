@@ -469,7 +469,13 @@ def extractTeamStats(team, prefix):
     pitching = team["teamStats"]["pitching"]
     fielding = team["teamStats"]["fielding"]
 
-    def safe_float(val): return float(val) if val not in (None, ".---", "-.--", "") else 0.0
+    def safe_float(val):
+        if val in (None, ".---", "-.--", "--", "-", ""):
+            return 0.0
+        try:
+            return float(val)
+        except (ValueError, TypeError):
+            return 0.0
 
     return {
         f"{prefix}_team_id": team["team"]["id"],
