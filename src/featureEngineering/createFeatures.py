@@ -296,6 +296,15 @@ def engineerFeatures(rolling_window_size, base_url):
                     game_date = datetime.strptime(game[3], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
                     now = datetime.now(timezone.utc)
 
+                    # Skip games that were never played (null teams, empty stats)
+                    try:
+                        if not game_data["teams"]["home"].get("teamStats") or not game_data["teams"]["away"].get("teamStats"):
+                            print(f"Skipping unplayed game {game_id} (empty boxscore)")
+                            continue
+                    except KeyError:
+                        print(f"Skipping malformed/unplayed game {game_id}")
+                        continue
+
                      # Only store in box score table if it's a historic game (finished season) or
                      # an older current season game
                     if season != os.environ.get("CURRENT_SEASON") or (now - game_date > timedelta(days=14)):
@@ -335,6 +344,8 @@ def engineerFeatures(rolling_window_size, base_url):
                 updateTeamSeasonStats(team_season_stats, home_team_id, away_team_id, home_stats, away_stats)   
                 # also update rolling averages
                 updateTeamRollingStats(team_rolling_stats, home_team_id, away_team_id, home_stats, away_stats)
+
+                conn.commit() 
 
                 numGamesProcessed += 1
                 if season == os.environ.get("CURRENT_SEASON"):
