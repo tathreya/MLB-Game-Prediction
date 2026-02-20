@@ -131,3 +131,177 @@ For each future game, the pipeline builds a feature vector using:
 
 These features are passed into the trained model to generate a prediction.
 
+## 🔄 Season Migration Guide
+
+### Migrating to a New MLB Season
+
+Follow these steps to migrate the system from one season to the next (e.g., 2025 → 2026):
+
+#### 1. Update Environment Configuration
+**File**: `.env`
+- Change `CURRENT_SEASON=2025` to `CURRENT_SEASON=2026`
+
+#### 2. Update Pipeline Configuration
+**File**: `src/runFeaturePipeline.py`
+- Add the completed season to `old_seasons` list:
+```python
+old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]
+```
+
+#### 3. Clean Current Season Table
+**SQL Command**:
+```sql
+DELETE FROM CurrentSchedule WHERE season = '2025';
+```
+This removes the old season data from the current schedule table.
+
+#### 4. Run Full Pipeline
+```bash
+python src/runFeaturePipeline.py
+```
+
+#### 5. Verify Migration
+**Check OldGames table**:
+```sql
+SELECT COUNT(*) FROM OldGames WHERE season = '2025';
+-- Should show ~2,430 regular season games
+```
+
+**Check CurrentSchedule table**:
+```sql
+SELECT COUNT(*) FROM CurrentSchedule WHERE season = '2026';
+-- Should show ~2,430 games when season is available
+SELECT COUNT(*) FROM CurrentSchedule WHERE season != '2026';
+-- Should show 0 (no old season contamination)
+```
+
+#### 6. Test Web Application
+```bash
+cd predictionsApp
+python app.py
+```
+- Open browser to `http://localhost:5000`
+- Verify login works
+- Confirm no previous season games appear
+
+### What Happens During Migration
+
+1. **Data Migration**: Previous season moves from `CurrentSchedule` → `OldGames`
+2. **New Schedule**: Current season schedule populates `CurrentSchedule` table
+3. **Feature Engineering**: Historical data (including previous season) used for context
+4. **Predictions**: Available once teams have 5+ completed games in new season
+
+### Important Notes
+
+- **No Model Retraining Required**: Existing model works with new season data
+- **Historical Context**: Previous season provides valuable team performance context
+- **Feature Building**: Starts after ~5 games per team in new season
+- **Postseason Data**: Only regular season games preserved in historical data
+
+## 🐳 Docker Deployment
+
+### Quick Start with Docker
+
+#### Option 1: Docker Compose (Recommended)
+```bash
+# Build and run (uses modern "docker compose" command)
+docker compose up --build
+```
+
+#### Option 2: Docker Compose (Legacy)
+```bash
+# Build and run (uses legacy "docker-compose" command)
+docker-compose up --build
+```
+
+#### Option 3: Manual Docker
+```bash
+# Build the image
+docker build -t mlb-ai-betting .
+
+# Run the container
+docker run -p 8001:8000 -v $(pwd)/databases:/app/databases --env-file .env mlb-ai-betting
+```
+
+#### Stop Containers
+```bash
+# Modern command
+docker compose down
+
+# Legacy command
+docker-compose down
+
+# Or stop specific container
+docker stop mlb-app
+```
+
+### Docker Configuration Details
+
+**Dockerfile**:
+- Uses `continuumio/miniconda3` base image
+- Creates conda environment from `environment.yml`
+- Exposes port 8000 (mapped to 8001 on host)
+- Mounts database directory for persistence
+- Runs Flask app from `/app/predictionsApp/app.py`
+
+**docker-compose.yml**:
+- Maps host port 8001 to container port 8000
+- Persists database with volume mount
+- Uses `.env` file for environment variables
+
+### Container Access
+
+- **Web App**: `http://localhost:8001`
+- **Database**: Stored in `./databases/` (persisted outside container)
+- **Logs**: View with `docker compose logs -f` (modern) or `docker-compose logs -f` (legacy)
+
+### Which Command to Use?
+
+```bash
+# Check your Docker Compose version
+docker-compose --version
+
+# Or try the modern command first
+docker compose up --build
+```
+
+Use whichever command works on your system - both are functionally identical.
+
+#### 3. Stop Containers
+```bash
+docker-compose down
+# Or stop specific container
+docker stop mlb-app
+```
+
+### Docker Configuration Details
+
+**Dockerfile**:
+- Uses `continuumio/miniconda3` base image
+- Creates conda environment from `environment.yml`
+- Exposes port 8000 (mapped to 8001 on host)
+- Mounts database directory for persistence
+- Runs Flask app from `/app/predictionsApp/app.py`
+
+**docker-compose.yml**:
+- Maps host port 8001 to container port 8000
+- Persists database with volume mount
+- Uses `.env` file for environment variables
+
+### Container Access
+
+- **Web App**: `http://localhost:8001`
+- **Database**: Stored in `./databases/` (persisted outside container)
+- **Logs**: View with `docker compose logs -f` (Docker Compose V2) or `docker-compose logs -f` (V1)
+
+### Development vs Production
+
+For development, the volume mount allows you to:
+- Edit source code locally
+- Database changes persist across container restarts
+- Use `docker compose up` for iterative development
+
+For production, consider:
+- Using Docker volumes instead of bind mounts
+- Environment-specific configurations
+- Process monitoring and restart policies

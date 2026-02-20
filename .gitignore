@@ -1,3 +1,5 @@
 .env
 *.log
 databases/MLB_Betting.db
+*.pyc
+__pycache__/
