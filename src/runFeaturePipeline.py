@@ -38,10 +38,14 @@ def main():
     :returns: None
     """
 
+    # Change to root directory to ensure relative paths work correctly
+    import os
+    os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    
     sys.stdout = open('main.log', 'w', encoding='utf-8')
     print('here inside main')
     fetchMLBTeams(base_url)
-    old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
+    old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]
     for season in old_seasons:
         fetchAndUpdateOldSeason(season, base_url)
     fetchAndUpdateCurrentSchedule(current_season, base_url)

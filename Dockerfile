@@ -20,7 +20,7 @@ COPY predictionsApp/ ./predictionsApp/
 COPY databases/ ./databases/
 
 # Expose Flask port
-EXPOSE 5000
+EXPOSE 8000
 
 # Run Flask app using the MLB_Betting environment
 CMD ["python", "predictionsApp/app.py"]

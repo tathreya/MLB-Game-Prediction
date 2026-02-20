@@ -27,9 +27,12 @@ app.permanent_session_lifetime = timedelta(hours=2)
 
 # ----------------- GLOBAL VARIABLES -----------------
 
-DB_PATH = "databases/MLB_Betting.db"
-FEATURE_FILE = "src/modelDevelopment/training/model_files/feature_names_diff.pkl"
-MODEL_FILE = "src/modelDevelopment/training/model_files/xgboost_base_96_profit.json"
+# Get absolute paths to avoid directory issues - works from any directory
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, "databases", "MLB_Betting.db")
+FEATURE_FILE = os.path.join(BASE_DIR, "src", "modelDevelopment", "training", "model_files", "feature_names_diff.pkl")
+MODEL_FILE = os.path.join(BASE_DIR, "src", "modelDevelopment", "training", "model_files", "xgboost_base_96_profit.json")
 
 TEAM_LOGOS = {
     "Los Angeles Angels": "logos/angels.png",
@@ -68,7 +71,7 @@ with open(FEATURE_FILE, "rb") as f:
     FEATURE_NAMES = pickle.load(f)
 
 model = XGBClassifier()
-model.load_model(f"src/modelDevelopment/training/model_files/xgboost_base_96_profit.json")
+model.load_model(MODEL_FILE)
 
 # ----------------- HELPER FUNCTIONS -----------------
 
@@ -228,4 +231,8 @@ def predict():
     })
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    port = 8000
+    print(f"🚀 Starting MLB Betting App on http://localhost:{port}")
+    print(f"📊 Database: {DB_PATH}")
+    print(f"🧠 Model: {MODEL_FILE}")
+    app.run(host="0.0.0.0", port=port, debug=True)
