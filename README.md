@@ -133,70 +133,69 @@ These features are passed into the trained model to generate a prediction.
 
 ## 🔄 Season Migration Guide
 
-### Migrating to a New MLB Season
+### Migrating to a New MLB Season (Streamlined)
 
-Follow these steps to migrate the system from one season to the next (e.g., 2025 → 2026):
+**🎯 NEW: Single Point of Configuration!** 
 
-#### 1. Update Environment Configuration
+All season management is centralized in the `.env` file.
+
+#### 1. Update Environment Configuration (Only Step!)
 **File**: `.env`
-- Change `CURRENT_SEASON=2025` to `CURRENT_SEASON=2026`
-
-#### 2. Update Pipeline Configuration
-**File**: `src/runFeaturePipeline.py`
-- Add the completed season to `old_seasons` list:
-```python
-old_seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]
+```bash
+# Just change this one line:
+CURRENT_SEASON=new_season_year
 ```
 
-#### 3. Clean Current Season Table
+That's it! The system automatically handles everything else.
+
+#### 2. Clean Current Season Table (Optional but Recommended)
 **SQL Command**:
 ```sql
-DELETE FROM CurrentSchedule WHERE season = '2025';
+DELETE FROM CurrentSchedule WHERE season = 'last_year_season';
 ```
-This removes the old season data from the current schedule table.
 
-#### 4. Run Full Pipeline
+#### 3. Run Full Pipeline
 ```bash
 python src/runFeaturePipeline.py
 ```
 
-#### 5. Verify Migration
-**Check OldGames table**:
-```sql
-SELECT COUNT(*) FROM OldGames WHERE season = '2025';
--- Should show ~2,430 regular season games
-```
+### What Happens Automatically
 
-**Check CurrentSchedule table**:
-```sql
-SELECT COUNT(*) FROM CurrentSchedule WHERE season = '2026';
--- Should show ~2,430 games when season is available
-SELECT COUNT(*) FROM CurrentSchedule WHERE season != '2026';
--- Should show 0 (no old season contamination)
-```
+The system now dynamically generates season lists from your `.env` file:
 
-#### 6. Test Web Application
+- **Old Seasons**: Automatically generates `["2015", "2016", ..., "2025"]` from `CURRENT_SEASON=2026`
+- **Feature Engineering**: Automatically includes `["2015", "2016", ..., "2026"]` 
+- **Current Season**: Uses `CURRENT_SEASON` value for all operations
+
+### Files That Auto-Update (No Manual Changes Needed)
+
+✅ **`src/runFeaturePipeline.py`** - Uses `get_old_seasons()`  
+✅ **`src/featureEngineering/createFeatures.py`** - Uses `get_all_seasons()`  
+✅ **All other modules** - Use `get_current_season()`
+
+### Migration Benefits
+
+- ✅ **Single Source of Truth**: Only `.env` file needs changes
+- ✅ **Error-Proof**: No more forgetting to update multiple files
+- ✅ **Future-Proof**: Works for any season automatically
+- ✅ **Consistent**: All modules use same season logic
+
+### Example: Migrating to 2027 Season
+
 ```bash
-cd predictionsApp
-python app.py
+# 1. Update .env
+echo "CURRENT_SEASON=2027" > .env
+
+# 2. Run pipeline (everything else is automatic)
+python src/runFeaturePipeline.py
 ```
-- Open browser to `http://localhost:5000`
-- Verify login works
-- Confirm no previous season games appear
 
-### What Happens During Migration
+The system will automatically:
+- Process seasons 2015-2026 as old seasons
+- Build features for seasons 2015-2027
+- Handle 2027 as current season
 
-1. **Data Migration**: Previous season moves from `CurrentSchedule` → `OldGames`
-2. **New Schedule**: Current season schedule populates `CurrentSchedule` table
-3. **Feature Engineering**: Historical data (including previous season) used for context
-4. **Predictions**: Available once teams have 5+ completed games in new season
-
-### Important Notes
-
-- **No Model Retraining Required**: Existing model works with new season data
-- **Historical Context**: Previous season provides valuable team performance context
-- **Feature Building**: Starts after ~5 games per team in new season
-- **Postseason Data**: Only regular season games preserved in historical data
+**Migration simplified from 3 steps to 1 step!** 🎉
 
 ## 🐳 Docker Deployment
 

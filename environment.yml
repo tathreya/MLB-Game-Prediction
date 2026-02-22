@@ -18,6 +18,7 @@ dependencies:
   - pip
   - flask
   - jinja2
+  - openpyxl
   - pip:
       - playwright
       - beautifulsoup4

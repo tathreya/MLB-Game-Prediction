@@ -5,6 +5,7 @@ from collections import defaultdict, deque
 import json
 import os
 from datetime import datetime, timezone, timedelta
+from utils.config import get_current_season, get_all_seasons, get_mlb_api_base_url
 
 logger = logging.getLogger(__name__)
 
@@ -190,13 +191,13 @@ def engineerFeatures(rolling_window_size, base_url):
 
         logger.debug("Attempting to engineer features for past seasons")
 
-        seasons = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]
+        seasons = get_all_seasons()
         for season in seasons:
             
             logger.debug(f"Engineering features for {season} season")
 
             # if it is the current season
-            if (season == os.environ.get("CURRENT_SEASON")):
+            if (season == get_current_season()):
 
                 games = selectCurrentSeasonGames(cursor, season)
             else:
@@ -276,21 +277,21 @@ def engineerFeatures(rolling_window_size, base_url):
                 
                 game_id = game[0]
 
-                if season == os.environ.get("CURRENT_SEASON"):
+                if season == get_current_season():
                     print(game_id)
 
                 game_data = None
 
                 if (boxScoreExists(cursor, game_id)):
 
-                    if season == os.environ.get("CURRENT_SEASON"):
+                    if season == get_current_season():
                         print('box score existed current season game, getting from DB')
                     game_data = reconstructGameDataFromSQL(cursor, game_id)
                   
                 else:
                     response = requests.get(f"{base_url}game/{game_id}/boxscore")
                     game_data = response.json()
-                    if season == os.environ.get("CURRENT_SEASON"):
+                    if season == get_current_season():
                         print('box score did not exist for current season game, fetching from API')
                     
                     game_date = datetime.strptime(game[3], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
@@ -348,7 +349,7 @@ def engineerFeatures(rolling_window_size, base_url):
                 conn.commit() 
 
                 numGamesProcessed += 1
-                if season == os.environ.get("CURRENT_SEASON"):
+                if season == get_current_season():
                     print('numGamesProcessed = ' + str(numGamesProcessed))
         conn.commit() 
 
