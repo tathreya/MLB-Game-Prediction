@@ -378,6 +378,17 @@
     "away_odds": "+125"
   },
   {
+    "date": "30 Sep 2024",
+    "home_team": "Atlanta Braves",
+    "away_team": "New York Mets",
+    "home_score": 3,
+    "away_score": 0,
+    "home_odds": "-285",
+    "away_odds": "+222",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "29 Sep 2024",
     "home_team": "Atlanta Braves",
     "away_team": "Kansas City Royals",
@@ -493,6 +504,17 @@
     "away_score": 6,
     "home_odds": "+120",
     "away_odds": "-141"
+  },
+  {
+    "date": "29 Sep 2024",
+    "home_team": "Arizona Diamondbacks",
+    "away_team": "San Diego Padres",
+    "home_score": 11,
+    "away_score": 2,
+    "home_odds": "-234",
+    "away_odds": "+185",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "28 Sep 2024",
@@ -963,6 +985,17 @@
     "away_odds": "-159"
   },
   {
+    "date": "25 Sep 2024",
+    "home_team": "Arizona Diamondbacks",
+    "away_team": "San Francisco Giants",
+    "home_score": 8,
+    "away_score": 2,
+    "home_odds": "-262",
+    "away_odds": "+213",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "24 Sep 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "San Diego Padres",
@@ -1260,6 +1293,28 @@
     "away_odds": "-110"
   },
   {
+    "date": "22 Sep 2024",
+    "home_team": "Boston Red Sox",
+    "away_team": "Minnesota Twins",
+    "home_score": 9,
+    "away_score": 3,
+    "home_odds": "+103",
+    "away_odds": "-126",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "22 Sep 2024",
+    "home_team": "Boston Red Sox",
+    "away_team": "Minnesota Twins",
+    "home_score": 9,
+    "away_score": 3,
+    "home_odds": "+103",
+    "away_odds": "-126",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "21 Sep 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Colorado Rockies",
@@ -1375,6 +1430,17 @@
     "away_score": 1,
     "home_odds": "-125",
     "away_odds": "+104"
+  },
+  {
+    "date": "21 Sep 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Cleveland Guardians",
+    "home_score": 6,
+    "away_score": 5,
+    "home_odds": "-100",
+    "away_odds": "-123",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "20 Sep 2024",
@@ -1744,6 +1810,17 @@
     "away_score": 5,
     "home_odds": "-179",
     "away_odds": "+150"
+  },
+  {
+    "date": "18 Sep 2024",
+    "home_team": "Los Angeles Angels",
+    "away_team": "Chicago White Sox",
+    "home_score": 4,
+    "away_score": 3,
+    "home_odds": "-152",
+    "away_odds": "+125",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "17 Sep 2024",
@@ -2223,6 +2300,28 @@
     "away_odds": "-120"
   },
   {
+    "date": "14 Sep 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Athletics",
+    "home_score": 7,
+    "away_score": 6,
+    "home_odds": "+142",
+    "away_odds": "-174",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "14 Sep 2024",
+    "home_team": "Minnesota Twins",
+    "away_team": "Cincinnati Reds",
+    "home_score": 1,
+    "away_score": 11,
+    "home_odds": "-153",
+    "away_odds": "+128",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "13 Sep 2024",
     "home_team": "San Francisco Giants",
     "away_team": "San Diego Padres",
@@ -2691,6 +2790,17 @@
     "away_odds": "+140"
   },
   {
+    "date": "10 Sep 2024",
+    "home_team": "Houston Astros",
+    "away_team": "Athletics",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-196",
+    "away_odds": "+162",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "09 Sep 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Chicago Cubs",
@@ -3040,6 +3150,17 @@
     "away_score": 2,
     "home_odds": "+125",
     "away_odds": "-149"
+  },
+  {
+    "date": "07 Sep 2024",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "Washington Nationals",
+    "home_score": 6,
+    "away_score": 8,
+    "home_odds": "-142",
+    "away_odds": "+120",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "06 Sep 2024",
@@ -3490,6 +3611,17 @@
     "away_score": 0,
     "home_odds": "-345",
     "away_odds": "+270"
+  },
+  {
+    "date": "03 Sep 2024",
+    "home_team": "Miami Marlins",
+    "away_team": "Washington Nationals",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "-115",
+    "away_odds": "-108",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "02 Sep 2024",
@@ -3996,6 +4128,17 @@
     "away_odds": "-115"
   },
   {
+    "date": "30 Aug 2024",
+    "home_team": "Texas Rangers",
+    "away_team": "Athletics",
+    "home_score": 2,
+    "away_score": 9,
+    "home_odds": "-138",
+    "away_odds": "+117",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "29 Aug 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Baltimore Orioles",
@@ -4230,6 +4373,17 @@
     "away_odds": "+145"
   },
   {
+    "date": "28 Aug 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Texas Rangers",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "+147",
+    "away_odds": "-180",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "27 Aug 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Baltimore Orioles",
@@ -4426,6 +4580,138 @@
     "away_score": 18,
     "home_odds": "-115",
     "away_odds": "-105"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Kansas City Royals",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-139",
+    "away_odds": "+116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Boston Red Sox",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 3,
+    "away_score": 7,
+    "home_odds": "-158",
+    "away_odds": "+133",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Kansas City Royals",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-139",
+    "away_odds": "+116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Houston Astros",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-198",
+    "away_odds": "+164",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "Chicago Cubs",
+    "home_score": 8,
+    "away_score": 18,
+    "home_odds": "-116",
+    "away_odds": "-103",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Washington Nationals",
+    "away_team": "New York Yankees",
+    "home_score": 2,
+    "away_score": 5,
+    "home_odds": "+159",
+    "away_odds": "-190",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Boston Red Sox",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 3,
+    "away_score": 7,
+    "home_odds": "-158",
+    "away_odds": "+133",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Minnesota Twins",
+    "away_team": "Atlanta Braves",
+    "home_score": 6,
+    "away_score": 10,
+    "home_odds": "-120",
+    "away_odds": "-100",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "San Diego Padres",
+    "home_score": 4,
+    "away_score": 7,
+    "home_odds": "-121",
+    "away_odds": "+102",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Detroit Tigers",
+    "home_score": 3,
+    "away_score": 6,
+    "home_odds": "+116",
+    "away_odds": "-137",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Colorado Rockies",
+    "away_team": "Miami Marlins",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-115",
+    "away_odds": "-104",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Aug 2024",
+    "home_team": "Seattle Mariners",
+    "away_team": "Tampa Bay Rays",
+    "home_score": 5,
+    "away_score": 1,
+    "home_odds": "-135",
+    "away_odds": "+110",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "25 Aug 2024",
@@ -4822,6 +5108,17 @@
     "away_score": 5,
     "home_odds": "-115",
     "away_odds": "-105"
+  },
+  {
+    "date": "23 Aug 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Texas Rangers",
+    "home_score": 3,
+    "away_score": 5,
+    "home_odds": "-145",
+    "away_odds": "+122",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "22 Aug 2024",
@@ -5263,6 +5560,17 @@
     "away_score": 9,
     "home_odds": "+179",
     "away_odds": "-222"
+  },
+  {
+    "date": "19 Aug 2024",
+    "home_team": "Houston Astros",
+    "away_team": "Boston Red Sox",
+    "home_score": 6,
+    "away_score": 4,
+    "home_odds": "-145",
+    "away_odds": "+122",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "18 Aug 2024",
@@ -5713,6 +6021,17 @@
     "away_score": 7,
     "home_odds": "-200",
     "away_odds": "+165"
+  },
+  {
+    "date": "15 Aug 2024",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Washington Nationals",
+    "home_score": 13,
+    "away_score": 3,
+    "home_odds": "-273",
+    "away_odds": "+220",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "14 Aug 2024",
@@ -6192,6 +6511,17 @@
     "away_odds": "+135"
   },
   {
+    "date": "11 Aug 2024",
+    "home_team": "San Francisco Giants",
+    "away_team": "Detroit Tigers",
+    "home_score": 4,
+    "away_score": 5,
+    "home_odds": "-186",
+    "away_odds": "+155",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "10 Aug 2024",
     "home_team": "Seattle Mariners",
     "away_team": "New York Mets",
@@ -6318,6 +6648,28 @@
     "away_odds": "+110"
   },
   {
+    "date": "10 Aug 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Texas Rangers",
+    "home_score": 4,
+    "away_score": 9,
+    "home_odds": "-188",
+    "away_odds": "+151",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "10 Aug 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Texas Rangers",
+    "home_score": 4,
+    "away_score": 9,
+    "home_odds": "-188",
+    "away_odds": "+151",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "09 Aug 2024",
     "home_team": "San Francisco Giants",
     "away_team": "Detroit Tigers",
@@ -6442,6 +6794,17 @@
     "away_score": 2,
     "home_odds": "+100",
     "away_odds": "-120"
+  },
+  {
+    "date": "09 Aug 2024",
+    "home_team": "Minnesota Twins",
+    "away_team": "Cleveland Guardians",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "-108",
+    "away_odds": "-111",
+    "books_used": 4,
+    "source": "sbr"
   },
   {
     "date": "08 Aug 2024",
@@ -6649,6 +7012,193 @@
     "away_score": 7,
     "home_odds": "-105",
     "away_odds": "-115"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 3,
+    "away_score": 5,
+    "home_odds": "-112",
+    "away_odds": "-110",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 3,
+    "away_score": 5,
+    "home_odds": "-112",
+    "away_odds": "-110",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Chicago Cubs",
+    "away_team": "Minnesota Twins",
+    "home_score": 8,
+    "away_score": 2,
+    "home_odds": "+116",
+    "away_odds": "-142",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Texas Rangers",
+    "away_team": "Houston Astros",
+    "home_score": 4,
+    "away_score": 6,
+    "home_odds": "+111",
+    "away_odds": "-133",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Athletics",
+    "away_team": "Chicago White Sox",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-182",
+    "away_odds": "+145",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Los Angeles Angels",
+    "home_score": 2,
+    "away_score": 8,
+    "home_odds": "-301",
+    "away_odds": "+241",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Los Angeles Angels",
+    "home_score": 2,
+    "away_score": 8,
+    "home_odds": "-301",
+    "away_odds": "+241",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Miami Marlins",
+    "away_team": "Cincinnati Reds",
+    "home_score": 6,
+    "away_score": 4,
+    "home_odds": "-145",
+    "away_odds": "+119",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "San Diego Padres",
+    "home_score": 8,
+    "away_score": 9,
+    "home_odds": "-101",
+    "away_odds": "-123",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Washington Nationals",
+    "away_team": "San Francisco Giants",
+    "home_score": 4,
+    "away_score": 7,
+    "home_odds": "+132",
+    "away_odds": "-161",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Toronto Blue Jays",
+    "away_team": "Baltimore Orioles",
+    "home_score": 3,
+    "away_score": 7,
+    "home_odds": "+137",
+    "away_odds": "-170",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Atlanta Braves",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 5,
+    "away_score": 8,
+    "home_odds": "-162",
+    "away_odds": "+135",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Tampa Bay Rays",
+    "home_score": 5,
+    "away_score": 2,
+    "home_odds": "-121",
+    "away_odds": "-101",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Kansas City Royals",
+    "away_team": "Boston Red Sox",
+    "home_score": 8,
+    "away_score": 4,
+    "home_odds": "-145",
+    "away_odds": "+120",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Colorado Rockies",
+    "away_team": "New York Mets",
+    "home_score": 3,
+    "away_score": 5,
+    "home_odds": "+123",
+    "away_odds": "-150",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Seattle Mariners",
+    "away_team": "Detroit Tigers",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "-140",
+    "away_odds": "+114",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Aug 2024",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Philadelphia Phillies",
+    "home_score": 4,
+    "away_score": 9,
+    "home_odds": "-198",
+    "away_odds": "+162",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "06 Aug 2024",
@@ -6973,6 +7523,17 @@
     "away_score": 8,
     "home_odds": "-115",
     "away_odds": "-105"
+  },
+  {
+    "date": "04 Aug 2024",
+    "home_team": "Atlanta Braves",
+    "away_team": "Miami Marlins",
+    "home_score": 1,
+    "away_score": 7,
+    "home_odds": "-242",
+    "away_odds": "+197",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "03 Aug 2024",
@@ -7405,6 +7966,17 @@
     "away_score": 6,
     "home_odds": "-263",
     "away_odds": "+210"
+  },
+  {
+    "date": "31 Jul 2024",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "New York Yankees",
+    "home_score": 5,
+    "away_score": 9,
+    "home_odds": "+119",
+    "away_odds": "-146",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "30 Jul 2024",
@@ -7902,6 +8474,39 @@
     "away_odds": "+114"
   },
   {
+    "date": "27 Jul 2024",
+    "home_team": "San Francisco Giants",
+    "away_team": "Colorado Rockies",
+    "home_score": 4,
+    "away_score": 1,
+    "home_odds": "-211",
+    "away_odds": "+175",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "27 Jul 2024",
+    "home_team": "San Francisco Giants",
+    "away_team": "Colorado Rockies",
+    "home_score": 4,
+    "away_score": 1,
+    "home_odds": "-211",
+    "away_odds": "+175",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "27 Jul 2024",
+    "home_team": "Houston Astros",
+    "away_team": "Los Angeles Dodgers",
+    "home_score": 7,
+    "away_score": 6,
+    "home_odds": "-161",
+    "away_odds": "+131",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "26 Jul 2024",
     "home_team": "San Francisco Giants",
     "away_team": "Colorado Rockies",
@@ -8361,6 +8966,17 @@
     "away_odds": "+150"
   },
   {
+    "date": "23 Jul 2024",
+    "home_team": "Kansas City Royals",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "-112",
+    "away_odds": "-107",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "22 Jul 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "San Francisco Giants",
@@ -8746,6 +9362,17 @@
     "away_score": 9,
     "home_odds": "-164",
     "away_odds": "+140"
+  },
+  {
+    "date": "20 Jul 2024",
+    "home_team": "Athletics",
+    "away_team": "Los Angeles Angels",
+    "home_score": 8,
+    "away_score": 2,
+    "home_odds": "-147",
+    "away_odds": "+121",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "19 Jul 2024",
@@ -9270,6 +9897,17 @@
     "away_odds": "+210"
   },
   {
+    "date": "12 Jul 2024",
+    "home_team": "San Diego Padres",
+    "away_team": "Atlanta Braves",
+    "home_score": 1,
+    "away_score": 6,
+    "home_odds": "-114",
+    "away_odds": "-106",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "11 Jul 2024",
     "home_team": "Arizona Diamondbacks",
     "away_team": "Atlanta Braves",
@@ -9504,6 +10142,39 @@
     "away_odds": "+150"
   },
   {
+    "date": "10 Jul 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Minnesota Twins",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "+135",
+    "away_odds": "-161",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "10 Jul 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Minnesota Twins",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "+135",
+    "away_odds": "-161",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "10 Jul 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Kansas City Royals",
+    "home_score": 5,
+    "away_score": 8,
+    "home_odds": "-119",
+    "away_odds": "-100",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
     "date": "09 Jul 2024",
     "home_team": "San Francisco Giants",
     "away_team": "Toronto Blue Jays",
@@ -9610,6 +10281,17 @@
     "away_score": 9,
     "home_odds": "-185",
     "away_odds": "+154"
+  },
+  {
+    "date": "09 Jul 2024",
+    "home_team": "Tampa Bay Rays",
+    "away_team": "New York Yankees",
+    "home_score": 5,
+    "away_score": 3,
+    "home_odds": "+101",
+    "away_odds": "-120",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "08 Jul 2024",
@@ -10071,6 +10753,17 @@
     "away_odds": "+165"
   },
   {
+    "date": "05 Jul 2024",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Detroit Tigers",
+    "home_score": 4,
+    "away_score": 5,
+    "home_odds": "-142",
+    "away_odds": "+116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "04 Jul 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Arizona Diamondbacks",
@@ -10465,6 +11158,17 @@
     "away_score": 8,
     "home_odds": "+135",
     "away_odds": "-159"
+  },
+  {
+    "date": "02 Jul 2024",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 4,
+    "away_score": 7,
+    "home_odds": "-122",
+    "away_odds": "+100",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "01 Jul 2024",
@@ -10890,6 +11594,17 @@
     "away_odds": "+185"
   },
   {
+    "date": "28 Jun 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Colorado Rockies",
+    "home_score": 5,
+    "away_score": 3,
+    "home_odds": "-139",
+    "away_odds": "+116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "27 Jun 2024",
     "home_team": "Los Angeles Angels",
     "away_team": "Detroit Tigers",
@@ -10960,6 +11675,17 @@
     "away_score": 13,
     "home_odds": "-105",
     "away_odds": "-115"
+  },
+  {
+    "date": "27 Jun 2024",
+    "home_team": "Kansas City Royals",
+    "away_team": "Cleveland Guardians",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "-105",
+    "away_odds": "-116",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "26 Jun 2024",
@@ -11077,6 +11803,28 @@
     "away_score": 5,
     "home_odds": "-110",
     "away_odds": "-110"
+  },
+  {
+    "date": "26 Jun 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Atlanta Braves",
+    "home_score": 4,
+    "away_score": 1,
+    "home_odds": "+104",
+    "away_odds": "-128",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "26 Jun 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Atlanta Braves",
+    "home_score": 4,
+    "away_score": 1,
+    "home_odds": "+104",
+    "away_odds": "-128",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "25 Jun 2024",
@@ -11430,6 +12178,17 @@
     "away_odds": "+195"
   },
   {
+    "date": "23 Jun 2024",
+    "home_team": "San Diego Padres",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "-136",
+    "away_odds": "+115",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "22 Jun 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Los Angeles Angels",
@@ -11761,6 +12520,17 @@
     "away_score": 7,
     "home_odds": "-141",
     "away_odds": "+120"
+  },
+  {
+    "date": "20 Jun 2024",
+    "home_team": "Washington Nationals",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 2,
+    "away_score": 5,
+    "home_odds": "-145",
+    "away_odds": "+122",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "19 Jun 2024",
@@ -12247,6 +13017,17 @@
     "away_score": 2,
     "home_odds": "-130",
     "away_odds": "+110"
+  },
+  {
+    "date": "16 Jun 2024",
+    "home_team": "New York Mets",
+    "away_team": "San Diego Padres",
+    "home_score": 11,
+    "away_score": 6,
+    "home_odds": "+121",
+    "away_odds": "-146",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "15 Jun 2024",
@@ -12735,6 +13516,17 @@
     "away_odds": "+204"
   },
   {
+    "date": "12 Jun 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 4,
+    "away_score": 2,
+    "home_odds": "-178",
+    "away_odds": "+149",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "11 Jun 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Texas Rangers",
@@ -13194,6 +13986,17 @@
     "away_odds": "-159"
   },
   {
+    "date": "08 Jun 2024",
+    "home_team": "Miami Marlins",
+    "away_team": "Cleveland Guardians",
+    "home_score": 0,
+    "away_score": 8,
+    "home_odds": "+163",
+    "away_odds": "-202",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "07 Jun 2024",
     "home_team": "Athletics",
     "away_team": "Toronto Blue Jays",
@@ -13401,6 +14204,17 @@
     "away_odds": "+104"
   },
   {
+    "date": "06 Jun 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Kansas City Royals",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-167",
+    "away_odds": "+141",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "05 Jun 2024",
     "home_team": "Athletics",
     "away_team": "Seattle Mariners",
@@ -13516,6 +14330,17 @@
     "away_score": 4,
     "home_odds": "-149",
     "away_odds": "+125"
+  },
+  {
+    "date": "05 Jun 2024",
+    "home_team": "Boston Red Sox",
+    "away_team": "Atlanta Braves",
+    "home_score": 9,
+    "away_score": 0,
+    "home_odds": "-113",
+    "away_odds": "-108",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "04 Jun 2024",
@@ -13986,6 +14811,17 @@
     "away_odds": "+129"
   },
   {
+    "date": "01 Jun 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Washington Nationals",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-147",
+    "away_odds": "+120",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "31 May 2024",
     "home_team": "San Francisco Giants",
     "away_team": "New York Yankees",
@@ -14454,6 +15290,28 @@
     "away_odds": "+145"
   },
   {
+    "date": "28 May 2024",
+    "home_team": "New York Mets",
+    "away_team": "Los Angeles Dodgers",
+    "home_score": 0,
+    "away_score": 3,
+    "home_odds": "+106",
+    "away_odds": "-126",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 May 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 2,
+    "away_score": 7,
+    "home_odds": "+188",
+    "away_odds": "-229",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "27 May 2024",
     "home_team": "Seattle Mariners",
     "away_team": "Houston Astros",
@@ -14805,6 +15663,17 @@
     "away_odds": "-105"
   },
   {
+    "date": "25 May 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Chicago Cubs",
+    "home_score": 7,
+    "away_score": 6,
+    "home_odds": "-115",
+    "away_odds": "-107",
+    "books_used": 3,
+    "source": "sbr"
+  },
+  {
     "date": "24 May 2024",
     "home_team": "Arizona Diamondbacks",
     "away_team": "Miami Marlins",
@@ -14920,6 +15789,17 @@
     "away_score": 5,
     "home_odds": "+150",
     "away_odds": "-179"
+  },
+  {
+    "date": "24 May 2024",
+    "home_team": "San Diego Padres",
+    "away_team": "New York Yankees",
+    "home_score": 0,
+    "away_score": 8,
+    "home_odds": "+102",
+    "away_odds": "-121",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "23 May 2024",
@@ -15127,6 +16007,17 @@
     "away_score": 3,
     "home_odds": "+110",
     "away_odds": "-130"
+  },
+  {
+    "date": "22 May 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Baltimore Orioles",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "+106",
+    "away_odds": "-129",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "21 May 2024",
@@ -15354,6 +16245,138 @@
     "away_odds": "+104"
   },
   {
+    "date": "20 May 2024",
+    "home_team": "Atlanta Braves",
+    "away_team": "San Diego Padres",
+    "home_score": 3,
+    "away_score": 0,
+    "home_odds": "-228",
+    "away_odds": "+177",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Toronto Blue Jays",
+    "away_team": "Chicago White Sox",
+    "home_score": 9,
+    "away_score": 3,
+    "home_odds": "-203",
+    "away_odds": "+168",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "New York Mets",
+    "home_score": 3,
+    "away_score": 1,
+    "home_odds": "-125",
+    "away_odds": "+106",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Atlanta Braves",
+    "away_team": "San Diego Padres",
+    "home_score": 3,
+    "away_score": 0,
+    "home_odds": "-228",
+    "away_odds": "+177",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Miami Marlins",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "+121",
+    "away_odds": "-145",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Washington Nationals",
+    "away_team": "Minnesota Twins",
+    "home_score": 12,
+    "away_score": 3,
+    "home_odds": "+133",
+    "away_odds": "-159",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Tampa Bay Rays",
+    "away_team": "Boston Red Sox",
+    "home_score": 0,
+    "away_score": 5,
+    "home_odds": "-125",
+    "away_odds": "+102",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Seattle Mariners",
+    "home_score": 4,
+    "away_score": 5,
+    "home_odds": "-144",
+    "away_odds": "+121",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Kansas City Royals",
+    "away_team": "Detroit Tigers",
+    "home_score": 8,
+    "away_score": 3,
+    "home_odds": "-113",
+    "away_odds": "-110",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Baltimore Orioles",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "-123",
+    "away_odds": "-100",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Houston Astros",
+    "away_team": "Los Angeles Angels",
+    "home_score": 7,
+    "away_score": 9,
+    "home_odds": "-228",
+    "away_odds": "+184",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 May 2024",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 6,
+    "away_score": 4,
+    "home_odds": "-250",
+    "away_odds": "+203",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "19 May 2024",
     "home_team": "Atlanta Braves",
     "away_team": "San Diego Padres",
@@ -15478,6 +16501,17 @@
     "away_score": 11,
     "home_odds": "+110",
     "away_odds": "-130"
+  },
+  {
+    "date": "19 May 2024",
+    "home_team": "Houston Astros",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 9,
+    "away_score": 4,
+    "home_odds": "-137",
+    "away_odds": "+117",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "18 May 2024",
@@ -15730,6 +16764,17 @@
     "away_score": 9,
     "home_odds": "-105",
     "away_odds": "-115"
+  },
+  {
+    "date": "17 May 2024",
+    "home_team": "Miami Marlins",
+    "away_team": "New York Mets",
+    "home_score": 8,
+    "away_score": 0,
+    "home_odds": "-102",
+    "away_odds": "-120",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "16 May 2024",
@@ -16047,6 +17092,17 @@
     "away_odds": "-125"
   },
   {
+    "date": "14 May 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Washington Nationals",
+    "home_score": 4,
+    "away_score": 0,
+    "home_odds": "+101",
+    "away_odds": "-121",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "13 May 2024",
     "home_team": "San Francisco Giants",
     "away_team": "Los Angeles Dodgers",
@@ -16153,6 +17209,17 @@
     "away_score": 3,
     "home_odds": "-185",
     "away_odds": "+154"
+  },
+  {
+    "date": "13 May 2024",
+    "home_team": "Atlanta Braves",
+    "away_team": "Chicago Cubs",
+    "home_score": 2,
+    "away_score": 0,
+    "home_odds": "-140",
+    "away_odds": "+118",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "12 May 2024",
@@ -16612,6 +17679,83 @@
     "away_score": 1,
     "home_odds": "-115",
     "away_odds": "-105"
+  },
+  {
+    "date": "09 May 2024",
+    "home_team": "Minnesota Twins",
+    "away_team": "Seattle Mariners",
+    "home_score": 11,
+    "away_score": 1,
+    "home_odds": "-115",
+    "away_odds": "-105",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "09 May 2024",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 4,
+    "away_score": 5,
+    "home_odds": "-142",
+    "away_odds": "+120",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "09 May 2024",
+    "home_team": "Colorado Rockies",
+    "away_team": "San Francisco Giants",
+    "home_score": 9,
+    "away_score": 1,
+    "home_odds": "+111",
+    "away_odds": "-131",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "09 May 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Houston Astros",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-148",
+    "away_odds": "+124",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "09 May 2024",
+    "home_team": "Milwaukee Brewers",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 7,
+    "away_score": 1,
+    "home_odds": "+119",
+    "away_odds": "-140",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "09 May 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Cleveland Guardians",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "+132",
+    "away_odds": "-158",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "09 May 2024",
+    "home_team": "Los Angeles Angels",
+    "away_team": "Kansas City Royals",
+    "home_score": 4,
+    "away_score": 10,
+    "home_odds": "-104",
+    "away_odds": "-120",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "08 May 2024",
@@ -17100,6 +18244,17 @@
     "away_odds": "+100"
   },
   {
+    "date": "05 May 2024",
+    "home_team": "Arizona Diamondbacks",
+    "away_team": "San Diego Padres",
+    "home_score": 11,
+    "away_score": 4,
+    "home_odds": "-108",
+    "away_odds": "-111",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "04 May 2024",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Atlanta Braves",
@@ -17550,6 +18705,17 @@
     "away_odds": "-110"
   },
   {
+    "date": "01 May 2024",
+    "home_team": "Texas Rangers",
+    "away_team": "Washington Nationals",
+    "home_score": 0,
+    "away_score": 1,
+    "home_odds": "-201",
+    "away_odds": "+167",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "30 Apr 2024",
     "home_team": "Arizona Diamondbacks",
     "away_team": "Los Angeles Dodgers",
@@ -17917,6 +19083,17 @@
     "away_score": 7,
     "home_odds": "-204",
     "away_odds": "+170"
+  },
+  {
+    "date": "28 Apr 2024",
+    "home_team": "Miami Marlins",
+    "away_team": "Washington Nationals",
+    "home_score": 9,
+    "away_score": 12,
+    "home_odds": "-136",
+    "away_odds": "+116",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "27 Apr 2024",
@@ -18394,6 +19571,17 @@
     "away_score": 1,
     "home_odds": "-120",
     "away_odds": "+100"
+  },
+  {
+    "date": "24 Apr 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Athletics",
+    "home_score": 7,
+    "away_score": 3,
+    "home_odds": "-249",
+    "away_odds": "+198",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "23 Apr 2024",
@@ -18882,6 +20070,193 @@
     "away_odds": "+104"
   },
   {
+    "date": "21 Apr 2024",
+    "home_team": "Colorado Rockies",
+    "away_team": "Seattle Mariners",
+    "home_score": 2,
+    "away_score": 10,
+    "home_odds": "+104",
+    "away_odds": "-124",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Tampa Bay Rays",
+    "home_score": 0,
+    "away_score": 2,
+    "home_odds": "-124",
+    "away_odds": "+105",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Minnesota Twins",
+    "away_team": "Detroit Tigers",
+    "home_score": 4,
+    "away_score": 3,
+    "home_odds": "-145",
+    "away_odds": "+121",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 5,
+    "away_score": 12,
+    "home_odds": "-138",
+    "away_odds": "+117",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Chicago Cubs",
+    "away_team": "Miami Marlins",
+    "home_score": 5,
+    "away_score": 3,
+    "home_odds": "-212",
+    "away_odds": "+174",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "San Francisco Giants",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 7,
+    "away_score": 3,
+    "home_odds": "-109",
+    "away_odds": "-114",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "Boston Red Sox",
+    "home_score": 2,
+    "away_score": 4,
+    "home_odds": "-120",
+    "away_odds": "-100",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Washington Nationals",
+    "away_team": "Houston Astros",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "+149",
+    "away_odds": "-178",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "New York Mets",
+    "home_score": 4,
+    "away_score": 6,
+    "home_odds": "-175",
+    "away_odds": "+146",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Chicago White Sox",
+    "home_score": 9,
+    "away_score": 5,
+    "home_odds": "-379",
+    "away_odds": "+297",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Athletics",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "-191",
+    "away_odds": "+159",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Los Angeles Angels",
+    "home_score": 7,
+    "away_score": 5,
+    "home_odds": "-121",
+    "away_odds": "+101",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Kansas City Royals",
+    "away_team": "Baltimore Orioles",
+    "home_score": 7,
+    "away_score": 9,
+    "home_odds": "+103",
+    "away_odds": "-122",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Atlanta Braves",
+    "away_team": "Texas Rangers",
+    "home_score": 5,
+    "away_score": 2,
+    "home_odds": "-142",
+    "away_odds": "+120",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Chicago Cubs",
+    "away_team": "Miami Marlins",
+    "home_score": 5,
+    "away_score": 3,
+    "home_odds": "-212",
+    "away_odds": "+174",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "Colorado Rockies",
+    "away_team": "Seattle Mariners",
+    "home_score": 0,
+    "away_score": 7,
+    "home_odds": "+154",
+    "away_odds": "-186",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2024",
+    "home_team": "San Diego Padres",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 2,
+    "away_score": 5,
+    "home_odds": "+103",
+    "away_odds": "-122",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "19 Apr 2024",
     "home_team": "San Francisco Giants",
     "away_team": "Arizona Diamondbacks",
@@ -18997,6 +20372,17 @@
     "away_score": 3,
     "home_odds": "-169",
     "away_odds": "+145"
+  },
+  {
+    "date": "19 Apr 2024",
+    "home_team": "Washington Nationals",
+    "away_team": "Houston Astros",
+    "home_score": 3,
+    "away_score": 5,
+    "home_odds": "+128",
+    "away_odds": "-152",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "18 Apr 2024",
@@ -19285,6 +20671,171 @@
     "away_score": 2,
     "home_odds": "+104",
     "away_odds": "-125"
+  },
+  {
+    "date": "17 Apr 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Kansas City Royals",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "+144",
+    "away_odds": "-176",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Detroit Tigers",
+    "away_team": "Texas Rangers",
+    "home_score": 4,
+    "away_score": 2,
+    "home_odds": "+106",
+    "away_odds": "-125",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Baltimore Orioles",
+    "away_team": "Minnesota Twins",
+    "home_score": 11,
+    "away_score": 3,
+    "home_odds": "-167",
+    "away_odds": "+141",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Miami Marlins",
+    "away_team": "San Francisco Giants",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "+113",
+    "away_odds": "-134",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Colorado Rockies",
+    "home_score": 5,
+    "away_score": 0,
+    "home_odds": "-257",
+    "away_odds": "+209",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Tampa Bay Rays",
+    "away_team": "Los Angeles Angels",
+    "home_score": 7,
+    "away_score": 6,
+    "home_odds": "-150",
+    "away_odds": "+126",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Toronto Blue Jays",
+    "away_team": "New York Yankees",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-118",
+    "away_odds": "-102",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Boston Red Sox",
+    "away_team": "Cleveland Guardians",
+    "home_score": 7,
+    "away_score": 10,
+    "home_odds": "-126",
+    "away_odds": "+103",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "New York Mets",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 3,
+    "away_score": 1,
+    "home_odds": "-111",
+    "away_odds": "-108",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Milwaukee Brewers",
+    "away_team": "San Diego Padres",
+    "home_score": 3,
+    "away_score": 6,
+    "home_odds": "-102",
+    "away_odds": "-117",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Houston Astros",
+    "away_team": "Atlanta Braves",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "-105",
+    "away_odds": "-114",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Athletics",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "+121",
+    "away_odds": "-144",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Seattle Mariners",
+    "away_team": "Cincinnati Reds",
+    "home_score": 3,
+    "away_score": 1,
+    "home_odds": "-136",
+    "away_odds": "+116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Arizona Diamondbacks",
+    "away_team": "Chicago Cubs",
+    "home_score": 12,
+    "away_score": 11,
+    "home_odds": "-122",
+    "away_odds": "+102",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Apr 2024",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Washington Nationals",
+    "home_score": 6,
+    "away_score": 2,
+    "home_odds": "-278",
+    "away_odds": "+224",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "15 Apr 2024",
@@ -19681,6 +21232,39 @@
     "away_score": 11,
     "home_odds": "-164",
     "away_odds": "+140"
+  },
+  {
+    "date": "13 Apr 2024",
+    "home_team": "Detroit Tigers",
+    "away_team": "Minnesota Twins",
+    "home_score": 1,
+    "away_score": 4,
+    "home_odds": "-136",
+    "away_odds": "+115",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "13 Apr 2024",
+    "home_team": "Detroit Tigers",
+    "away_team": "Minnesota Twins",
+    "home_score": 1,
+    "away_score": 4,
+    "home_odds": "-136",
+    "away_odds": "+115",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "13 Apr 2024",
+    "home_team": "Cleveland Guardians",
+    "away_team": "New York Yankees",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "-106",
+    "away_odds": "-112",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "12 Apr 2024",
@@ -20095,6 +21679,17 @@
     "away_score": 5,
     "home_odds": "-125",
     "away_odds": "+104"
+  },
+  {
+    "date": "09 Apr 2024",
+    "home_team": "Minnesota Twins",
+    "away_team": "Los Angeles Dodgers",
+    "home_score": 3,
+    "away_score": 6,
+    "home_odds": "+158",
+    "away_odds": "-190",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "08 Apr 2024",
@@ -20583,6 +22178,149 @@
     "away_odds": "+135"
   },
   {
+    "date": "05 Apr 2024",
+    "home_team": "New York Yankees",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 0,
+    "away_score": 3,
+    "home_odds": "-161",
+    "away_odds": "+134",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Detroit Tigers",
+    "away_team": "Athletics",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-252",
+    "away_odds": "+204",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Chicago Cubs",
+    "away_team": "Los Angeles Dodgers",
+    "home_score": 9,
+    "away_score": 7,
+    "home_odds": "+157",
+    "away_odds": "-188",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Colorado Rockies",
+    "away_team": "Tampa Bay Rays",
+    "home_score": 10,
+    "away_score": 7,
+    "home_odds": "+144",
+    "away_odds": "-171",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "Baltimore Orioles",
+    "home_score": 2,
+    "away_score": 5,
+    "home_odds": "+100",
+    "away_odds": "-122",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "San Francisco Giants",
+    "away_team": "San Diego Padres",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-123",
+    "away_odds": "+103",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Cincinnati Reds",
+    "away_team": "New York Mets",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "-132",
+    "away_odds": "+112",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Washington Nationals",
+    "away_team": "Philadelphia Phillies",
+    "home_score": 0,
+    "away_score": 4,
+    "home_odds": "+166",
+    "away_odds": "-200",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Atlanta Braves",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 6,
+    "away_score": 5,
+    "home_odds": "-311",
+    "away_odds": "+250",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Kansas City Royals",
+    "away_team": "Chicago White Sox",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "-189",
+    "away_odds": "+157",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Texas Rangers",
+    "away_team": "Houston Astros",
+    "home_score": 10,
+    "away_score": 2,
+    "home_odds": "+117",
+    "away_odds": "-142",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Milwaukee Brewers",
+    "away_team": "Seattle Mariners",
+    "home_score": 6,
+    "away_score": 5,
+    "home_odds": "-129",
+    "away_odds": "+109",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "05 Apr 2024",
+    "home_team": "Los Angeles Angels",
+    "away_team": "Boston Red Sox",
+    "home_score": 6,
+    "away_score": 8,
+    "home_odds": "-102",
+    "away_odds": "-119",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "04 Apr 2024",
     "home_team": "Kansas City Royals",
     "away_team": "Chicago White Sox",
@@ -20617,6 +22355,28 @@
     "away_score": 7,
     "home_odds": "+104",
     "away_odds": "-125"
+  },
+  {
+    "date": "04 Apr 2024",
+    "home_team": "New York Mets",
+    "away_team": "Detroit Tigers",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "-126",
+    "away_odds": "+105",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Apr 2024",
+    "home_team": "New York Mets",
+    "away_team": "Detroit Tigers",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "-126",
+    "away_odds": "+105",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "03 Apr 2024",
@@ -20968,6 +22728,17 @@
     "away_score": 9,
     "home_odds": "+265",
     "away_odds": "-333"
+  },
+  {
+    "date": "01 Apr 2024",
+    "home_team": "Houston Astros",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 10,
+    "away_score": 0,
+    "home_odds": "-148",
+    "away_odds": "+124",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "31 Mar 2024",
@@ -21337,5 +23108,159 @@
     "away_score": 6,
     "home_odds": "-149",
     "away_odds": "+125"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Baltimore Orioles",
+    "away_team": "Los Angeles Angels",
+    "home_score": 11,
+    "away_score": 3,
+    "home_odds": "-189",
+    "away_odds": "+157",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Miami Marlins",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 5,
+    "away_score": 6,
+    "home_odds": "-132",
+    "away_odds": "+112",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 7,
+    "away_score": 1,
+    "home_odds": "-231",
+    "away_odds": "+191",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "San Diego Padres",
+    "away_team": "San Francisco Giants",
+    "home_score": 6,
+    "away_score": 4,
+    "home_odds": "-113",
+    "away_odds": "-106",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Kansas City Royals",
+    "away_team": "Minnesota Twins",
+    "home_score": 1,
+    "away_score": 4,
+    "home_odds": "+106",
+    "away_odds": "-126",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Houston Astros",
+    "away_team": "New York Yankees",
+    "home_score": 4,
+    "away_score": 5,
+    "home_odds": "-153",
+    "away_odds": "+129",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Washington Nationals",
+    "home_score": 8,
+    "away_score": 2,
+    "home_odds": "-154",
+    "away_odds": "+130",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Tampa Bay Rays",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 2,
+    "away_score": 8,
+    "home_odds": "-134",
+    "away_odds": "+114",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Chicago White Sox",
+    "away_team": "Detroit Tigers",
+    "home_score": 0,
+    "away_score": 1,
+    "home_odds": "+150",
+    "away_odds": "-180",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Texas Rangers",
+    "away_team": "Chicago Cubs",
+    "home_score": 4,
+    "away_score": 3,
+    "home_odds": "-119",
+    "away_odds": "-101",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Athletics",
+    "away_team": "Cleveland Guardians",
+    "home_score": 0,
+    "away_score": 8,
+    "home_odds": "+134",
+    "away_odds": "-159",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Mar 2024",
+    "home_team": "Arizona Diamondbacks",
+    "away_team": "Colorado Rockies",
+    "home_score": 16,
+    "away_score": 1,
+    "home_odds": "-224",
+    "away_odds": "+185",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Mar 2024",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "San Diego Padres",
+    "home_score": 11,
+    "away_score": 15,
+    "home_odds": "-194",
+    "away_odds": "+161",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Mar 2024",
+    "home_team": "San Diego Padres",
+    "away_team": "Los Angeles Dodgers",
+    "home_score": 2,
+    "away_score": 5,
+    "home_odds": "+159",
+    "away_odds": "-198",
+    "books_used": 5,
+    "source": "sbr"
   }
 ]

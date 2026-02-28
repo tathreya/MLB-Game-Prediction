@@ -477,6 +477,17 @@
     "away_odds": "+140"
   },
   {
+    "date": "05 Oct 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Minnesota Twins",
+    "home_score": 1,
+    "away_score": 10,
+    "home_odds": "-123",
+    "away_odds": "+100",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "04 Oct 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Colorado Rockies",
@@ -574,6 +585,72 @@
     "away_score": 3,
     "home_odds": "-185",
     "away_odds": "+165"
+  },
+  {
+    "date": "04 Oct 2022",
+    "home_team": "Texas Rangers",
+    "away_team": "New York Yankees",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "+171",
+    "away_odds": "-207",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Oct 2022",
+    "home_team": "New York Mets",
+    "away_team": "Washington Nationals",
+    "home_score": 8,
+    "away_score": 0,
+    "home_odds": "-276",
+    "away_odds": "+222",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Oct 2022",
+    "home_team": "New York Mets",
+    "away_team": "Washington Nationals",
+    "home_score": 8,
+    "away_score": 0,
+    "home_odds": "-276",
+    "away_odds": "+222",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Oct 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Detroit Tigers",
+    "home_score": 9,
+    "away_score": 6,
+    "home_odds": "-162",
+    "away_odds": "+139",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Oct 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Detroit Tigers",
+    "home_score": 9,
+    "away_score": 6,
+    "home_odds": "-162",
+    "away_odds": "+139",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Oct 2022",
+    "home_team": "Texas Rangers",
+    "away_team": "New York Yankees",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "+171",
+    "away_odds": "-207",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "03 Oct 2022",
@@ -954,6 +1031,39 @@
     "away_odds": "+200"
   },
   {
+    "date": "01 Oct 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Philadelphia Phillies",
+    "home_score": 13,
+    "away_score": 4,
+    "home_odds": "+168",
+    "away_odds": "-200",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "01 Oct 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Philadelphia Phillies",
+    "home_score": 13,
+    "away_score": 4,
+    "home_odds": "+168",
+    "away_odds": "-200",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "01 Oct 2022",
+    "home_team": "San Diego Padres",
+    "away_team": "Chicago White Sox",
+    "home_score": 5,
+    "away_score": 2,
+    "home_odds": "-113",
+    "away_odds": "-108",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "30 Sep 2022",
     "home_team": "San Francisco Giants",
     "away_team": "Arizona Diamondbacks",
@@ -1294,6 +1404,17 @@
     "away_score": 1,
     "home_odds": "-111",
     "away_odds": "-111"
+  },
+  {
+    "date": "28 Sep 2022",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "Cincinnati Reds",
+    "home_score": 4,
+    "away_score": 3,
+    "home_odds": "-119",
+    "away_odds": "-103",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "27 Sep 2022",
@@ -1863,6 +1984,171 @@
     "away_odds": "-111"
   },
   {
+    "date": "23 Sep 2022",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "Chicago Cubs",
+    "home_score": 5,
+    "away_score": 7,
+    "home_odds": "-132",
+    "away_odds": "+108",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 3,
+    "away_score": 6,
+    "home_odds": "+146",
+    "away_odds": "-174",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Miami Marlins",
+    "away_team": "Washington Nationals",
+    "home_score": 5,
+    "away_score": 2,
+    "home_odds": "-162",
+    "away_odds": "+136",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "New York Yankees",
+    "away_team": "Boston Red Sox",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-225",
+    "away_odds": "+187",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Atlanta Braves",
+    "home_score": 9,
+    "away_score": 1,
+    "home_odds": "-146",
+    "away_odds": "+123",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Baltimore Orioles",
+    "away_team": "Houston Astros",
+    "home_score": 6,
+    "away_score": 0,
+    "home_odds": "+115",
+    "away_odds": "-141",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Tampa Bay Rays",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 10,
+    "away_score": 6,
+    "home_odds": "-140",
+    "away_odds": "+115",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Texas Rangers",
+    "away_team": "Cleveland Guardians",
+    "home_score": 3,
+    "away_score": 6,
+    "home_odds": "-127",
+    "away_odds": "+106",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Detroit Tigers",
+    "home_score": 3,
+    "away_score": 5,
+    "home_odds": "-183",
+    "away_odds": "+154",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Seattle Mariners",
+    "home_score": 5,
+    "away_score": 1,
+    "home_odds": "-115",
+    "away_odds": "-104",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Colorado Rockies",
+    "away_team": "San Diego Padres",
+    "home_score": 4,
+    "away_score": 3,
+    "home_odds": "+142",
+    "away_odds": "-170",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Minnesota Twins",
+    "away_team": "Los Angeles Angels",
+    "home_score": 2,
+    "away_score": 4,
+    "home_odds": "+123",
+    "away_odds": "-146",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Athletics",
+    "away_team": "New York Mets",
+    "home_score": 2,
+    "away_score": 9,
+    "home_odds": "+185",
+    "away_odds": "-226",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Arizona Diamondbacks",
+    "away_team": "San Francisco Giants",
+    "home_score": 5,
+    "away_score": 6,
+    "home_odds": "+127",
+    "away_odds": "-155",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Sep 2022",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 0,
+    "away_score": 11,
+    "home_odds": "-169",
+    "away_odds": "+142",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "22 Sep 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Arizona Diamondbacks",
@@ -2230,6 +2516,39 @@
     "away_score": 5,
     "home_odds": "+104",
     "away_odds": "-125"
+  },
+  {
+    "date": "20 Sep 2022",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 2,
+    "away_score": 5,
+    "home_odds": "-319",
+    "away_odds": "+248",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Sep 2022",
+    "home_team": "Atlanta Braves",
+    "away_team": "Washington Nationals",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-342",
+    "away_odds": "+271",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Sep 2022",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 2,
+    "away_score": 5,
+    "home_odds": "-319",
+    "away_odds": "+248",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "19 Sep 2022",
@@ -2691,6 +3010,17 @@
     "away_odds": "+110"
   },
   {
+    "date": "16 Sep 2022",
+    "home_team": "Houston Astros",
+    "away_team": "Athletics",
+    "home_score": 5,
+    "away_score": 0,
+    "home_odds": "-365",
+    "away_odds": "+285",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "15 Sep 2022",
     "home_team": "Arizona Diamondbacks",
     "away_team": "San Diego Padres",
@@ -3015,6 +3345,50 @@
     "away_odds": "+110"
   },
   {
+    "date": "13 Sep 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 0,
+    "away_score": 1,
+    "home_odds": "-140",
+    "away_odds": "+120",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
+    "date": "13 Sep 2022",
+    "home_team": "Toronto Blue Jays",
+    "away_team": "Tampa Bay Rays",
+    "home_score": 7,
+    "away_score": 2,
+    "home_odds": "-170",
+    "away_odds": "+150",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
+    "date": "13 Sep 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 0,
+    "away_score": 1,
+    "home_odds": "-140",
+    "away_odds": "+120",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
+    "date": "13 Sep 2022",
+    "home_team": "Toronto Blue Jays",
+    "away_team": "Tampa Bay Rays",
+    "home_score": 7,
+    "away_score": 2,
+    "home_odds": "-170",
+    "away_odds": "+150",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
     "date": "12 Sep 2022",
     "home_team": "San Francisco Giants",
     "away_team": "Atlanta Braves",
@@ -3067,6 +3441,39 @@
     "away_score": 4,
     "home_odds": "-147",
     "away_odds": "+125"
+  },
+  {
+    "date": "12 Sep 2022",
+    "home_team": "Miami Marlins",
+    "away_team": "Texas Rangers",
+    "home_score": 10,
+    "away_score": 6,
+    "home_odds": "+103",
+    "away_odds": "-125",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "12 Sep 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 3,
+    "away_score": 6,
+    "home_odds": "-135",
+    "away_odds": "+113",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "12 Sep 2022",
+    "home_team": "Miami Marlins",
+    "away_team": "Texas Rangers",
+    "home_score": 10,
+    "away_score": 6,
+    "home_odds": "+103",
+    "away_odds": "-125",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "11 Sep 2022",
@@ -3510,6 +3917,17 @@
     "away_odds": "+229"
   },
   {
+    "date": "08 Sep 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Miami Marlins",
+    "home_score": 5,
+    "away_score": 6,
+    "home_odds": "-143",
+    "away_odds": "+117",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "07 Sep 2022",
     "home_team": "San Diego Padres",
     "away_team": "Arizona Diamondbacks",
@@ -3625,6 +4043,28 @@
     "away_score": 4,
     "home_odds": "+120",
     "away_odds": "-141"
+  },
+  {
+    "date": "07 Sep 2022",
+    "home_team": "New York Yankees",
+    "away_team": "Minnesota Twins",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-197",
+    "away_odds": "+167",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Sep 2022",
+    "home_team": "New York Yankees",
+    "away_team": "Minnesota Twins",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-197",
+    "away_odds": "+167",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "06 Sep 2022",
@@ -3958,6 +4398,39 @@
     "away_score": 4,
     "home_odds": "+175",
     "away_odds": "-213"
+  },
+  {
+    "date": "04 Sep 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Colorado Rockies",
+    "home_score": 10,
+    "away_score": 0,
+    "home_odds": "-117",
+    "away_odds": "-106",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Sep 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Colorado Rockies",
+    "home_score": 10,
+    "away_score": 0,
+    "home_odds": "-117",
+    "away_odds": "-106",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Sep 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Minnesota Twins",
+    "home_score": 1,
+    "away_score": 5,
+    "home_odds": "-135",
+    "away_odds": "+112",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "03 Sep 2022",
@@ -4417,6 +4890,17 @@
     "away_score": 5,
     "home_odds": "+114",
     "away_odds": "-135"
+  },
+  {
+    "date": "31 Aug 2022",
+    "home_team": "Atlanta Braves",
+    "away_team": "Colorado Rockies",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-393",
+    "away_odds": "+292",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "30 Aug 2022",
@@ -4887,6 +5371,17 @@
     "away_odds": "+129"
   },
   {
+    "date": "27 Aug 2022",
+    "home_team": "Athletics",
+    "away_team": "New York Yankees",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "+183",
+    "away_odds": "-226",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "26 Aug 2022",
     "home_team": "Seattle Mariners",
     "away_team": "Cleveland Guardians",
@@ -5220,6 +5715,17 @@
     "away_odds": "-250"
   },
   {
+    "date": "24 Aug 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "San Francisco Giants",
+    "home_score": 6,
+    "away_score": 1,
+    "home_odds": "+133",
+    "away_odds": "-158",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "23 Aug 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Milwaukee Brewers",
@@ -5344,6 +5850,28 @@
     "away_score": 6,
     "home_odds": "+195",
     "away_odds": "-238"
+  },
+  {
+    "date": "23 Aug 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 3,
+    "away_score": 13,
+    "home_odds": "+112",
+    "away_odds": "-135",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Aug 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 3,
+    "away_score": 13,
+    "home_odds": "+112",
+    "away_odds": "-135",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "22 Aug 2022",
@@ -5668,6 +6196,39 @@
     "away_score": 5,
     "home_odds": "-185",
     "away_odds": "+165"
+  },
+  {
+    "date": "20 Aug 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "New York Mets",
+    "home_score": 4,
+    "away_score": 1,
+    "home_odds": "+105",
+    "away_odds": "-129",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Aug 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 6,
+    "away_score": 5,
+    "home_odds": "+106",
+    "away_odds": "-125",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Aug 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "New York Mets",
+    "home_score": 4,
+    "away_score": 1,
+    "home_odds": "+105",
+    "away_odds": "-129",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "19 Aug 2022",
@@ -6165,6 +6726,17 @@
     "away_odds": "-141"
   },
   {
+    "date": "16 Aug 2022",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Colorado Rockies",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-229",
+    "away_odds": "+189",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "15 Aug 2022",
     "home_team": "San Francisco Giants",
     "away_team": "Arizona Diamondbacks",
@@ -6271,6 +6843,28 @@
     "away_score": 0,
     "home_odds": "+135",
     "away_odds": "-156"
+  },
+  {
+    "date": "15 Aug 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Detroit Tigers",
+    "home_score": 5,
+    "away_score": 7,
+    "home_odds": "-225",
+    "away_odds": "+182",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "15 Aug 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Detroit Tigers",
+    "home_score": 5,
+    "away_score": 7,
+    "home_odds": "-225",
+    "away_odds": "+182",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "14 Aug 2022",
@@ -6523,6 +7117,39 @@
     "away_score": 1,
     "home_odds": "-120",
     "away_odds": "+100"
+  },
+  {
+    "date": "13 Aug 2022",
+    "home_team": "Miami Marlins",
+    "away_team": "Atlanta Braves",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "+157",
+    "away_odds": "-184",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "13 Aug 2022",
+    "home_team": "Tampa Bay Rays",
+    "away_team": "Baltimore Orioles",
+    "home_score": 8,
+    "away_score": 2,
+    "home_odds": "-204",
+    "away_odds": "+166",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "13 Aug 2022",
+    "home_team": "Miami Marlins",
+    "away_team": "Atlanta Braves",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "+157",
+    "away_odds": "-184",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "12 Aug 2022",
@@ -6966,6 +7593,39 @@
     "away_odds": "+114"
   },
   {
+    "date": "09 Aug 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Chicago White Sox",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "+115",
+    "away_odds": "-138",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "09 Aug 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Chicago White Sox",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "+115",
+    "away_odds": "-138",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "09 Aug 2022",
+    "home_team": "Baltimore Orioles",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 6,
+    "away_score": 5,
+    "home_odds": "+135",
+    "away_odds": "-160",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "08 Aug 2022",
     "home_team": "Seattle Mariners",
     "away_team": "New York Yankees",
@@ -7281,6 +7941,50 @@
     "away_odds": "-116"
   },
   {
+    "date": "06 Aug 2022",
+    "home_team": "New York Mets",
+    "away_team": "Atlanta Braves",
+    "home_score": 6,
+    "away_score": 2,
+    "home_odds": "-133",
+    "away_odds": "+110",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "06 Aug 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Los Angeles Angels",
+    "home_score": 1,
+    "away_score": 7,
+    "home_odds": "-143",
+    "away_odds": "+119",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "06 Aug 2022",
+    "home_team": "New York Mets",
+    "away_team": "Atlanta Braves",
+    "home_score": 6,
+    "away_score": 2,
+    "home_odds": "-133",
+    "away_odds": "+110",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "06 Aug 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Los Angeles Angels",
+    "home_score": 1,
+    "away_score": 7,
+    "home_odds": "-143",
+    "away_odds": "+119",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "05 Aug 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "San Diego Padres",
@@ -7398,6 +8102,17 @@
     "away_odds": "+204"
   },
   {
+    "date": "05 Aug 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "Miami Marlins",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "-144",
+    "away_odds": "+118",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "04 Aug 2022",
     "home_team": "Kansas City Royals",
     "away_team": "Boston Red Sox",
@@ -7495,6 +8210,28 @@
     "away_score": 4,
     "home_odds": "+215",
     "away_odds": "-263"
+  },
+  {
+    "date": "04 Aug 2022",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Chicago Cubs",
+    "home_score": 7,
+    "away_score": 2,
+    "home_odds": "-184",
+    "away_odds": "+156",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Aug 2022",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Chicago Cubs",
+    "home_score": 7,
+    "away_score": 2,
+    "home_odds": "-184",
+    "away_odds": "+156",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "03 Aug 2022",
@@ -7848,6 +8585,17 @@
     "away_odds": "+104"
   },
   {
+    "date": "01 Aug 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 6,
+    "away_score": 5,
+    "home_odds": "-167",
+    "away_odds": "+138",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "31 Jul 2022",
     "home_team": "San Francisco Giants",
     "away_team": "Chicago Cubs",
@@ -8334,6 +9082,17 @@
     "away_odds": "+114"
   },
   {
+    "date": "28 Jul 2022",
+    "home_team": "Los Angeles Angels",
+    "away_team": "Texas Rangers",
+    "home_score": 0,
+    "away_score": 2,
+    "home_odds": "-195",
+    "away_odds": "+160",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "27 Jul 2022",
     "home_team": "Boston Red Sox",
     "away_team": "Cleveland Guardians",
@@ -8829,6 +9588,171 @@
     "away_odds": "+100"
   },
   {
+    "date": "24 Jul 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Chicago Cubs",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-128",
+    "away_odds": "+104",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Baltimore Orioles",
+    "away_team": "New York Yankees",
+    "home_score": 0,
+    "away_score": 6,
+    "home_odds": "+149",
+    "away_odds": "-179",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "Miami Marlins",
+    "home_score": 5,
+    "away_score": 6,
+    "home_odds": "+146",
+    "away_odds": "-173",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Boston Red Sox",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 4,
+    "away_score": 8,
+    "home_odds": "+139",
+    "away_odds": "-169",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Atlanta Braves",
+    "away_team": "Los Angeles Angels",
+    "home_score": 1,
+    "away_score": 9,
+    "home_odds": "-220",
+    "away_odds": "+176",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "+140",
+    "away_odds": "-164",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "Minnesota Twins",
+    "home_score": 1,
+    "away_score": 9,
+    "home_odds": "+145",
+    "away_odds": "-171",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Milwaukee Brewers",
+    "away_team": "Colorado Rockies",
+    "home_score": 10,
+    "away_score": 9,
+    "home_odds": "-197",
+    "away_odds": "+162",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Tampa Bay Rays",
+    "home_score": 4,
+    "away_score": 2,
+    "home_odds": "+131",
+    "away_odds": "-154",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Cleveland Guardians",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "-156",
+    "away_odds": "+132",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Athletics",
+    "away_team": "Texas Rangers",
+    "home_score": 8,
+    "away_score": 11,
+    "home_odds": "+122",
+    "away_odds": "-144",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Arizona Diamondbacks",
+    "away_team": "Washington Nationals",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-124",
+    "away_odds": "+105",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Houston Astros",
+    "home_score": 5,
+    "away_score": 8,
+    "home_odds": "-105",
+    "away_odds": "-116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "San Francisco Giants",
+    "home_score": 7,
+    "away_score": 4,
+    "home_odds": "-234",
+    "away_odds": "+190",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "24 Jul 2022",
+    "home_team": "New York Mets",
+    "away_team": "San Diego Padres",
+    "home_score": 8,
+    "away_score": 5,
+    "home_odds": "-136",
+    "away_odds": "+111",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "23 Jul 2022",
     "home_team": "Athletics",
     "away_team": "Texas Rangers",
@@ -8953,6 +9877,28 @@
     "away_score": 3,
     "home_odds": "+140",
     "away_odds": "-161"
+  },
+  {
+    "date": "23 Jul 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Cleveland Guardians",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-170",
+    "away_odds": "+145",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Jul 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Cleveland Guardians",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-170",
+    "away_odds": "+145",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "22 Jul 2022",
@@ -9117,6 +10063,28 @@
     "away_odds": "+114"
   },
   {
+    "date": "21 Jul 2022",
+    "home_team": "Houston Astros",
+    "away_team": "New York Yankees",
+    "home_score": 7,
+    "away_score": 5,
+    "home_odds": "-135",
+    "away_odds": "+115",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Jul 2022",
+    "home_team": "Houston Astros",
+    "away_team": "New York Yankees",
+    "home_score": 7,
+    "away_score": 5,
+    "home_odds": "-135",
+    "away_odds": "+115",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "19 Jul 2022",
     "home_team": "National League",
     "away_team": "American League",
@@ -9223,6 +10191,17 @@
     "away_score": 2,
     "home_odds": "-333",
     "away_odds": "+265"
+  },
+  {
+    "date": "17 Jul 2022",
+    "home_team": "San Francisco Giants",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 9,
+    "away_score": 5,
+    "home_odds": "-159",
+    "away_odds": "+133",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "16 Jul 2022",
@@ -9349,6 +10328,28 @@
     "away_score": 3,
     "home_odds": "-135",
     "away_odds": "+114"
+  },
+  {
+    "date": "16 Jul 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "New York Mets",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "+208",
+    "away_odds": "-256",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "16 Jul 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "New York Mets",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "+208",
+    "away_odds": "-256",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "15 Jul 2022",
@@ -9585,6 +10586,17 @@
     "away_odds": "+140"
   },
   {
+    "date": "14 Jul 2022",
+    "home_team": "New York Yankees",
+    "away_team": "Cincinnati Reds",
+    "home_score": 6,
+    "away_score": 7,
+    "home_odds": "-178",
+    "away_odds": "+147",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "13 Jul 2022",
     "home_team": "Los Angeles Angels",
     "away_team": "Houston Astros",
@@ -9711,6 +10723,28 @@
     "away_odds": "+135"
   },
   {
+    "date": "13 Jul 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Seattle Mariners",
+    "home_score": 1,
+    "away_score": 2,
+    "home_odds": "-106",
+    "away_odds": "-116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "13 Jul 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Seattle Mariners",
+    "home_score": 1,
+    "away_score": 2,
+    "home_odds": "-106",
+    "away_odds": "-116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "12 Jul 2022",
     "home_team": "San Francisco Giants",
     "away_team": "Arizona Diamondbacks",
@@ -9828,6 +10862,28 @@
     "away_odds": "+167"
   },
   {
+    "date": "12 Jul 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Chicago White Sox",
+    "home_score": 0,
+    "away_score": 7,
+    "home_odds": "+146",
+    "away_odds": "-171",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "12 Jul 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Chicago White Sox",
+    "home_score": 0,
+    "away_score": 7,
+    "home_odds": "+146",
+    "away_odds": "-171",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
     "date": "11 Jul 2022",
     "home_team": "San Francisco Giants",
     "away_team": "Arizona Diamondbacks",
@@ -9898,6 +10954,28 @@
     "away_score": 5,
     "home_odds": "-172",
     "away_odds": "+150"
+  },
+  {
+    "date": "11 Jul 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Detroit Tigers",
+    "home_score": 7,
+    "away_score": 3,
+    "home_odds": "-137",
+    "away_odds": "+116",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "11 Jul 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Detroit Tigers",
+    "home_score": 7,
+    "away_score": 3,
+    "home_odds": "-137",
+    "away_odds": "+116",
+    "books_used": 4,
+    "source": "sbr"
   },
   {
     "date": "10 Jul 2022",
@@ -10024,6 +11102,17 @@
     "away_score": 5,
     "home_odds": "-111",
     "away_odds": "-111"
+  },
+  {
+    "date": "10 Jul 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Detroit Tigers",
+    "home_score": 4,
+    "away_score": 2,
+    "home_odds": "-192",
+    "away_odds": "+161",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "09 Jul 2022",
@@ -10395,6 +11484,28 @@
     "away_odds": "+275"
   },
   {
+    "date": "07 Jul 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 5,
+    "away_score": 1,
+    "home_odds": "-128",
+    "away_odds": "+106",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Jul 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 5,
+    "away_score": 1,
+    "home_odds": "-128",
+    "away_odds": "+106",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "06 Jul 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Colorado Rockies",
@@ -10510,6 +11621,17 @@
     "away_score": 2,
     "home_odds": "+145",
     "away_odds": "-167"
+  },
+  {
+    "date": "06 Jul 2022",
+    "home_team": "Pittsburgh Pirates",
+    "away_team": "New York Yankees",
+    "home_score": 0,
+    "away_score": 16,
+    "home_odds": "+173",
+    "away_odds": "-207",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "05 Jul 2022",
@@ -10899,6 +12021,17 @@
     "away_odds": "+125"
   },
   {
+    "date": "03 Jul 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "New York Yankees",
+    "home_score": 2,
+    "away_score": 0,
+    "home_odds": "+129",
+    "away_odds": "-155",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "02 Jul 2022",
     "home_team": "Colorado Rockies",
     "away_team": "Arizona Diamondbacks",
@@ -11041,6 +12174,17 @@
     "away_score": 13,
     "home_odds": "+254",
     "away_odds": "-323"
+  },
+  {
+    "date": "02 Jul 2022",
+    "home_team": "Toronto Blue Jays",
+    "away_team": "Tampa Bay Rays",
+    "home_score": 5,
+    "away_score": 11,
+    "home_odds": "-137",
+    "away_odds": "+112",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "01 Jul 2022",
@@ -11358,6 +12502,28 @@
     "away_odds": "+110"
   },
   {
+    "date": "29 Jun 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Baltimore Orioles",
+    "home_score": 9,
+    "away_score": 3,
+    "home_odds": "-130",
+    "away_odds": "+107",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "29 Jun 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Atlanta Braves",
+    "home_score": 1,
+    "away_score": 4,
+    "home_odds": "+107",
+    "away_odds": "-127",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "28 Jun 2022",
     "home_team": "Seattle Mariners",
     "away_team": "Baltimore Orioles",
@@ -11482,6 +12648,28 @@
     "away_score": 1,
     "home_odds": "-135",
     "away_odds": "+114"
+  },
+  {
+    "date": "28 Jun 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Minnesota Twins",
+    "home_score": 0,
+    "away_score": 6,
+    "home_odds": "-105",
+    "away_odds": "-114",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "28 Jun 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Minnesota Twins",
+    "home_score": 0,
+    "away_score": 6,
+    "home_odds": "-105",
+    "away_odds": "-114",
+    "books_used": 4,
+    "source": "sbr"
   },
   {
     "date": "27 Jun 2022",
@@ -11824,6 +13012,17 @@
     "away_score": 3,
     "home_odds": "-185",
     "away_odds": "+165"
+  },
+  {
+    "date": "25 Jun 2022",
+    "home_team": "Atlanta Braves",
+    "away_team": "Los Angeles Dodgers",
+    "home_score": 5,
+    "away_score": 3,
+    "home_odds": "-143",
+    "away_odds": "+119",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "24 Jun 2022",
@@ -12175,6 +13374,17 @@
     "away_score": 3,
     "home_odds": "-141",
     "away_odds": "+120"
+  },
+  {
+    "date": "22 Jun 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 5,
+    "away_score": 9,
+    "home_odds": "-102",
+    "away_odds": "-117",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "21 Jun 2022",
@@ -12645,6 +13855,39 @@
     "away_odds": "-213"
   },
   {
+    "date": "18 Jun 2022",
+    "home_team": "Athletics",
+    "away_team": "Kansas City Royals",
+    "home_score": 0,
+    "away_score": 2,
+    "home_odds": "-117",
+    "away_odds": "-102",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "18 Jun 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Los Angeles Angels",
+    "home_score": 0,
+    "away_score": 3,
+    "home_odds": "+106",
+    "away_odds": "-125",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "18 Jun 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Los Angeles Angels",
+    "home_score": 0,
+    "away_score": 3,
+    "home_odds": "+106",
+    "away_odds": "-125",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "17 Jun 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Cleveland Guardians",
@@ -12769,6 +14012,28 @@
     "away_score": 0,
     "home_odds": "+160",
     "away_odds": "-182"
+  },
+  {
+    "date": "17 Jun 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Philadelphia Phillies",
+    "home_score": 7,
+    "away_score": 8,
+    "home_odds": "+102",
+    "away_odds": "-121",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "17 Jun 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Philadelphia Phillies",
+    "home_score": 7,
+    "away_score": 8,
+    "home_odds": "+102",
+    "away_odds": "-121",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "16 Jun 2022",
@@ -13102,6 +14367,39 @@
     "away_score": 10,
     "home_odds": "+150",
     "away_odds": "-172"
+  },
+  {
+    "date": "14 Jun 2022",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 9,
+    "away_score": 1,
+    "home_odds": "-408",
+    "away_odds": "+332",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "14 Jun 2022",
+    "home_team": "Boston Red Sox",
+    "away_team": "Athletics",
+    "home_score": 6,
+    "away_score": 1,
+    "home_odds": "-431",
+    "away_odds": "+345",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "14 Jun 2022",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 9,
+    "away_score": 1,
+    "home_odds": "-408",
+    "away_odds": "+332",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "13 Jun 2022",
@@ -13455,6 +14753,28 @@
     "away_odds": "-147"
   },
   {
+    "date": "11 Jun 2022",
+    "home_team": "San Diego Padres",
+    "away_team": "Colorado Rockies",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "-225",
+    "away_odds": "+186",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "11 Jun 2022",
+    "home_team": "San Diego Padres",
+    "away_team": "Colorado Rockies",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "-225",
+    "away_odds": "+186",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "10 Jun 2022",
     "home_team": "San Francisco Giants",
     "away_team": "Los Angeles Dodgers",
@@ -13579,6 +14899,17 @@
     "away_score": 5,
     "home_odds": "+135",
     "away_odds": "-156"
+  },
+  {
+    "date": "10 Jun 2022",
+    "home_team": "Los Angeles Angels",
+    "away_team": "New York Mets",
+    "home_score": 3,
+    "away_score": 7,
+    "home_odds": "+115",
+    "away_odds": "-135",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "09 Jun 2022",
@@ -13923,6 +15254,39 @@
     "away_odds": "+100"
   },
   {
+    "date": "07 Jun 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Texas Rangers",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "-127",
+    "away_odds": "+107",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Jun 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Texas Rangers",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "-127",
+    "away_odds": "+107",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 Jun 2022",
+    "home_team": "Miami Marlins",
+    "away_team": "Washington Nationals",
+    "home_score": 12,
+    "away_score": 2,
+    "home_odds": "-182",
+    "away_odds": "+157",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "06 Jun 2022",
     "home_team": "San Diego Padres",
     "away_team": "New York Mets",
@@ -14220,6 +15584,39 @@
     "away_odds": "+280"
   },
   {
+    "date": "04 Jun 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 4,
+    "away_score": 7,
+    "home_odds": "-103",
+    "away_odds": "-116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Jun 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 4,
+    "away_score": 7,
+    "home_odds": "-103",
+    "away_odds": "-116",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 Jun 2022",
+    "home_team": "Colorado Rockies",
+    "away_team": "Atlanta Braves",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "+167",
+    "away_odds": "-194",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "03 Jun 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "New York Mets",
@@ -14344,6 +15741,17 @@
     "away_score": 15,
     "home_odds": "-111",
     "away_odds": "-111"
+  },
+  {
+    "date": "03 Jun 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 5,
+    "away_score": 14,
+    "home_odds": "-110",
+    "away_odds": "-110",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "02 Jun 2022",
@@ -14571,6 +15979,28 @@
     "away_odds": "+210"
   },
   {
+    "date": "01 Jun 2022",
+    "home_team": "Colorado Rockies",
+    "away_team": "Miami Marlins",
+    "home_score": 13,
+    "away_score": 12,
+    "home_odds": "-115",
+    "away_odds": "-105",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
+    "date": "01 Jun 2022",
+    "home_team": "Colorado Rockies",
+    "away_team": "Miami Marlins",
+    "home_score": 13,
+    "away_score": 12,
+    "home_odds": "-115",
+    "away_odds": "-105",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
     "date": "31 May 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Pittsburgh Pirates",
@@ -14688,6 +16118,28 @@
     "away_odds": "+120"
   },
   {
+    "date": "31 May 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "Minnesota Twins",
+    "home_score": 4,
+    "away_score": 0,
+    "home_odds": "+119",
+    "away_odds": "-140",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "31 May 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "Minnesota Twins",
+    "home_score": 4,
+    "away_score": 0,
+    "home_odds": "+119",
+    "away_odds": "-140",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "30 May 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Pittsburgh Pirates",
@@ -14776,6 +16228,39 @@
     "away_score": 5,
     "home_odds": "+120",
     "away_odds": "-141"
+  },
+  {
+    "date": "30 May 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 1,
+    "away_score": 3,
+    "home_odds": "+101",
+    "away_odds": "-126",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "30 May 2022",
+    "home_team": "St. Louis Cardinals",
+    "away_team": "San Diego Padres",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "-126",
+    "away_odds": "+102",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "30 May 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 1,
+    "away_score": 3,
+    "home_odds": "+101",
+    "away_odds": "-126",
+    "books_used": 4,
+    "source": "sbr"
   },
   {
     "date": "29 May 2022",
@@ -15030,6 +16515,50 @@
     "away_odds": "+145"
   },
   {
+    "date": "28 May 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Colorado Rockies",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "-123",
+    "away_odds": "+103",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 May 2022",
+    "home_team": "Boston Red Sox",
+    "away_team": "Baltimore Orioles",
+    "home_score": 2,
+    "away_score": 4,
+    "home_odds": "-156",
+    "away_odds": "+134",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 May 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Colorado Rockies",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "-123",
+    "away_odds": "+103",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "28 May 2022",
+    "home_team": "Boston Red Sox",
+    "away_team": "Baltimore Orioles",
+    "home_score": 2,
+    "away_score": 4,
+    "home_odds": "-156",
+    "away_odds": "+134",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "27 May 2022",
     "home_team": "Arizona Diamondbacks",
     "away_team": "Los Angeles Dodgers",
@@ -15226,6 +16755,17 @@
     "away_score": 5,
     "home_odds": "-105",
     "away_odds": "-116"
+  },
+  {
+    "date": "26 May 2022",
+    "home_team": "Atlanta Braves",
+    "away_team": "Philadelphia Phillies",
+    "home_score": 1,
+    "away_score": 4,
+    "home_odds": "-108",
+    "away_odds": "-114",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "25 May 2022",
@@ -15723,6 +17263,17 @@
     "away_odds": "-167"
   },
   {
+    "date": "22 May 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 5,
+    "away_score": 4,
+    "home_odds": "-136",
+    "away_odds": "+112",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "21 May 2022",
     "home_team": "Los Angeles Angels",
     "away_team": "Athletics",
@@ -15838,6 +17389,28 @@
     "away_score": 5,
     "home_odds": "-227",
     "away_odds": "+185"
+  },
+  {
+    "date": "21 May 2022",
+    "home_team": "Colorado Rockies",
+    "away_team": "New York Mets",
+    "home_score": 1,
+    "away_score": 5,
+    "home_odds": "+114",
+    "away_odds": "-134",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 May 2022",
+    "home_team": "Colorado Rockies",
+    "away_team": "New York Mets",
+    "home_score": 1,
+    "away_score": 5,
+    "home_odds": "+114",
+    "away_odds": "-134",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "20 May 2022",
@@ -16146,6 +17719,17 @@
     "away_odds": "+140"
   },
   {
+    "date": "18 May 2022",
+    "home_team": "Toronto Blue Jays",
+    "away_team": "Seattle Mariners",
+    "home_score": 1,
+    "away_score": 5,
+    "home_odds": "-250",
+    "away_odds": "+205",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "17 May 2022",
     "home_team": "Athletics",
     "away_team": "Minnesota Twins",
@@ -16270,6 +17854,50 @@
     "away_score": 1,
     "home_odds": "-111",
     "away_odds": "-111"
+  },
+  {
+    "date": "17 May 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Chicago White Sox",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "-110",
+    "away_odds": "-111",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "17 May 2022",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 12,
+    "away_score": 3,
+    "home_odds": "-199",
+    "away_odds": "+167",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "17 May 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Chicago White Sox",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "-110",
+    "away_odds": "-111",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "17 May 2022",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 12,
+    "away_score": 3,
+    "home_odds": "-199",
+    "away_odds": "+167",
+    "books_used": 4,
+    "source": "sbr"
   },
   {
     "date": "16 May 2022",
@@ -16504,6 +18132,17 @@
     "away_score": 8,
     "home_odds": "+170",
     "away_odds": "-200"
+  },
+  {
+    "date": "15 May 2022",
+    "home_team": "Atlanta Braves",
+    "away_team": "San Diego Padres",
+    "home_score": 3,
+    "away_score": 7,
+    "home_odds": "-124",
+    "away_odds": "+103",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "14 May 2022",
@@ -16857,6 +18496,17 @@
     "away_odds": "-152"
   },
   {
+    "date": "12 May 2022",
+    "home_team": "Minnesota Twins",
+    "away_team": "Houston Astros",
+    "home_score": 0,
+    "away_score": 5,
+    "home_odds": "+101",
+    "away_odds": "-121",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "11 May 2022",
     "home_team": "Texas Rangers",
     "away_team": "Kansas City Royals",
@@ -16963,6 +18613,17 @@
     "away_score": 3,
     "home_odds": "+170",
     "away_odds": "-200"
+  },
+  {
+    "date": "11 May 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Milwaukee Brewers",
+    "home_score": 14,
+    "away_score": 11,
+    "home_odds": "+174",
+    "away_odds": "-207",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "10 May 2022",
@@ -17089,6 +18750,28 @@
     "away_score": 11,
     "home_odds": "+200",
     "away_odds": "-244"
+  },
+  {
+    "date": "10 May 2022",
+    "home_team": "Athletics",
+    "away_team": "Detroit Tigers",
+    "home_score": 0,
+    "away_score": 6,
+    "home_odds": "+114",
+    "away_odds": "-137",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "10 May 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "Athletics",
+    "home_score": 1,
+    "away_score": 4,
+    "home_odds": "-145",
+    "away_odds": "+125",
+    "books_used": 1,
+    "source": "sbr"
   },
   {
     "date": "09 May 2022",
@@ -17316,6 +18999,50 @@
     "away_odds": "+154"
   },
   {
+    "date": "08 May 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "New York Mets",
+    "home_score": 1,
+    "away_score": 6,
+    "home_odds": "+126",
+    "away_odds": "-150",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "08 May 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "New York Mets",
+    "home_score": 1,
+    "away_score": 6,
+    "home_odds": "+126",
+    "away_odds": "-150",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "08 May 2022",
+    "home_team": "Baltimore Orioles",
+    "away_team": "Kansas City Royals",
+    "home_score": 4,
+    "away_score": 6,
+    "home_odds": "-118",
+    "away_odds": "-103",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "08 May 2022",
+    "home_team": "Baltimore Orioles",
+    "away_team": "Kansas City Royals",
+    "home_score": 4,
+    "away_score": 6,
+    "home_odds": "-118",
+    "away_odds": "-103",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "07 May 2022",
     "home_team": "Seattle Mariners",
     "away_team": "Tampa Bay Rays",
@@ -17404,6 +19131,61 @@
     "away_score": 0,
     "home_odds": "-227",
     "away_odds": "+185"
+  },
+  {
+    "date": "07 May 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 5,
+    "away_score": 8,
+    "home_odds": "+111",
+    "away_odds": "-134",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 May 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "Los Angeles Dodgers",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "+154",
+    "away_odds": "-182",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 May 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 3,
+    "away_score": 8,
+    "home_odds": "+105",
+    "away_odds": "-127",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 May 2022",
+    "home_team": "Cincinnati Reds",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 5,
+    "away_score": 8,
+    "home_odds": "+111",
+    "away_odds": "-134",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "07 May 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "Los Angeles Dodgers",
+    "home_score": 2,
+    "away_score": 6,
+    "home_odds": "+154",
+    "away_odds": "-182",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "06 May 2022",
@@ -17703,6 +19485,39 @@
     "away_odds": "+150"
   },
   {
+    "date": "04 May 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-150",
+    "away_odds": "+129",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 May 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "San Diego Padres",
+    "home_score": 4,
+    "away_score": 5,
+    "home_odds": "+119",
+    "away_odds": "-139",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "04 May 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 3,
+    "away_score": 2,
+    "home_odds": "-150",
+    "away_odds": "+129",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "03 May 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "San Francisco Giants",
@@ -17800,6 +19615,39 @@
     "away_score": 5,
     "home_odds": "-135",
     "away_odds": "+114"
+  },
+  {
+    "date": "03 May 2022",
+    "home_team": "New York Mets",
+    "away_team": "Atlanta Braves",
+    "home_score": 3,
+    "away_score": 0,
+    "home_odds": "-110",
+    "away_odds": "-110",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
+    "date": "03 May 2022",
+    "home_team": "New York Mets",
+    "away_team": "Atlanta Braves",
+    "home_score": 3,
+    "away_score": 0,
+    "home_odds": "-110",
+    "away_odds": "-110",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
+    "date": "03 May 2022",
+    "home_team": "Philadelphia Phillies",
+    "away_team": "Texas Rangers",
+    "home_score": 4,
+    "away_score": 6,
+    "home_odds": "-161",
+    "away_odds": "+134",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "02 May 2022",
@@ -18270,6 +20118,17 @@
     "away_odds": "-182"
   },
   {
+    "date": "29 Apr 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Los Angeles Angels",
+    "home_score": 1,
+    "away_score": 5,
+    "home_odds": "-147",
+    "away_odds": "+125",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "28 Apr 2022",
     "home_team": "St.Louis Cardinals",
     "away_team": "Arizona Diamondbacks",
@@ -18711,6 +20570,17 @@
     "away_odds": "+170"
   },
   {
+    "date": "25 Apr 2022",
+    "home_team": "Texas Rangers",
+    "away_team": "Houston Astros",
+    "home_score": 6,
+    "away_score": 2,
+    "home_odds": "+113",
+    "away_odds": "-136",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "24 Apr 2022",
     "home_team": "Philadelphia Phillies",
     "away_team": "Milwaukee Brewers",
@@ -18972,6 +20842,28 @@
     "away_odds": "-175"
   },
   {
+    "date": "23 Apr 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "Colorado Rockies",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "+210",
+    "away_odds": "-275",
+    "books_used": 3,
+    "source": "sbr"
+  },
+  {
+    "date": "23 Apr 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "Colorado Rockies",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "+210",
+    "away_odds": "-275",
+    "books_used": 3,
+    "source": "sbr"
+  },
+  {
     "date": "22 Apr 2022",
     "home_team": "Arizona Diamondbacks",
     "away_team": "New York Mets",
@@ -19179,6 +21071,116 @@
     "away_odds": "+114"
   },
   {
+    "date": "21 Apr 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Chicago White Sox",
+    "home_score": 6,
+    "away_score": 3,
+    "home_odds": "+127",
+    "away_odds": "-148",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "Detroit Tigers",
+    "away_team": "New York Yankees",
+    "home_score": 3,
+    "away_score": 0,
+    "home_odds": "+146",
+    "away_odds": "-170",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "New York Mets",
+    "away_team": "San Francisco Giants",
+    "home_score": 6,
+    "away_score": 2,
+    "home_odds": "-131",
+    "away_odds": "+107",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "Boston Red Sox",
+    "away_team": "Toronto Blue Jays",
+    "home_score": 2,
+    "away_score": 3,
+    "home_odds": "-104",
+    "away_odds": "-115",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "Kansas City Royals",
+    "away_team": "Minnesota Twins",
+    "home_score": 0,
+    "away_score": 1,
+    "home_odds": "+123",
+    "away_odds": "-144",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "Athletics",
+    "away_team": "Baltimore Orioles",
+    "home_score": 6,
+    "away_score": 4,
+    "home_odds": "-133",
+    "away_odds": "+112",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-133",
+    "away_odds": "+112",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "Miami Marlins",
+    "away_team": "St. Louis Cardinals",
+    "home_score": 5,
+    "away_score": 0,
+    "home_odds": "-135",
+    "away_odds": "+114",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "Chicago Cubs",
+    "away_team": "Pittsburgh Pirates",
+    "home_score": 3,
+    "away_score": 4,
+    "home_odds": "-164",
+    "away_odds": "+141",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
+    "date": "21 Apr 2022",
+    "home_team": "Seattle Mariners",
+    "away_team": "Texas Rangers",
+    "home_score": 6,
+    "away_score": 8,
+    "home_odds": "-128",
+    "away_odds": "+108",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "20 Apr 2022",
     "home_team": "Seattle Mariners",
     "away_team": "Texas Rangers",
@@ -19305,6 +21307,28 @@
     "away_odds": "+200"
   },
   {
+    "date": "20 Apr 2022",
+    "home_team": "Cleveland Guardians",
+    "away_team": "Chicago White Sox",
+    "home_score": 2,
+    "away_score": 1,
+    "home_odds": "-145",
+    "away_odds": "+123",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "20 Apr 2022",
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Atlanta Braves",
+    "home_score": 5,
+    "away_score": 1,
+    "home_odds": "-135",
+    "away_odds": "+114",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "19 Apr 2022",
     "home_team": "Los Angeles Dodgers",
     "away_team": "Atlanta Braves",
@@ -19411,6 +21435,50 @@
     "away_score": 5,
     "home_odds": "-105",
     "away_odds": "-116"
+  },
+  {
+    "date": "19 Apr 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 1,
+    "away_score": 0,
+    "home_odds": "-127",
+    "away_odds": "+107",
+    "books_used": 4,
+    "source": "sbr"
+  },
+  {
+    "date": "19 Apr 2022",
+    "home_team": "New York Mets",
+    "away_team": "San Francisco Giants",
+    "home_score": 3,
+    "away_score": 1,
+    "home_odds": "-125",
+    "away_odds": "+105",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
+    "date": "19 Apr 2022",
+    "home_team": "New York Mets",
+    "away_team": "San Francisco Giants",
+    "home_score": 3,
+    "away_score": 1,
+    "home_odds": "-125",
+    "away_odds": "+105",
+    "books_used": 1,
+    "source": "sbr"
+  },
+  {
+    "date": "19 Apr 2022",
+    "home_team": "Washington Nationals",
+    "away_team": "Arizona Diamondbacks",
+    "home_score": 1,
+    "away_score": 0,
+    "home_odds": "-127",
+    "away_odds": "+107",
+    "books_used": 4,
+    "source": "sbr"
   },
   {
     "date": "18 Apr 2022",
@@ -19600,6 +21668,17 @@
     "away_score": 0,
     "home_odds": "+170",
     "away_odds": "-200"
+  },
+  {
+    "date": "17 Apr 2022",
+    "home_team": "Colorado Rockies",
+    "away_team": "Chicago Cubs",
+    "home_score": 4,
+    "away_score": 6,
+    "home_odds": "-129",
+    "away_odds": "+109",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "16 Apr 2022",
@@ -19962,6 +22041,17 @@
     "away_odds": "+185"
   },
   {
+    "date": "14 Apr 2022",
+    "home_team": "Chicago White Sox",
+    "away_team": "Seattle Mariners",
+    "home_score": 1,
+    "away_score": 5,
+    "home_odds": "-100",
+    "away_odds": "-120",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "13 Apr 2022",
     "home_team": "Chicago White Sox",
     "away_team": "Seattle Mariners",
@@ -20196,6 +22286,17 @@
     "away_odds": "-125"
   },
   {
+    "date": "12 Apr 2022",
+    "home_team": "Arizona Diamondbacks",
+    "away_team": "Houston Astros",
+    "home_score": 1,
+    "away_score": 2,
+    "home_odds": "+127",
+    "away_odds": "-150",
+    "books_used": 5,
+    "source": "sbr"
+  },
+  {
     "date": "11 Apr 2022",
     "home_team": "San Francisco Giants",
     "away_team": "San Diego Padres",
@@ -20419,6 +22520,17 @@
     "away_score": 4,
     "home_odds": "-233",
     "away_odds": "+190"
+  },
+  {
+    "date": "10 Apr 2022",
+    "home_team": "Atlanta Braves",
+    "away_team": "Cincinnati Reds",
+    "home_score": 3,
+    "away_score": 6,
+    "home_odds": "-177",
+    "away_odds": "+152",
+    "books_used": 5,
+    "source": "sbr"
   },
   {
     "date": "09 Apr 2022",
