@@ -1,6 +1,8 @@
 import pandas as pd
 import sqlite3
 import os
+import json
+from datetime import datetime
 
 def get_team_mapping(season_year):
     """Dynamically handles MLB team name changes and inconsistent Vegas abbreviations"""
@@ -57,39 +59,114 @@ def parse_historical_odds(file_path, season_year):
         
     return games_data
 
+
+def parse_json_odds(file_path):
+    """Extracts raw game data from the JSON files (2022-2025)"""
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+        
+    games_data = []
+    for row in data:
+        # Skip All-Star games and invalid entries
+        home_team = row['home_team']
+        away_team = row.get('away_team', '')  # Some entries might not have away_team
+        
+        if home_team in ['National League', 'American League'] or away_team in ['National League', 'American League']:
+            continue  # Skip All-Star games
+        
+        # Convert "03 Nov 2022" to "2022-11-03"
+        raw_date = row['date']
+        formatted_date = datetime.strptime(raw_date, "%d %b %Y").strftime("%Y-%m-%d")
+        
+        game_dict = {
+            'date': formatted_date,
+            'home_team': home_team,
+            'away_open_ml': None, # Left blank as requested
+            'away_close_ml': int(row['away_odds']),
+            'home_open_ml': None, # Left blank as requested
+            'home_close_ml': int(row['home_odds'])
+        }
+        games_data.append(game_dict)
+        
+    return games_data
+
 if __name__ == "__main__":
     start_year = 2015
-    end_year = 2021
+    end_year = 2025
     db_path = "databases/MLB_Betting.db"
-    excel_dir = 'historic_odds'
+    data_dir = 'historic_odds'
     
     conn = sqlite3.connect(db_path)
     total_inserted = 0
 
     for year in range(start_year, end_year + 1):
-        excel_file = os.path.join(excel_dir, f'mlb-odds-{year}.xlsx')
-        
-        if not os.path.exists(excel_file):
-            print(f"Skipping {year}: File not found.")
-            continue
-
         print(f"\n--- Processing {year} Season ---")
         
-        # 1. Parse Excel
-        season_odds_list = parse_historical_odds(excel_file, year)
-        odds_df = pd.DataFrame(season_odds_list)
-        mapping_dict = get_team_mapping(year)
-        odds_df['home_team'] = odds_df['home_team_vegas'].map(mapping_dict)
-        
+        # 1. Parse Files based on the year
+        if year <= 2021:
+            file_path = os.path.join(data_dir, f'mlb-odds-{year}.xlsx')
+            if not os.path.exists(file_path):
+                print(f"Skipping {year}: File not found.")
+                continue
+                
+            season_odds_list = parse_historical_odds(file_path, year)
+            odds_df = pd.DataFrame(season_odds_list)
+            mapping_dict = get_team_mapping(year)
+            odds_df['home_team'] = odds_df['home_team_vegas'].map(mapping_dict)
+            
+        else:
+            # UPDATED: Matches the new oddsportal naming convention
+            file_path = os.path.join(data_dir, f'oddsportal_mlb_{year}.json')
+            if not os.path.exists(file_path):
+                print(f"Skipping {year}: File not found.")
+                continue
+                
+            season_odds_list = parse_json_odds(file_path)
+            odds_df = pd.DataFrame(season_odds_list)
+            
+            # --- NEW: JSON SPECIFIC TEAM FIX ---
+            json_mapping = {
+                'St.Louis Cardinals': 'St. Louis Cardinals' # Fixes the missing space
+            }
+            # Handles the early Athletics name change in OddsPortal
+            if year <= 2024:
+                json_mapping['Athletics'] = 'Oakland Athletics'
+                
+            odds_df['home_team'] = odds_df['home_team'].replace(json_mapping)
+
+        # 2. Load OldGames for the specific year
+        query = f"SELECT game_id, date_time, home_team, away_team FROM OldGames WHERE season = '{year}'"
+        old_games_df = pd.read_sql(query, conn)
+
         # 2. Load OldGames for the specific year
         query = f"SELECT game_id, date_time, home_team, away_team FROM OldGames WHERE season = '{year}'"
         old_games_df = pd.read_sql(query, conn)
         
-        # 3. Timezone Fix & Game Numbering
+        # --- DIAGNOSTIC CHECK FOR TEAM NAMES ---
+        if year >= 2022:
+            json_teams = set(odds_df['home_team'].unique())
+            db_teams = set(old_games_df['home_team'].unique())
+            
+            mismatched_teams = json_teams - db_teams
+            
+            if mismatched_teams:
+                print(f"  [!] Team Name Mismatches in {year}:")
+                for team in mismatched_teams:
+                    print(f"      JSON has: '{team}' (NOT in SQL DB)")
+        
+        # 3. Timezone Fix & Game Numbering (Doubleheader logic)
         old_games_df['date_time'] = pd.to_datetime(old_games_df['date_time'], utc=True)
         old_games_df['local_date'] = old_games_df['date_time'].dt.tz_convert('US/Eastern').dt.strftime('%Y-%m-%d')
         old_games_df = old_games_df.sort_values('date_time')
         old_games_df['game_num'] = old_games_df.groupby(['local_date', 'home_team']).cumcount() + 1
+        
+        # Filter odds to only include regular season dates (match OldGames range)
+        regular_season_start = old_games_df['local_date'].min()
+        regular_season_end = old_games_df['local_date'].max()
+        odds_df = odds_df[(odds_df['date'] >= regular_season_start) & (odds_df['date'] <= regular_season_end)]
+        
+        # Make sure odds_df is sorted by date before applying cumcount so doubleheaders align
+        odds_df = odds_df.sort_values('date') 
         odds_df['game_num'] = odds_df.groupby(['date', 'home_team']).cumcount() + 1
         
         # 4. Join datasets
@@ -101,10 +178,16 @@ if __name__ == "__main__":
             right_on=['date', 'home_team', 'game_num']
         )
         
-        # 5. Diagnostic Log
+       # 5. Diagnostic Log (The Detective Version)
         missing_odds = merged_df[merged_df['home_close_ml'].isna()]
         if not missing_odds.empty:
             print(f"MISSING ODDS ALERT: {len(missing_odds)} games found in {year}")
+            print("\n--- SAMPLE OF MISSING GAMES ---")
+            
+            # Print the key identifying columns for the first 15 missing games
+            cols_to_print = ['local_date', 'home_team', 'away_team', 'game_num']
+            print(missing_odds[cols_to_print].head(15).to_string(index=False))
+            print("-------------------------------\n")
         
         # 6. Filter and Save
         final_odds_table = merged_df.dropna(subset=['home_close_ml']).copy()
@@ -116,10 +199,7 @@ if __name__ == "__main__":
         final_odds_table = final_odds_table[columns_to_keep]
         
         # --- THE OVERWRITE LOGIC ---
-        # If it's the first year (2015), use 'replace' to wipe the table.
-        # Otherwise, use 'append' to add the other years to the clean table.
         write_mode = 'replace' if year == start_year else 'append'
-        
         final_odds_table.to_sql('Odds_Temp', conn, if_exists=write_mode, index=False)
         
         total_inserted += len(final_odds_table)
@@ -127,3 +207,4 @@ if __name__ == "__main__":
 
     print(f"\nDONE: Master Odds_Temp table built from scratch with {total_inserted} games.")
     conn.close()
+
