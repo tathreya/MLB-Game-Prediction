@@ -1,8 +1,13 @@
 import requests
 import sqlite3
-import logging 
+import logging
+import os
 
 logger = logging.getLogger(__name__)
+
+# Get the absolute path to the database
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, "databases", "MLB_Betting.db")
 
 # ----------------------------- #
 #        SQL STATEMENTS         #
@@ -39,8 +44,9 @@ def fetchMLBTeams(base_url):
     :return: None
     """
 
+    conn = None
     try:
-        conn = sqlite3.connect("databases/MLB_Betting.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
         logger.debug("Creating Teams table if it doesn't exist")
@@ -61,15 +67,19 @@ def fetchMLBTeams(base_url):
 
     except requests.exceptions.RequestException as err:
         logger.error(f"Error occurred while fetching MLB Teams API data: {err}")
-        conn.rollback()  
+        if conn:
+            conn.rollback()  
     except sqlite3.DatabaseError as db_err:
         logger.error(f"Database error occurred when initializing MLB Teams: {db_err}")
-        conn.rollback()  
+        if conn:
+            conn.rollback()  
     except Exception as e:
         logger.error(f"An error occurred when initializing MLB Teams: {e}")
-        conn.rollback() 
+        if conn:
+            conn.rollback() 
     finally:
-        conn.close()
+        if conn:
+            conn.close()
 
 def createTeamsTable(cursor):
     """

@@ -80,6 +80,7 @@ def fetchAndUpdateOldSeason(season, base_url):
     :return: None
     """
 
+    conn = None
     try:
 
         conn = sqlite3.connect("databases/MLB_Betting.db")
@@ -153,12 +154,15 @@ def fetchAndUpdateOldSeason(season, base_url):
     
     except requests.exceptions.HTTPError as http_err:
         logger.error(f"HTTP error occurred while fetching {season} MLB schedule API data: {http_err}")
-        conn.rollback()
+        if conn:
+            conn.rollback()
     except Exception as e:
         logger.error(f"Other error occurred while saving {season} MLB schedule to DB: {e}")
-        conn.rollback()
+        if conn:
+            conn.rollback()
     finally:
-        conn.close()
+        if conn:
+            conn.close()
     
 def createOldGamesTable(cursor):
     """

@@ -135,6 +135,28 @@
     button.predict-btn:hover {
         background: linear-gradient(135deg, #84CC16, #65A30D);
     }
+    
+    .action-btn {
+        background: linear-gradient(135deg, #A3E635, #84CC16); 
+        color: #1E1E2F; 
+        border: none; 
+        padding: 16px 32px; 
+        border-radius: 12px; 
+        cursor: pointer; 
+        font-weight: 600; 
+        font-size: 16px; 
+        transition: all 0.3s ease;
+    }
+    .action-btn:hover {
+        background: linear-gradient(135deg, #84CC16, #65A30D);
+        transform: translateY(-2px);
+    }
+    .action-btn:disabled {
+        background: #555;
+        color: #999;
+        cursor: not-allowed;
+        transform: none;
+    }
 
     .prediction-output {
         margin-top: 12px;
@@ -172,7 +194,7 @@
             padding: 6px;
         }
 
-        #runButton, button.predict-btn {
+        #runButton, button.predict-btn, .action-btn {
             padding: 10px 16px;
             font-size: 14px;
         }
@@ -190,16 +212,14 @@ async function runPipeline() {
         const result = await response.json();
 
         if(result.status === "success") {
-            // hide button after pipeline finishes
             button.style.display = "none"; 
             fetchGames();
+            document.getElementById('gamesContainer').style.display = "block"; 
         } else {
             button.disabled = false;
             button.innerText = "Run the Model for Today";
             alert(result.message);
         }
-        // button.style.display = "none"; 
-        // fetchGames()
     } catch (err) {
         button.disabled = false;
         button.innerText = "Run the Model for Today";
@@ -219,6 +239,19 @@ async function fetchGames() {
     // Header
     const header = table.insertRow();
     ["Date/Time (EST)", "Away Team", "Away Odds", "Home Team", "Home Odds", "Prediction"].forEach(h => header.insertCell().innerText = h);
+    
+    // Action Buttons Row (Scrape Odds & Predict All)
+    const buttonRow = table.insertRow();
+    const buttonCell = buttonRow.insertCell();
+    buttonCell.colSpan = "6";
+    buttonCell.style.textAlign = "center";
+    buttonCell.style.paddingBottom = "20px";
+    buttonCell.innerHTML = `
+        <div style="display: flex; justify-content: center; gap: 15px;">
+            <button id="scrapeOddsButton" class="action-btn" onclick="scrapeOdds()">Scrape Odds for Today</button>
+            <button id="predictAllButton" class="action-btn" onclick="predictAll()">Predict All Games</button>
+        </div>
+    `;
 
     games.forEach(game => {
         const row = table.insertRow();
@@ -239,7 +272,7 @@ async function fetchGames() {
         `;
 
         // Away Odds
-        row.insertCell().innerHTML = `<input type="text" class="away-odds" data-gameid="${game.game_id}">`;
+        row.insertCell().innerHTML = `<input type="text" class="away-odds" data-gameid="${game.game_id}" data-away="${game.away_team}" data-home="${game.home_team}">`;
 
         // Home Team + Logo
         const homeCell = row.insertCell();
@@ -254,8 +287,10 @@ async function fetchGames() {
         row.insertCell().innerHTML = `<input type="text" class="home-odds" data-gameid="${game.game_id}">`;
 
         // Prediction button/output
-        row.insertCell().innerHTML = `<button class="predict-btn" onclick="calculatePrediction(${game.game_id})">Predict</button>
-                                      <div class="prediction-output" id="prediction_${game.game_id}" style="display:none;"></div>`;
+        row.insertCell().innerHTML = `
+            <button class="predict-btn" onclick="calculatePrediction(${game.game_id})">Predict</button>
+            <div class="prediction-output" id="prediction_${game.game_id}" style="display:none;"></div>
+        `;
     });
 
     container.appendChild(table);
@@ -269,6 +304,47 @@ function validateOdds(odds) {
         odds.length >= 4 &&
         /^\d+$/.test(odds.slice(1))
     );
+}
+
+async function scrapeOdds() {
+    const button = document.getElementById('scrapeOddsButton');
+    button.disabled = true;
+    button.innerText = "Scraping...";
+    
+    try {
+        const response = await fetch('/scrape-odds', { method: 'POST' });
+        const result = await response.json();
+        
+        if(result.status === "success") {
+            // Populate odds inputs with scraped data
+            result.games.forEach(game => {
+                const awayInput = document.querySelector(`.away-odds[data-gameid='${game.game_id}']`);
+                const homeInput = document.querySelector(`.home-odds[data-gameid='${game.game_id}']`);
+                
+                if (awayInput && game.away_odds !== null) {
+                    awayInput.value = game.away_odds > 0 ? `+${game.away_odds}` : `${game.away_odds}`;
+                }
+                if (homeInput && game.home_odds !== null) {
+                    homeInput.value = game.home_odds > 0 ? `+${game.home_odds}` : `${game.home_odds}`;
+                }
+            });
+            
+            button.innerText = "Odds Scraped Successfully!";
+            setTimeout(() => {
+                button.innerText = "Scrape Odds for Today";
+                button.disabled = false;
+            }, 2000);
+        } else {
+            button.innerText = "Scrape Odds for Today";
+            button.disabled = false;
+            alert(`Failed to scrape odds: ${result.message}`);
+        }
+    } catch (err) {
+        button.innerText = "Scrape Odds for Today";
+        button.disabled = false;
+        alert("Error scraping odds");
+        console.error("Scrape error:", err);
+    }
 }
 
 async function calculatePrediction(game_id) {
@@ -291,16 +367,115 @@ async function calculatePrediction(game_id) {
     if(result.status === "success") {
         outputDiv.innerText = `Take ${result.teamToBetOn}, Unit Size: ${result.unit_size.toFixed(2)}, ROI: ${result.expected_roi.toFixed(2)}%`;
         outputDiv.style.display = 'block';
+        return {
+            status: "success",
+            game_id: game_id,
+            teamToBetOn: result.teamToBetOn,
+            unit_size: result.unit_size,
+            expected_roi: result.expected_roi
+        };
     } else {
-        outputDiv.innerText = "Prediction failed";
+        outputDiv.innerText = result.message || "Prediction failed";
         outputDiv.style.display = 'block';
+        console.error("Prediction error:", result);
+        return { status: "error" };
     }
 }
+
+async function predictAll() {
+    const btn = document.getElementById('predictAllButton');
+    btn.disabled = true;
+    btn.innerText = "Predicting All Games...";
+
+    const awayInputs = document.querySelectorAll('.away-odds');
+    let sweetSpotPlays = [];
+
+    // Run all predictions in parallel
+    const promises = Array.from(awayInputs).map(async (awayInput) => {
+        const game_id = awayInput.getAttribute('data-gameid');
+        const awayTeam = awayInput.getAttribute('data-away');
+        const homeTeam = awayInput.getAttribute('data-home');
+        
+        const homeInput = document.querySelector(`.home-odds[data-gameid='${game_id}']`);
+        
+        // Skip empty or invalid odds
+        if(!validateOdds(homeInput.value) || !validateOdds(awayInput.value)) {
+            const out = document.getElementById(`prediction_${game_id}`);
+            out.innerText = "Invalid/Missing odds";
+            out.style.display = 'block';
+            return;
+        }
+
+        const result = await calculatePrediction(game_id);
+
+        // Filter for sweet spot (ROI >= 35 and <= 65)
+        if (result && result.status === "success") {
+            if (result.expected_roi >= 35 && result.expected_roi <= 65) {
+                sweetSpotPlays.push({
+                    matchup: `${awayTeam} vs ${homeTeam}`,
+                    bet: result.teamToBetOn,
+                    odds: result.teamToBetOn === awayTeam ? awayInput.value : homeInput.value,
+                    unit: result.unit_size.toFixed(2),
+                    roi: result.expected_roi.toFixed(2)
+                });
+            }
+        }
+    });
+
+    await Promise.all(promises);
+
+    // Build the text file content
+    let textContent = "SWEET SPOT PLAYS (ROI 35% - 65%):\n\n";
+    if (sweetSpotPlays.length === 0) {
+        textContent += "No plays found in the sweet spot range today.\n";
+    } else {
+        sweetSpotPlays.forEach(play => {
+            textContent += `${play.matchup} --> Bet on: ${play.bet} @ ${play.odds} | Unit: ${play.unit} | ROI: ${play.roi}%\n`;
+        });
+    }
+
+    // Generate UI Textbox
+    generateSweetSpotBox(textContent);
+
+    // Reset button
+    btn.innerText = "Predict All Games";
+    btn.disabled = false;
+}
+
+function generateSweetSpotBox(textContent) {
+    let container = document.getElementById('sweetSpotContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'sweetSpotContainer';
+        container.style.marginTop = '20px';
+        container.style.background = 'rgba(30,30,47,0.9)';
+        container.style.padding = '20px';
+        container.style.borderRadius = '12px';
+        document.getElementById('gamesContainer').appendChild(container);
+    }
+    
+    container.innerHTML = `
+        <h3 style="color: #A3E635; margin-bottom: 15px;">Sweet Spot Plays (Ready to Copy)</h3>
+        <textarea id="sweetSpotText" style="width: 100%; height: 180px; background: rgba(0,0,0,0.3); color: #E5E7EB; border: 1px solid #A3E635; border-radius: 8px; padding: 10px; font-family: monospace; resize: none;">${textContent}</textarea>
+        <button onclick="copySweetSpotText()" style="margin-top: 10px; padding: 10px 20px; background: #A3E635; color: #1E1E2F; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">Copy to Clipboard</button>
+    `;
+    
+    // Scroll down to show it
+    container.scrollIntoView({ behavior: 'smooth' });
+}
+
+function copySweetSpotText() {
+    const txt = document.getElementById('sweetSpotText');
+    txt.select();
+    document.execCommand('copy');
+    alert('Copied to clipboard!');
+}
+
 </script>
 </head>
 <body>
 <h1>MLB Prediction Platform</h1>
-<button id="runButton" onclick="runPipeline()">Run the Model for Today</button>
+<button id="runButton" onclick="runPipeline()">Run Model for Today</button>
 <div id="gamesContainer"></div>
 </body>
 </html>

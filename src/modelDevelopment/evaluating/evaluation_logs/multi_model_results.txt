@@ -1,0 +1,49 @@
+==========================================================
+         OVERWRITING PREVIOUS BACKTEST RESULTS            
+         DATE: 2026-03-31 22:40:01         
+==========================================================
+
+############################################################
+ MODEL: XGBoost_Base_96_Profit
+############################################################
+
+🚀 Evaluating 2015 | XGBoost_Base_96_Profit
+2015 Season -> Profit: 3942.48 | Bets: 2348 | Wagered: 4294.48
+
+🚀 Evaluating 2016 | XGBoost_Base_96_Profit
+2016 Season -> Profit: 4268.04 | Bets: 2342 | Wagered: 4598.03
+
+🚀 Evaluating 2017 | XGBoost_Base_96_Profit
+2017 Season -> Profit: 4033.44 | Bets: 2351 | Wagered: 4343.27
+
+🚀 Evaluating 2018 | XGBoost_Base_96_Profit
+2018 Season -> Profit: 3968.86 | Bets: 2350 | Wagered: 4336.22
+
+🚀 Evaluating 2019 | XGBoost_Base_96_Profit
+2019 Season -> Profit: 4433.57 | Bets: 2343 | Wagered: 4721.46
+
+🚀 Evaluating 2020 | XGBoost_Base_96_Profit
+2020 Season -> Profit: 1795.83 | Bets: 810 | Wagered: 1843.46
+
+🚀 Evaluating 2021 | XGBoost_Base_96_Profit
+2021 Season -> Profit: 4250.04 | Bets: 2342 | Wagered: 4529.13
+
+🚀 Evaluating 2022 | XGBoost_Base_96_Profit
+2022 Season -> Profit: 3815.07 | Bets: 2341 | Wagered: 4184.95
+
+🚀 Evaluating 2023 | XGBoost_Base_96_Profit
+2023 Season -> Profit: -160.69 | Bets: 2352 | Wagered: 3231.96
+
+🚀 Evaluating 2024 | XGBoost_Base_96_Profit
+2024 Season -> Profit: -129.00 | Bets: 2350 | Wagered: 3110.41
+
+🚀 Evaluating 2025 | XGBoost_Base_96_Profit
+2025 Season -> Profit: 34.45 | Bets: 2350 | Wagered: 3109.38
+
+🏆 XGBoost_Base_96_Profit TOTALS:
+   3-Year Profit: 30252.08 units
+   Total Bets:    24279
+   Overall ROI:   71.51%
+
+------------------------------------------------------------
+
